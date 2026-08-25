@@ -1,9 +1,11 @@
 .PHONY: all data profile features train survival anomaly scenarios explain copilot submission test run-all clean
 
-PYTHON = python
+PYTHON = PYTHONPATH=. python
 
-run-all: data profile features train survival anomaly scenarios explain copilot submission
-	@echo "✅ Full pipeline complete. Check reports/ and submission/submission.csv"
+run-all: data profile train survival anomaly scenarios explain copilot submission
+	@echo "=================================================================="
+	@echo "✅ Full pipeline complete! All reports and submission.csv generated."
+	@echo "=================================================================="
 
 data:
 	@echo "→ Generating synthetic data..."
@@ -12,10 +14,6 @@ data:
 profile:
 	@echo "→ Task 1: Data Intelligence & Profiling..."
 	$(PYTHON) src/profiling/run_profiling.py
-
-features:
-	@echo "→ Feature engineering..."
-	$(PYTHON) src/features/feature_engineer.py
 
 train:
 	@echo "→ Task 2: Training prediction models..."
