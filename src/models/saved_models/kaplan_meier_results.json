@@ -1,0 +1,253 @@
+{
+  "overall_survival_table": [
+    {
+      "timeline_months": 0.0,
+      "survival_prob": 1.0,
+      "cumulative_default_prob": 0.0
+    },
+    {
+      "timeline_months": 1.0,
+      "survival_prob": 0.995,
+      "cumulative_default_prob": 0.005
+    },
+    {
+      "timeline_months": 2.0,
+      "survival_prob": 0.988,
+      "cumulative_default_prob": 0.012
+    },
+    {
+      "timeline_months": 3.0,
+      "survival_prob": 0.9798,
+      "cumulative_default_prob": 0.0202
+    },
+    {
+      "timeline_months": 4.0,
+      "survival_prob": 0.9711,
+      "cumulative_default_prob": 0.0289
+    },
+    {
+      "timeline_months": 5.0,
+      "survival_prob": 0.9631,
+      "cumulative_default_prob": 0.0369
+    },
+    {
+      "timeline_months": 6.0,
+      "survival_prob": 0.9555,
+      "cumulative_default_prob": 0.0445
+    },
+    {
+      "timeline_months": 7.0,
+      "survival_prob": 0.948,
+      "cumulative_default_prob": 0.052
+    },
+    {
+      "timeline_months": 8.0,
+      "survival_prob": 0.9409,
+      "cumulative_default_prob": 0.0591
+    },
+    {
+      "timeline_months": 9.0,
+      "survival_prob": 0.9326,
+      "cumulative_default_prob": 0.0674
+    },
+    {
+      "timeline_months": 10.0,
+      "survival_prob": 0.9245,
+      "cumulative_default_prob": 0.0755
+    },
+    {
+      "timeline_months": 11.0,
+      "survival_prob": 0.9166,
+      "cumulative_default_prob": 0.0834
+    },
+    {
+      "timeline_months": 12.0,
+      "survival_prob": 0.9092,
+      "cumulative_default_prob": 0.0908
+    },
+    {
+      "timeline_months": 13.0,
+      "survival_prob": 0.903,
+      "cumulative_default_prob": 0.097
+    },
+    {
+      "timeline_months": 14.0,
+      "survival_prob": 0.8955,
+      "cumulative_default_prob": 0.1045
+    },
+    {
+      "timeline_months": 15.0,
+      "survival_prob": 0.8885,
+      "cumulative_default_prob": 0.1115
+    },
+    {
+      "timeline_months": 16.0,
+      "survival_prob": 0.8819,
+      "cumulative_default_prob": 0.1181
+    },
+    {
+      "timeline_months": 17.0,
+      "survival_prob": 0.8744,
+      "cumulative_default_prob": 0.1256
+    },
+    {
+      "timeline_months": 18.0,
+      "survival_prob": 0.8679,
+      "cumulative_default_prob": 0.1321
+    },
+    {
+      "timeline_months": 19.0,
+      "survival_prob": 0.862,
+      "cumulative_default_prob": 0.138
+    },
+    {
+      "timeline_months": 20.0,
+      "survival_prob": 0.8548,
+      "cumulative_default_prob": 0.1452
+    },
+    {
+      "timeline_months": 21.0,
+      "survival_prob": 0.849,
+      "cumulative_default_prob": 0.151
+    },
+    {
+      "timeline_months": 22.0,
+      "survival_prob": 0.8424,
+      "cumulative_default_prob": 0.1576
+    },
+    {
+      "timeline_months": 23.0,
+      "survival_prob": 0.8364,
+      "cumulative_default_prob": 0.1636
+    },
+    {
+      "timeline_months": 24.0,
+      "survival_prob": 0.8295,
+      "cumulative_default_prob": 0.1705
+    },
+    {
+      "timeline_months": 25.0,
+      "survival_prob": 0.8229,
+      "cumulative_default_prob": 0.1771
+    },
+    {
+      "timeline_months": 26.0,
+      "survival_prob": 0.8164,
+      "cumulative_default_prob": 0.1836
+    },
+    {
+      "timeline_months": 27.0,
+      "survival_prob": 0.8096,
+      "cumulative_default_prob": 0.1904
+    },
+    {
+      "timeline_months": 28.0,
+      "survival_prob": 0.8039,
+      "cumulative_default_prob": 0.1961
+    },
+    {
+      "timeline_months": 29.0,
+      "survival_prob": 0.7968,
+      "cumulative_default_prob": 0.2032
+    },
+    {
+      "timeline_months": 30.0,
+      "survival_prob": 0.7911,
+      "cumulative_default_prob": 0.2089
+    },
+    {
+      "timeline_months": 31.0,
+      "survival_prob": 0.7843,
+      "cumulative_default_prob": 0.2157
+    },
+    {
+      "timeline_months": 32.0,
+      "survival_prob": 0.7787,
+      "cumulative_default_prob": 0.2213
+    },
+    {
+      "timeline_months": 33.0,
+      "survival_prob": 0.7744,
+      "cumulative_default_prob": 0.2256
+    },
+    {
+      "timeline_months": 34.0,
+      "survival_prob": 0.7704,
+      "cumulative_default_prob": 0.2296
+    },
+    {
+      "timeline_months": 35.0,
+      "survival_prob": 0.7647,
+      "cumulative_default_prob": 0.2353
+    },
+    {
+      "timeline_months": 36.0,
+      "survival_prob": 0.7572,
+      "cumulative_default_prob": 0.2428
+    }
+  ],
+  "by_credit_band": {
+    "<620": {
+      "n_loans": 3474,
+      "observed_defaults": 1189,
+      "default_rate_pct": 34.23,
+      "12m_cumulative_default": 0.219,
+      "24m_cumulative_default": 0.3779
+    },
+    "620-659": {
+      "n_loans": 5075,
+      "observed_defaults": 1187,
+      "default_rate_pct": 23.39,
+      "12m_cumulative_default": 0.144,
+      "24m_cumulative_default": 0.2685
+    },
+    "660-699": {
+      "n_loans": 8579,
+      "observed_defaults": 1448,
+      "default_rate_pct": 16.88,
+      "12m_cumulative_default": 0.1045,
+      "24m_cumulative_default": 0.1928
+    },
+    "700-739": {
+      "n_loans": 10787,
+      "observed_defaults": 1320,
+      "default_rate_pct": 12.24,
+      "12m_cumulative_default": 0.0749,
+      "24m_cumulative_default": 0.1428
+    },
+    "740-779": {
+      "n_loans": 8501,
+      "observed_defaults": 658,
+      "default_rate_pct": 7.74,
+      "12m_cumulative_default": 0.0457,
+      "24m_cumulative_default": 0.0924
+    },
+    "780+": {
+      "n_loans": 6595,
+      "observed_defaults": 285,
+      "default_rate_pct": 4.32,
+      "12m_cumulative_default": 0.0267,
+      "24m_cumulative_default": 0.0521
+    }
+  },
+  "by_vintage": {
+    "Crisis/Pre-2010": {
+      "n_loans": 19595,
+      "observed_defaults": 3492,
+      "default_rate_pct": 17.82,
+      "12m_cumulative_default": 0.1115
+    },
+    "Post-Crisis 2011-2018": {
+      "n_loans": 19568,
+      "observed_defaults": 2471,
+      "default_rate_pct": 12.63,
+      "12m_cumulative_default": 0.079
+    },
+    "Recent 2019+": {
+      "n_loans": 7250,
+      "observed_defaults": 826,
+      "default_rate_pct": 11.39,
+      "12m_cumulative_default": 0.0666
+    }
+  }
+}

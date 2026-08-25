@@ -1,0 +1,12 @@
+{
+  "target_evaluated": "next_12m_default_flag",
+  "n_records": 874435,
+  "mean_confidence_score": 0.8921,
+  "median_confidence_score": 0.902,
+  "mean_entropy_uncertainty": 0.2857,
+  "confidence_tiers": {
+    "high_confidence_gte_80_pct": 95.39,
+    "moderate_confidence_50_to_80_pct": 3.1,
+    "borderline_low_confidence_lt_50_pct": 1.51
+  }
+}

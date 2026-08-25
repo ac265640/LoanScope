@@ -1,0 +1,207 @@
+{
+  "one_month_transition_matrix": {
+    "Current": {
+      "Current": 0.9798,
+      "30-59 DPD": 0.0097,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0049,
+      "Prepaid": 0.0057,
+      "Paid Off": 0.0
+    },
+    "30-59 DPD": {
+      "Current": 0.3556,
+      "30-59 DPD": 0.2971,
+      "60-89 DPD": 0.1978,
+      "90+ DPD": 0.0,
+      "Default": 0.1494,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "60-89 DPD": {
+      "Current": 0.2365,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.3142,
+      "Default": 0.4494,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "90+ DPD": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 1.0,
+      "Default": 0.0,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "Default": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 1.0,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "Prepaid": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0,
+      "Prepaid": 1.0,
+      "Paid Off": 0.0
+    },
+    "Paid Off": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0,
+      "Prepaid": 0.0,
+      "Paid Off": 1.0
+    }
+  },
+  "six_month_projected_matrix": {
+    "Current": {
+      "Current": 0.9077,
+      "30-59 DPD": 0.0127,
+      "60-89 DPD": 0.0026,
+      "90+ DPD": 0.003,
+      "Default": 0.0414,
+      "Prepaid": 0.0326,
+      "Paid Off": 0.0
+    },
+    "30-59 DPD": {
+      "Current": 0.5311,
+      "30-59 DPD": 0.0081,
+      "60-89 DPD": 0.0019,
+      "90+ DPD": 0.0892,
+      "Default": 0.3556,
+      "Prepaid": 0.014,
+      "Paid Off": 0.0
+    },
+    "60-89 DPD": {
+      "Current": 0.2178,
+      "30-59 DPD": 0.0031,
+      "60-89 DPD": 0.0006,
+      "90+ DPD": 0.3147,
+      "Default": 0.4574,
+      "Prepaid": 0.0065,
+      "Paid Off": 0.0
+    },
+    "90+ DPD": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 1.0,
+      "Default": 0.0,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "Default": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 1.0,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "Prepaid": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0,
+      "Prepaid": 1.0,
+      "Paid Off": 0.0
+    },
+    "Paid Off": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0,
+      "Prepaid": 0.0,
+      "Paid Off": 1.0
+    }
+  },
+  "twelve_month_projected_matrix": {
+    "Current": {
+      "Current": 0.8312,
+      "30-59 DPD": 0.0117,
+      "60-89 DPD": 0.0023,
+      "90+ DPD": 0.0076,
+      "Default": 0.0847,
+      "Prepaid": 0.0624,
+      "Paid Off": 0.0
+    },
+    "30-59 DPD": {
+      "Current": 0.4868,
+      "30-59 DPD": 0.0068,
+      "60-89 DPD": 0.0014,
+      "90+ DPD": 0.0921,
+      "Default": 0.3814,
+      "Prepaid": 0.0315,
+      "Paid Off": 0.0
+    },
+    "60-89 DPD": {
+      "Current": 0.1995,
+      "30-59 DPD": 0.0028,
+      "60-89 DPD": 0.0006,
+      "90+ DPD": 0.3158,
+      "Default": 0.4677,
+      "Prepaid": 0.0136,
+      "Paid Off": 0.0
+    },
+    "90+ DPD": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 1.0,
+      "Default": 0.0,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "Default": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 1.0,
+      "Prepaid": 0.0,
+      "Paid Off": 0.0
+    },
+    "Prepaid": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0,
+      "Prepaid": 1.0,
+      "Paid Off": 0.0
+    },
+    "Paid Off": {
+      "Current": 0.0,
+      "30-59 DPD": 0.0,
+      "60-89 DPD": 0.0,
+      "90+ DPD": 0.0,
+      "Default": 0.0,
+      "Prepaid": 0.0,
+      "Paid Off": 1.0
+    }
+  },
+  "states": [
+    "Current",
+    "30-59 DPD",
+    "60-89 DPD",
+    "90+ DPD",
+    "Default",
+    "Prepaid",
+    "Paid Off"
+  ],
+  "n_transitions_observed": 828022
+}

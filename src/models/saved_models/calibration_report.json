@@ -1,0 +1,82 @@
+{
+  "next_3m_delinquency_flag": {
+    "uncalibrated_brier": 0.0388,
+    "calibrated_brier": 0.0297,
+    "uncalibrated_ece": 0.0546,
+    "calibrated_ece": 0.0018,
+    "calibration_method": "Platt Scaling (Sigmoid)",
+    "reliability_curve": [
+      {
+        "pred_bin": 0.0285,
+        "actual_empirical": 0.0276
+      },
+      {
+        "pred_bin": 0.6989,
+        "actual_empirical": 0.7493
+      }
+    ],
+    "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_3m_delinquency_flag.joblib"
+  },
+  "next_6m_delinquency_flag": {
+    "uncalibrated_brier": 0.0595,
+    "calibrated_brier": 0.05,
+    "uncalibrated_ece": 0.04,
+    "calibrated_ece": 0.0046,
+    "calibration_method": "Platt Scaling (Sigmoid)",
+    "reliability_curve": [
+      {
+        "pred_bin": 0.0454,
+        "actual_empirical": 0.046
+      },
+      {
+        "pred_bin": 0.1317,
+        "actual_empirical": 0.1011
+      },
+      {
+        "pred_bin": 0.6621,
+        "actual_empirical": 0.7593
+      }
+    ],
+    "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_6m_delinquency_flag.joblib"
+  },
+  "next_12m_default_flag": {
+    "uncalibrated_brier": 0.0441,
+    "calibrated_brier": 0.0418,
+    "uncalibrated_ece": 0.0419,
+    "calibrated_ece": 0.0016,
+    "calibration_method": "Platt Scaling (Sigmoid)",
+    "reliability_curve": [
+      {
+        "pred_bin": 0.0424,
+        "actual_empirical": 0.0416
+      },
+      {
+        "pred_bin": 0.1713,
+        "actual_empirical": 0.3571
+      },
+      {
+        "pred_bin": 0.2927,
+        "actual_empirical": 0.3644
+      }
+    ],
+    "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_12m_default_flag.joblib"
+  },
+  "next_12m_prepayment_flag": {
+    "uncalibrated_brier": 0.045,
+    "calibrated_brier": 0.0446,
+    "uncalibrated_ece": 0.0199,
+    "calibrated_ece": 0.0,
+    "calibration_method": "Platt Scaling (Sigmoid)",
+    "reliability_curve": [
+      {
+        "pred_bin": 0.047,
+        "actual_empirical": 0.047
+      },
+      {
+        "pred_bin": 0.2055,
+        "actual_empirical": 0.2
+      }
+    ],
+    "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_12m_prepayment_flag.joblib"
+  }
+}

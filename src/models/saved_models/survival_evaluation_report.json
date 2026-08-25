@@ -1,0 +1,49 @@
+{
+  "empirical_monthly_hazard_rate": 0.007764,
+  "naive_baseline_description": "Constant exponential hazard rate: lambda = total_events / total_exposure_months",
+  "cox_ph_concordance_index": 0.7059,
+  "naive_baseline_c_index": 0.5,
+  "c_index_lift": 0.2059,
+  "horizon_comparisons": [
+    {
+      "horizon_months": 6,
+      "empirical_event_rate": 0.0438,
+      "naive_baseline_prob": 0.0455,
+      "naive_brier_score": 0.0419,
+      "km_survival_prob": 0.9555,
+      "km_default_prob": 0.0445,
+      "km_brier_score": 0.0419,
+      "brier_improvement_pct": 0.01
+    },
+    {
+      "horizon_months": 12,
+      "empirical_event_rate": 0.0855,
+      "naive_baseline_prob": 0.089,
+      "naive_brier_score": 0.0782,
+      "km_survival_prob": 0.9092,
+      "km_default_prob": 0.0908,
+      "km_brier_score": 0.0782,
+      "brier_improvement_pct": -0.02
+    },
+    {
+      "horizon_months": 24,
+      "empirical_event_rate": 0.132,
+      "naive_baseline_prob": 0.17,
+      "naive_brier_score": 0.116,
+      "km_survival_prob": 0.8295,
+      "km_default_prob": 0.1705,
+      "km_brier_score": 0.116,
+      "brier_improvement_pct": -0.03
+    },
+    {
+      "horizon_months": 36,
+      "empirical_event_rate": 0.1463,
+      "naive_baseline_prob": 0.2438,
+      "naive_brier_score": 0.1344,
+      "km_survival_prob": 0.7572,
+      "km_default_prob": 0.2428,
+      "km_brier_score": 0.1342,
+      "brier_improvement_pct": 0.16
+    }
+  ]
+}

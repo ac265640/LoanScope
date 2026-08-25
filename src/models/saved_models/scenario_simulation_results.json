@@ -1,0 +1,251 @@
+[
+  {
+    "scenario_name": "base",
+    "description": "Base case \u2014 steady macro environment.",
+    "rate_shock_bps": 0,
+    "unemployment_delta_pct": 0.0,
+    "hpa_delta_pct": 0.0,
+    "portfolio_projected_rates": {
+      "mean_next_3m_delinquency_flag_rate": 5.24,
+      "mean_next_6m_delinquency_flag_rate": 7.85,
+      "mean_next_12m_default_flag_rate": 5.39,
+      "mean_next_12m_prepayment_flag_rate": 4.51
+    },
+    "segment_breakdowns": {
+      "by_credit_band": {
+        "620-659": {
+          "prob_next_12m_default_flag": 5.49,
+          "prob_next_12m_prepayment_flag": 4.59,
+          "prob_next_3m_delinquency_flag": 6.2
+        },
+        "660-699": {
+          "prob_next_12m_default_flag": 5.33,
+          "prob_next_12m_prepayment_flag": 4.65,
+          "prob_next_3m_delinquency_flag": 5.28
+        },
+        "700-739": {
+          "prob_next_12m_default_flag": 5.28,
+          "prob_next_12m_prepayment_flag": 4.68,
+          "prob_next_3m_delinquency_flag": 4.77
+        },
+        "740-779": {
+          "prob_next_12m_default_flag": 5.22,
+          "prob_next_12m_prepayment_flag": 4.69,
+          "prob_next_3m_delinquency_flag": 4.4
+        },
+        "780+": {
+          "prob_next_12m_default_flag": 5.1,
+          "prob_next_12m_prepayment_flag": 4.71,
+          "prob_next_3m_delinquency_flag": 3.98
+        },
+        "<620": {
+          "prob_next_12m_default_flag": 5.73,
+          "prob_next_12m_prepayment_flag": 4.52,
+          "prob_next_3m_delinquency_flag": 7.93
+        }
+      },
+      "by_vintage": {
+        "2011-2018": {
+          "prob_next_12m_default_flag": 4.55,
+          "prob_next_12m_prepayment_flag": 4.6
+        },
+        "2019+": {
+          "prob_next_12m_default_flag": 4.55,
+          "prob_next_12m_prepayment_flag": 4.65
+        },
+        "Pre-2010": {
+          "prob_next_12m_default_flag": 6.6,
+          "prob_next_12m_prepayment_flag": 4.36
+        }
+      },
+      "by_top_states": {
+        "CA": {
+          "prob_next_12m_default_flag": 5.43,
+          "prob_next_12m_prepayment_flag": 4.49
+        },
+        "GA": {
+          "prob_next_12m_default_flag": 5.37,
+          "prob_next_12m_prepayment_flag": 4.51
+        },
+        "NC": {
+          "prob_next_12m_default_flag": 5.31,
+          "prob_next_12m_prepayment_flag": 4.55
+        },
+        "WA": {
+          "prob_next_12m_default_flag": 5.38,
+          "prob_next_12m_prepayment_flag": 4.5
+        },
+        "WI": {
+          "prob_next_12m_default_flag": 5.31,
+          "prob_next_12m_prepayment_flag": 4.51
+        }
+      }
+    }
+  },
+  {
+    "scenario_name": "adverse_credit",
+    "description": "Adverse credit stress: rate rise 150bps, unemployment +2.5pp, HPI -8%.",
+    "rate_shock_bps": 150,
+    "unemployment_delta_pct": 2.5,
+    "hpa_delta_pct": -8.0,
+    "portfolio_projected_rates": {
+      "mean_next_3m_delinquency_flag_rate": 13.13,
+      "mean_next_6m_delinquency_flag_rate": 20.36,
+      "mean_next_12m_default_flag_rate": 15.87,
+      "mean_next_12m_prepayment_flag_rate": 2.68
+    },
+    "segment_breakdowns": {
+      "by_credit_band": {
+        "620-659": {
+          "prob_next_12m_default_flag": 15.95,
+          "prob_next_12m_prepayment_flag": 2.74,
+          "prob_next_3m_delinquency_flag": 14.23
+        },
+        "660-699": {
+          "prob_next_12m_default_flag": 15.65,
+          "prob_next_12m_prepayment_flag": 2.77,
+          "prob_next_3m_delinquency_flag": 13.05
+        },
+        "700-739": {
+          "prob_next_12m_default_flag": 15.6,
+          "prob_next_12m_prepayment_flag": 2.79,
+          "prob_next_3m_delinquency_flag": 12.44
+        },
+        "740-779": {
+          "prob_next_12m_default_flag": 15.48,
+          "prob_next_12m_prepayment_flag": 2.8,
+          "prob_next_3m_delinquency_flag": 12.01
+        },
+        "780+": {
+          "prob_next_12m_default_flag": 15.24,
+          "prob_next_12m_prepayment_flag": 2.81,
+          "prob_next_3m_delinquency_flag": 11.39
+        },
+        "<620": {
+          "prob_next_12m_default_flag": 16.24,
+          "prob_next_12m_prepayment_flag": 2.7,
+          "prob_next_3m_delinquency_flag": 16.27
+        }
+      },
+      "by_vintage": {
+        "2011-2018": {
+          "prob_next_12m_default_flag": 13.23,
+          "prob_next_12m_prepayment_flag": 2.74
+        },
+        "2019+": {
+          "prob_next_12m_default_flag": 13.19,
+          "prob_next_12m_prepayment_flag": 2.77
+        },
+        "Pre-2010": {
+          "prob_next_12m_default_flag": 19.66,
+          "prob_next_12m_prepayment_flag": 2.59
+        }
+      },
+      "by_top_states": {
+        "CA": {
+          "prob_next_12m_default_flag": 16.14,
+          "prob_next_12m_prepayment_flag": 2.68
+        },
+        "GA": {
+          "prob_next_12m_default_flag": 15.8,
+          "prob_next_12m_prepayment_flag": 2.69
+        },
+        "NC": {
+          "prob_next_12m_default_flag": 15.6,
+          "prob_next_12m_prepayment_flag": 2.72
+        },
+        "WA": {
+          "prob_next_12m_default_flag": 15.61,
+          "prob_next_12m_prepayment_flag": 2.69
+        },
+        "WI": {
+          "prob_next_12m_default_flag": 15.79,
+          "prob_next_12m_prepayment_flag": 2.69
+        }
+      }
+    }
+  },
+  {
+    "scenario_name": "high_prepayment",
+    "description": "High prepayment: rates drop 75bps, refi boom.",
+    "rate_shock_bps": -75,
+    "unemployment_delta_pct": -0.5,
+    "hpa_delta_pct": 5.0,
+    "portfolio_projected_rates": {
+      "mean_next_3m_delinquency_flag_rate": 4.19,
+      "mean_next_6m_delinquency_flag_rate": 6.28,
+      "mean_next_12m_default_flag_rate": 4.05,
+      "mean_next_12m_prepayment_flag_rate": 11.4
+    },
+    "segment_breakdowns": {
+      "by_credit_band": {
+        "620-659": {
+          "prob_next_12m_default_flag": 4.12,
+          "prob_next_12m_prepayment_flag": 11.61,
+          "prob_next_3m_delinquency_flag": 4.96
+        },
+        "660-699": {
+          "prob_next_12m_default_flag": 4.0,
+          "prob_next_12m_prepayment_flag": 11.76,
+          "prob_next_3m_delinquency_flag": 4.22
+        },
+        "700-739": {
+          "prob_next_12m_default_flag": 3.96,
+          "prob_next_12m_prepayment_flag": 11.83,
+          "prob_next_3m_delinquency_flag": 3.81
+        },
+        "740-779": {
+          "prob_next_12m_default_flag": 3.92,
+          "prob_next_12m_prepayment_flag": 11.85,
+          "prob_next_3m_delinquency_flag": 3.52
+        },
+        "780+": {
+          "prob_next_12m_default_flag": 3.82,
+          "prob_next_12m_prepayment_flag": 11.92,
+          "prob_next_3m_delinquency_flag": 3.19
+        },
+        "<620": {
+          "prob_next_12m_default_flag": 4.3,
+          "prob_next_12m_prepayment_flag": 11.43,
+          "prob_next_3m_delinquency_flag": 6.34
+        }
+      },
+      "by_vintage": {
+        "2011-2018": {
+          "prob_next_12m_default_flag": 3.41,
+          "prob_next_12m_prepayment_flag": 11.64
+        },
+        "2019+": {
+          "prob_next_12m_default_flag": 3.41,
+          "prob_next_12m_prepayment_flag": 11.74
+        },
+        "Pre-2010": {
+          "prob_next_12m_default_flag": 4.95,
+          "prob_next_12m_prepayment_flag": 11.02
+        }
+      },
+      "by_top_states": {
+        "CA": {
+          "prob_next_12m_default_flag": 4.07,
+          "prob_next_12m_prepayment_flag": 11.37
+        },
+        "GA": {
+          "prob_next_12m_default_flag": 4.02,
+          "prob_next_12m_prepayment_flag": 11.39
+        },
+        "NC": {
+          "prob_next_12m_default_flag": 3.98,
+          "prob_next_12m_prepayment_flag": 11.52
+        },
+        "WA": {
+          "prob_next_12m_default_flag": 4.04,
+          "prob_next_12m_prepayment_flag": 11.38
+        },
+        "WI": {
+          "prob_next_12m_default_flag": 3.98,
+          "prob_next_12m_prepayment_flag": 11.4
+        }
+      }
+    }
+  }
+]

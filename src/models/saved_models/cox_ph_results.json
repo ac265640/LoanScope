@@ -1,0 +1,43 @@
+{
+  "model_type": "Cox Proportional Hazards (L2 Penalized)",
+  "concordance_index": 0.7059,
+  "hazard_ratios": [
+    {
+      "covariate": "credit_score_ordinal",
+      "coef": -0.3804,
+      "hazard_ratio": 0.6836,
+      "se": 0.0084,
+      "p_value": 0.0
+    },
+    {
+      "covariate": "ltv_ordinal",
+      "coef": 0.2382,
+      "hazard_ratio": 1.269,
+      "se": 0.0087,
+      "p_value": 0.0
+    },
+    {
+      "covariate": "dti_ordinal",
+      "coef": 0.2104,
+      "hazard_ratio": 1.2342,
+      "se": 0.0098,
+      "p_value": 0.0
+    },
+    {
+      "covariate": "interest_rate",
+      "coef": 0.0008,
+      "hazard_ratio": 1.0008,
+      "se": 0.0062,
+      "p_value": 0.8911
+    },
+    {
+      "covariate": "is_legacy_vintage",
+      "coef": 0.3565,
+      "hazard_ratio": 1.4284,
+      "se": 0.0236,
+      "p_value": 0.0
+    }
+  ],
+  "n_observations": 46413,
+  "n_events": 6789
+}

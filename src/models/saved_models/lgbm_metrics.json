@@ -1,0 +1,79 @@
+{
+  "next_3m_delinquency_flag": {
+    "model_type": "LightGBM Classifier",
+    "best_iteration": 1,
+    "roc_auc": 0.7365,
+    "pr_auc": 0.3121,
+    "brier_score": 0.0388,
+    "f1_score": 0.0,
+    "top_5_features": [
+      "current_status_code",
+      "ltv_ordinal",
+      "dti_ordinal",
+      "orig_year",
+      "loan_age_months"
+    ],
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_3m_delinquency_flag.joblib"
+  },
+  "next_6m_delinquency_flag": {
+    "model_type": "LightGBM Classifier",
+    "best_iteration": 1,
+    "roc_auc": 0.6974,
+    "pr_auc": 0.2633,
+    "brier_score": 0.0595,
+    "f1_score": 0.0,
+    "top_5_features": [
+      "current_status_code",
+      "ltv_ordinal",
+      "dti_ordinal",
+      "orig_year",
+      "loan_age_months"
+    ],
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_6m_delinquency_flag.joblib"
+  },
+  "next_12m_default_flag": {
+    "model_type": "LightGBM Classifier",
+    "best_iteration": 1,
+    "roc_auc": 0.6341,
+    "pr_auc": 0.0926,
+    "brier_score": 0.0441,
+    "f1_score": 0.0,
+    "top_5_features": [
+      "current_status_code",
+      "ltv_ordinal",
+      "loan_age_months",
+      "dti_ordinal",
+      "orig_year"
+    ],
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_12m_default_flag.joblib"
+  },
+  "next_12m_prepayment_flag": {
+    "model_type": "LightGBM Classifier",
+    "best_iteration": 1,
+    "roc_auc": 0.5874,
+    "pr_auc": 0.0575,
+    "brier_score": 0.045,
+    "f1_score": 0.0,
+    "top_5_features": [
+      "loan_age_months",
+      "current_status_code",
+      "credit_score_is_missing",
+      "original_balance",
+      "state_freq"
+    ],
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_12m_prepayment_flag.joblib"
+  },
+  "next_state": {
+    "model_type": "LightGBM Multiclass Classifier",
+    "macro_f1": 0.5432,
+    "classes": [
+      "30-59 DPD",
+      "60-89 DPD",
+      "90+ DPD",
+      "Current",
+      "Default",
+      "Prepaid"
+    ],
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_state.joblib"
+  }
+}

@@ -1,0 +1,698 @@
+{
+  "next_3m_delinquency_flag": {
+    "top_10_features": [
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0483
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0333
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.025
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.0226
+      },
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0029
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0023
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0018
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "mean_abs_shap": 0.0007
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.0006
+      },
+      {
+        "feature": "remaining_term_months",
+        "mean_abs_shap": 0.0
+      }
+    ],
+    "all_features_shap": [
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0483
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0333
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.025
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.0226
+      },
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0029
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0023
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0018
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "mean_abs_shap": 0.0007
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.0006
+      },
+      {
+        "feature": "remaining_term_months",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "original_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "current_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "days_past_due",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "modification_flag",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "servicer_name_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "property_type_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "document_status_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "source_system_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "mean_abs_shap": 0.0
+      }
+    ]
+  },
+  "next_6m_delinquency_flag": {
+    "top_10_features": [
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0338
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0228
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.0177
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.0142
+      },
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0072
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0025
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.0011
+      },
+      {
+        "feature": "remaining_term_months",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "original_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "current_balance",
+        "mean_abs_shap": 0.0
+      }
+    ],
+    "all_features_shap": [
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0338
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0228
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.0177
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.0142
+      },
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0072
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0025
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.0011
+      },
+      {
+        "feature": "remaining_term_months",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "original_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "current_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "days_past_due",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "modification_flag",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "servicer_name_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "property_type_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "document_status_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "source_system_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "mean_abs_shap": 0.0
+      }
+    ]
+  },
+  "next_12m_default_flag": {
+    "top_10_features": [
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0434
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.0267
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0262
+      },
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0236
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.0151
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0049
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.0011
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0004
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "mean_abs_shap": 0.0003
+      },
+      {
+        "feature": "property_type_freq",
+        "mean_abs_shap": 0.0002
+      }
+    ],
+    "all_features_shap": [
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0434
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.0267
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0262
+      },
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0236
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.0151
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0049
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.0011
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0004
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "mean_abs_shap": 0.0003
+      },
+      {
+        "feature": "property_type_freq",
+        "mean_abs_shap": 0.0002
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "mean_abs_shap": 0.0001
+      },
+      {
+        "feature": "remaining_term_months",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "original_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "current_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "days_past_due",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "modification_flag",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "servicer_name_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "document_status_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "source_system_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "mean_abs_shap": 0.0
+      }
+    ]
+  },
+  "next_12m_prepayment_flag": {
+    "top_10_features": [
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0476
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.029
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0231
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.005
+      },
+      {
+        "feature": "original_balance",
+        "mean_abs_shap": 0.0037
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "mean_abs_shap": 0.0026
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "mean_abs_shap": 0.0026
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "mean_abs_shap": 0.0024
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.0013
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "mean_abs_shap": 0.0012
+      }
+    ],
+    "all_features_shap": [
+      {
+        "feature": "loan_age_months",
+        "mean_abs_shap": 0.0476
+      },
+      {
+        "feature": "current_status_code",
+        "mean_abs_shap": 0.029
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "mean_abs_shap": 0.0231
+      },
+      {
+        "feature": "state_freq",
+        "mean_abs_shap": 0.005
+      },
+      {
+        "feature": "original_balance",
+        "mean_abs_shap": 0.0037
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "mean_abs_shap": 0.0026
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "mean_abs_shap": 0.0026
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "mean_abs_shap": 0.0024
+      },
+      {
+        "feature": "orig_year",
+        "mean_abs_shap": 0.0013
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "mean_abs_shap": 0.0012
+      },
+      {
+        "feature": "property_type_freq",
+        "mean_abs_shap": 0.0012
+      },
+      {
+        "feature": "ltv_ordinal",
+        "mean_abs_shap": 0.0005
+      },
+      {
+        "feature": "dti_ordinal",
+        "mean_abs_shap": 0.0004
+      },
+      {
+        "feature": "remaining_term_months",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "current_balance",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "days_past_due",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "modification_flag",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "seasoning_ratio",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "servicer_name_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "document_status_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "source_system_freq",
+        "mean_abs_shap": 0.0
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "mean_abs_shap": 0.0
+      }
+    ]
+  }
+}

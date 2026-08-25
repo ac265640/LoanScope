@@ -1,0 +1,39 @@
+{
+  "next_3m_delinquency_flag": {
+    "model_type": "LogisticRegression (StandardScaled, Balanced)",
+    "roc_auc": 0.778,
+    "pr_auc": 0.2683,
+    "brier_score": 0.135,
+    "f1_score": 0.2165,
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/baseline_next_3m_delinquency_flag.joblib"
+  },
+  "next_6m_delinquency_flag": {
+    "model_type": "LogisticRegression (StandardScaled, Balanced)",
+    "roc_auc": 0.7464,
+    "pr_auc": 0.2607,
+    "brier_score": 0.1539,
+    "f1_score": 0.2476,
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/baseline_next_6m_delinquency_flag.joblib"
+  },
+  "next_12m_default_flag": {
+    "model_type": "LogisticRegression (StandardScaled, Balanced)",
+    "roc_auc": 0.7008,
+    "pr_auc": 0.1103,
+    "brier_score": 0.1649,
+    "f1_score": 0.162,
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/baseline_next_12m_default_flag.joblib"
+  },
+  "next_12m_prepayment_flag": {
+    "model_type": "LogisticRegression (StandardScaled, Balanced)",
+    "roc_auc": 0.6773,
+    "pr_auc": 0.0828,
+    "brier_score": 0.2419,
+    "f1_score": 0.1318,
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/baseline_next_12m_prepayment_flag.joblib"
+  },
+  "next_state": {
+    "model_type": "Multinomial LogisticRegression",
+    "macro_f1": 0.5111,
+    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/baseline_next_state.joblib"
+  }
+}

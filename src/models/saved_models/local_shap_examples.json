@@ -1,0 +1,797 @@
+[
+  {
+    "loan_id": "LN0008062",
+    "reporting_month": "2013-06",
+    "target": "next_12m_default_flag",
+    "predicted_probability": 0.091,
+    "base_expected_value": -2.4016,
+    "top_positive_risk_drivers": [
+      {
+        "feature": "dti_ordinal",
+        "feature_value": 4.0,
+        "shap_attribution": 0.054,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "ltv_ordinal",
+        "feature_value": 5.0,
+        "shap_attribution": 0.048,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "loan_age_months",
+        "feature_value": 15.0,
+        "shap_attribution": 0.0171,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "current_status_code",
+        "feature_value": 0.0,
+        "shap_attribution": 0.005,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "seasoning_ratio",
+        "feature_value": 0.0417,
+        "shap_attribution": 0.0029,
+        "direction": "INCREASES_RISK"
+      }
+    ],
+    "top_negative_protective_drivers": [
+      {
+        "feature": "orig_year",
+        "feature_value": 2012.0,
+        "shap_attribution": -0.0267,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "state_freq",
+        "feature_value": 0.0515,
+        "shap_attribution": -0.0004,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": -0.0002,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "feature_value": -0.0012,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "property_type_freq",
+        "feature_value": 0.0993,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      }
+    ],
+    "all_attributions": [
+      {
+        "feature": "dti_ordinal",
+        "feature_value": 4.0,
+        "shap_attribution": 0.054,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "ltv_ordinal",
+        "feature_value": 5.0,
+        "shap_attribution": 0.048,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "orig_year",
+        "feature_value": 2012.0,
+        "shap_attribution": -0.0267,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "loan_age_months",
+        "feature_value": 15.0,
+        "shap_attribution": 0.0171,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "current_status_code",
+        "feature_value": 0.0,
+        "shap_attribution": 0.005,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "seasoning_ratio",
+        "feature_value": 0.0417,
+        "shap_attribution": 0.0029,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "state_freq",
+        "feature_value": 0.0515,
+        "shap_attribution": -0.0004,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": -0.0002,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "feature_value": -0.0012,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "property_type_freq",
+        "feature_value": 0.0993,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "remaining_term_months",
+        "feature_value": 345.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "original_balance",
+        "feature_value": 131364.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "current_balance",
+        "feature_value": 129110.12,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "feature_value": 5.435,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "feature_value": 5.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "days_past_due",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "modification_flag",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "feature_value": 0.9828,
+        "shap_attribution": 0.0,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "feature_value": 1.435,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "feature_value": -0.0036,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "servicer_name_freq",
+        "feature_value": 0.2031,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "feature_value": 0.3984,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "feature_value": 0.7488,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "document_status_freq",
+        "feature_value": 0.2499,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "source_system_freq",
+        "feature_value": 0.2499,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0017535",
+    "reporting_month": "2012-12",
+    "target": "next_12m_default_flag",
+    "predicted_probability": 0.0853,
+    "base_expected_value": -2.4016,
+    "top_positive_risk_drivers": [
+      {
+        "feature": "ltv_ordinal",
+        "feature_value": 4.0,
+        "shap_attribution": 0.0519,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "loan_age_months",
+        "feature_value": 12.0,
+        "shap_attribution": 0.0149,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "current_status_code",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0034,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "seasoning_ratio",
+        "feature_value": 0.05,
+        "shap_attribution": 0.0009,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "state_freq",
+        "feature_value": 0.0481,
+        "shap_attribution": 0.0004,
+        "direction": "INCREASES_RISK"
+      }
+    ],
+    "top_negative_protective_drivers": [
+      {
+        "feature": "orig_year",
+        "feature_value": 2011.0,
+        "shap_attribution": -0.0253,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dti_ordinal",
+        "feature_value": 3.0,
+        "shap_attribution": -0.0165,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": -0.0002,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "feature_value": -0.0033,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "remaining_term_months",
+        "feature_value": 228.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      }
+    ],
+    "all_attributions": [
+      {
+        "feature": "ltv_ordinal",
+        "feature_value": 4.0,
+        "shap_attribution": 0.0519,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "orig_year",
+        "feature_value": 2011.0,
+        "shap_attribution": -0.0253,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dti_ordinal",
+        "feature_value": 3.0,
+        "shap_attribution": -0.0165,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "loan_age_months",
+        "feature_value": 12.0,
+        "shap_attribution": 0.0149,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "current_status_code",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0034,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "seasoning_ratio",
+        "feature_value": 0.05,
+        "shap_attribution": 0.0009,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "state_freq",
+        "feature_value": 0.0481,
+        "shap_attribution": 0.0004,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": -0.0002,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "feature_value": -0.0033,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "remaining_term_months",
+        "feature_value": 228.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "original_balance",
+        "feature_value": 130002.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "current_balance",
+        "feature_value": 125111.34,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "feature_value": 2.856,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "feature_value": 2.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "days_past_due",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "modification_flag",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "feature_value": 0.9624,
+        "shap_attribution": 0.0,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "feature_value": -1.144,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "feature_value": -0.0098,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "servicer_name_freq",
+        "feature_value": 0.2031,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "feature_value": 0.3984,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "feature_value": 0.7488,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "property_type_freq",
+        "feature_value": 0.602,
+        "shap_attribution": 0.0,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "document_status_freq",
+        "feature_value": 0.2493,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "source_system_freq",
+        "feature_value": 0.2493,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "feature_value": 1.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0037291",
+    "reporting_month": "2014-10",
+    "target": "next_12m_default_flag",
+    "predicted_probability": 0.08,
+    "base_expected_value": -2.4016,
+    "top_positive_risk_drivers": [
+      {
+        "feature": "loan_age_months",
+        "feature_value": 7.0,
+        "shap_attribution": 0.0133,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "seasoning_ratio",
+        "feature_value": 0.0194,
+        "shap_attribution": 0.0019,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "current_status_code",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0018,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "state_freq",
+        "feature_value": 0.0497,
+        "shap_attribution": 0.0007,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "property_type_freq",
+        "feature_value": 0.602,
+        "shap_attribution": 0.0001,
+        "direction": "INCREASES_RISK"
+      }
+    ],
+    "top_negative_protective_drivers": [
+      {
+        "feature": "orig_year",
+        "feature_value": 2014.0,
+        "shap_attribution": -0.0248,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dti_ordinal",
+        "feature_value": 3.0,
+        "shap_attribution": -0.0194,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "ltv_ordinal",
+        "feature_value": 3.0,
+        "shap_attribution": -0.0142,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "feature_value": -0.0016,
+        "shap_attribution": -0.0002,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      }
+    ],
+    "all_attributions": [
+      {
+        "feature": "orig_year",
+        "feature_value": 2014.0,
+        "shap_attribution": -0.0248,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dti_ordinal",
+        "feature_value": 3.0,
+        "shap_attribution": -0.0194,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "ltv_ordinal",
+        "feature_value": 3.0,
+        "shap_attribution": -0.0142,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "loan_age_months",
+        "feature_value": 7.0,
+        "shap_attribution": 0.0133,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "seasoning_ratio",
+        "feature_value": 0.0194,
+        "shap_attribution": 0.0019,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "current_status_code",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0018,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "state_freq",
+        "feature_value": 0.0497,
+        "shap_attribution": 0.0007,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "balance_change_1m_pct",
+        "feature_value": -0.0016,
+        "shap_attribution": -0.0002,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": -0.0001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "property_type_freq",
+        "feature_value": 0.602,
+        "shap_attribution": 0.0001,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "remaining_term_months",
+        "feature_value": 353.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "original_balance",
+        "feature_value": 148489.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "current_balance",
+        "feature_value": 146806.13,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "interest_rate_imputed",
+        "feature_value": 3.386,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "interest_rate_is_missing",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "credit_score_ordinal",
+        "feature_value": 5.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "days_past_due",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "modification_flag",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_to_orig_ratio",
+        "feature_value": 0.9887,
+        "shap_attribution": 0.0,
+        "direction": "INCREASES_RISK"
+      },
+      {
+        "feature": "rate_to_market_spread",
+        "feature_value": -0.614,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_max_3m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_max_6m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "dpd_roll_mean_6m",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "balance_change_3m_pct",
+        "feature_value": -0.0049,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "is_currently_delinquent",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "ever_delinquent_past",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "servicer_name_freq",
+        "feature_value": 0.1966,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "loan_purpose_freq",
+        "feature_value": 0.3011,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "occupancy_type_freq",
+        "feature_value": 0.1509,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "document_status_freq",
+        "feature_value": 0.2493,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "source_system_freq",
+        "feature_value": 0.2493,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "is_legacy_vintage",
+        "feature_value": 0.0,
+        "shap_attribution": 0.0,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  }
+]
