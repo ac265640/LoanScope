@@ -1,0 +1,39 @@
+{
+  "model_type": "Cause-Specific Cumulative Incidence Functions (CIF)",
+  "cohort_loans": 46413,
+  "default_events": 6789,
+  "prepayment_events": 4827,
+  "censored_loans": 34797,
+  "cif_milestones": [
+    {
+      "month": 6,
+      "cif_default": 0.044,
+      "cif_prepayment": 0.0309,
+      "survival_active": 0.9256
+    },
+    {
+      "month": 12,
+      "cif_default": 0.0884,
+      "cif_prepayment": 0.062,
+      "survival_active": 0.8506
+    },
+    {
+      "month": 18,
+      "cif_default": 0.1267,
+      "cif_prepayment": 0.0893,
+      "survival_active": 0.7854
+    },
+    {
+      "month": 24,
+      "cif_default": 0.161,
+      "cif_prepayment": 0.1156,
+      "survival_active": 0.7252
+    },
+    {
+      "month": 36,
+      "cif_default": 0.2227,
+      "cif_prepayment": 0.1573,
+      "survival_active": 0.6225
+    }
+  ]
+}
