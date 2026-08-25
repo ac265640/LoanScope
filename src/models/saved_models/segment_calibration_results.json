@@ -1,0 +1,57 @@
+{
+  "overall_brier_score": 0.0441,
+  "overall_ece": 0.0419,
+  "by_credit_score_band": {
+    "700-739": {
+      "sample_size": 23415,
+      "actual_default_rate": 0.0357,
+      "mean_predicted_prob": 0.0817,
+      "brier_score": 0.0364,
+      "expected_calibration_error": 0.0492
+    },
+    "740-779": {
+      "sample_size": 18675,
+      "actual_default_rate": 0.0277,
+      "mean_predicted_prob": 0.0813,
+      "brier_score": 0.0296,
+      "expected_calibration_error": 0.0563
+    },
+    "660-699": {
+      "sample_size": 19849,
+      "actual_default_rate": 0.0529,
+      "mean_predicted_prob": 0.0815,
+      "brier_score": 0.0505,
+      "expected_calibration_error": 0.0359
+    },
+    "780+": {
+      "sample_size": 14207,
+      "actual_default_rate": 0.0175,
+      "mean_predicted_prob": 0.0813,
+      "brier_score": 0.0212,
+      "expected_calibration_error": 0.0664
+    },
+    "620-659": {
+      "sample_size": 11769,
+      "actual_default_rate": 0.0655,
+      "mean_predicted_prob": 0.0813,
+      "brier_score": 0.0609,
+      "expected_calibration_error": 0.0235
+    },
+    "<620": {
+      "sample_size": 7039,
+      "actual_default_rate": 0.1209,
+      "mean_predicted_prob": 0.0817,
+      "brier_score": 0.107,
+      "expected_calibration_error": 0.0392
+    }
+  },
+  "by_vintage_era": {
+    "2020+ (Modern)": {
+      "sample_size": 95563,
+      "actual_default_rate": 0.0451,
+      "mean_predicted_prob": 0.0815,
+      "brier_score": 0.0441,
+      "expected_calibration_error": 0.0419
+    }
+  }
+}
