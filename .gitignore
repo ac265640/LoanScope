@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Environment variables
+.env
+*.env
+
+# Data artifacts (raw / large processed files — keep processed small CSVs)
+data/raw/*.csv
+data/raw/*.parquet
+data/processed/*.parquet
+data/processed/*.csv
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# ML checkpoints / model binaries (keep .pkl in models/ but not large artifacts)
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.h5
+*.hdf5
+
+# MLflow / experiment tracking
+mlruns/
+mlflow.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# SHAP / plot caches
+*.npz
