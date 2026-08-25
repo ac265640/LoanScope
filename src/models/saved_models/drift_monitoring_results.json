@@ -1,0 +1,343 @@
+{
+  "total_features_monitored": 32,
+  "stable_features": 22,
+  "moderate_drift_features": 1,
+  "severe_drift_features": 9,
+  "severe_drift_list": [
+    "state_freq",
+    "servicer_name_freq",
+    "loan_purpose_freq",
+    "occupancy_type_freq",
+    "property_type_freq",
+    "document_status_freq",
+    "source_system_freq",
+    "orig_year",
+    "is_legacy_vintage"
+  ],
+  "moderate_drift_list": [
+    "credit_score_ordinal"
+  ],
+  "overall_portfolio_stability": "FAIL",
+  "per_feature_drift": {
+    "document_status_freq": {
+      "psi": 15.8861,
+      "ks_statistic": 0.51,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.25,
+      "test_mean": 0.2501,
+      "train_std": 0.002,
+      "test_std": 0.005,
+      "mean_shift_pct": 0.03
+    },
+    "source_system_freq": {
+      "psi": 15.8861,
+      "ks_statistic": 0.51,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.25,
+      "test_mean": 0.2501,
+      "train_std": 0.002,
+      "test_std": 0.005,
+      "mean_shift_pct": 0.03
+    },
+    "servicer_name_freq": {
+      "psi": 12.3348,
+      "ks_statistic": 0.4161,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.2,
+      "test_mean": 0.2003,
+      "train_std": 0.0022,
+      "test_std": 0.0076,
+      "mean_shift_pct": 0.13
+    },
+    "orig_year": {
+      "psi": 12.0758,
+      "ks_statistic": 1.0,
+      "drift_status": "Severe Drift",
+      "train_mean": 2011.0622,
+      "test_mean": 2022.3414,
+      "train_std": 4.8742,
+      "test_std": 0.4742,
+      "mean_shift_pct": 0.56
+    },
+    "property_type_freq": {
+      "psi": 10.226,
+      "ks_statistic": 0.6019,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.4067,
+      "test_mean": 0.4015,
+      "train_std": 0.241,
+      "test_std": 0.2387,
+      "mean_shift_pct": 1.28
+    },
+    "is_legacy_vintage": {
+      "psi": 7.2698,
+      "ks_statistic": 0.5228,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.5228,
+      "test_mean": 0.0,
+      "train_std": 0.4995,
+      "test_std": 0.0,
+      "mean_shift_pct": 100.0
+    },
+    "state_freq": {
+      "psi": 5.3545,
+      "ks_statistic": 0.4329,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.05,
+      "test_mean": 0.0504,
+      "train_std": 0.0012,
+      "test_std": 0.0045,
+      "mean_shift_pct": 0.75
+    },
+    "loan_purpose_freq": {
+      "psi": 2.1556,
+      "ks_statistic": 0.4019,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.2992,
+      "test_mean": 0.3058,
+      "train_std": 0.0992,
+      "test_std": 0.1003,
+      "mean_shift_pct": 2.2
+    },
+    "occupancy_type_freq": {
+      "psi": 1.9591,
+      "ks_statistic": 0.7496,
+      "drift_status": "Severe Drift",
+      "train_mean": 0.5918,
+      "test_mean": 0.5944,
+      "train_std": 0.2678,
+      "test_std": 0.2688,
+      "mean_shift_pct": 0.44
+    },
+    "credit_score_ordinal": {
+      "psi": 0.1709,
+      "ks_statistic": 0.0718,
+      "drift_status": "Moderate Drift",
+      "train_mean": 3.5523,
+      "test_mean": 3.7972,
+      "train_std": 1.7503,
+      "test_std": 1.4856,
+      "mean_shift_pct": 6.89
+    },
+    "ever_delinquent_past": {
+      "psi": 0.0051,
+      "ks_statistic": 0.0211,
+      "drift_status": "Stable",
+      "train_mean": 0.1078,
+      "test_mean": 0.0867,
+      "train_std": 0.3101,
+      "test_std": 0.2813,
+      "mean_shift_pct": 19.58
+    },
+    "interest_rate_imputed": {
+      "psi": 0.0045,
+      "ks_statistic": 0.0588,
+      "drift_status": "Stable",
+      "train_mean": 4.6571,
+      "test_mean": 4.7035,
+      "train_std": 1.9605,
+      "test_std": 1.9258,
+      "mean_shift_pct": 1.0
+    },
+    "rate_to_market_spread": {
+      "psi": 0.0045,
+      "ks_statistic": 0.0588,
+      "drift_status": "Stable",
+      "train_mean": 0.6571,
+      "test_mean": 0.7035,
+      "train_std": 1.9605,
+      "test_std": 1.9258,
+      "mean_shift_pct": 7.05
+    },
+    "original_balance": {
+      "psi": 0.0038,
+      "ks_statistic": 0.0143,
+      "drift_status": "Stable",
+      "train_mean": 155657.9374,
+      "test_mean": 155637.1824,
+      "train_std": 91122.3621,
+      "test_std": 93331.1037,
+      "mean_shift_pct": 0.01
+    },
+    "current_balance": {
+      "psi": 0.0028,
+      "ks_statistic": 0.0124,
+      "drift_status": "Stable",
+      "train_mean": 152051.3842,
+      "test_mean": 151982.0825,
+      "train_std": 90749.2083,
+      "test_std": 92727.6912,
+      "mean_shift_pct": 0.05
+    },
+    "balance_change_3m_pct": {
+      "psi": 0.0018,
+      "ks_statistic": 0.0106,
+      "drift_status": "Stable",
+      "train_mean": -0.0082,
+      "test_mean": -0.0082,
+      "train_std": 0.0885,
+      "test_std": 0.0867,
+      "mean_shift_pct": 0.16
+    },
+    "remaining_term_months": {
+      "psi": 0.0014,
+      "ks_statistic": 0.0103,
+      "drift_status": "Stable",
+      "train_mean": 318.0622,
+      "test_mean": 318.7706,
+      "train_std": 62.0102,
+      "test_std": 61.0777,
+      "mean_shift_pct": 0.22
+    },
+    "loan_age_months": {
+      "psi": 0.0011,
+      "ks_statistic": 0.0151,
+      "drift_status": "Stable",
+      "train_mean": 12.1028,
+      "test_mean": 12.3797,
+      "train_std": 8.2378,
+      "test_std": 8.3326,
+      "mean_shift_pct": 2.29
+    },
+    "balance_change_1m_pct": {
+      "psi": 0.001,
+      "ks_statistic": 0.0129,
+      "drift_status": "Stable",
+      "train_mean": -0.0057,
+      "test_mean": -0.0056,
+      "train_std": 0.0937,
+      "test_std": 0.0915,
+      "mean_shift_pct": 0.36
+    },
+    "seasoning_ratio": {
+      "psi": 0.0007,
+      "ks_statistic": 0.0125,
+      "drift_status": "Stable",
+      "train_mean": 0.0386,
+      "test_mean": 0.0393,
+      "train_std": 0.0293,
+      "test_std": 0.0294,
+      "mean_shift_pct": 1.67
+    },
+    "dti_ordinal": {
+      "psi": 0.0006,
+      "ks_statistic": 0.0058,
+      "drift_status": "Stable",
+      "train_mean": 2.7164,
+      "test_mean": 2.7087,
+      "train_std": 1.1683,
+      "test_std": 1.1525,
+      "mean_shift_pct": 0.28
+    },
+    "ltv_ordinal": {
+      "psi": 0.0005,
+      "ks_statistic": 0.0097,
+      "drift_status": "Stable",
+      "train_mean": 3.3396,
+      "test_mean": 3.3475,
+      "train_std": 1.3526,
+      "test_std": 1.367,
+      "mean_shift_pct": 0.24
+    },
+    "balance_to_orig_ratio": {
+      "psi": 0.0005,
+      "ks_statistic": 0.0094,
+      "drift_status": "Stable",
+      "train_mean": 0.9768,
+      "test_mean": 0.9766,
+      "train_std": 0.0984,
+      "test_std": 0.0966,
+      "mean_shift_pct": 0.02
+    },
+    "interest_rate_is_missing": {
+      "psi": 0.0,
+      "ks_statistic": 0.0061,
+      "drift_status": "Stable",
+      "train_mean": 0.0312,
+      "test_mean": 0.0373,
+      "train_std": 0.1738,
+      "test_std": 0.1894,
+      "mean_shift_pct": 19.53
+    },
+    "credit_score_is_missing": {
+      "psi": 0.0,
+      "ks_statistic": 0.0718,
+      "drift_status": "Stable",
+      "train_mean": 0.0799,
+      "test_mean": 0.0081,
+      "train_std": 0.2711,
+      "test_std": 0.0897,
+      "mean_shift_pct": 89.84
+    },
+    "current_status_code": {
+      "psi": 0.0,
+      "ks_statistic": 0.0125,
+      "drift_status": "Stable",
+      "train_mean": 0.109,
+      "test_mean": 0.079,
+      "train_std": 0.6075,
+      "test_std": 0.5346,
+      "mean_shift_pct": 27.45
+    },
+    "days_past_due": {
+      "psi": 0.0,
+      "ks_statistic": 0.0097,
+      "drift_status": "Stable",
+      "train_mean": 2.5605,
+      "test_mean": 1.8244,
+      "train_std": 20.4826,
+      "test_std": 18.3962,
+      "mean_shift_pct": 28.75
+    },
+    "modification_flag": {
+      "psi": 0.0,
+      "ks_statistic": 0.0017,
+      "drift_status": "Stable",
+      "train_mean": 0.0059,
+      "test_mean": 0.0042,
+      "train_std": 0.0768,
+      "test_std": 0.0646,
+      "mean_shift_pct": 29.3
+    },
+    "dpd_roll_max_3m": {
+      "psi": 0.0,
+      "ks_statistic": 0.0131,
+      "drift_status": "Stable",
+      "train_mean": 4.4986,
+      "test_mean": 3.555,
+      "train_std": 30.1683,
+      "test_std": 28.1721,
+      "mean_shift_pct": 20.98
+    },
+    "dpd_roll_max_6m": {
+      "psi": 0.0,
+      "ks_statistic": 0.0164,
+      "drift_status": "Stable",
+      "train_mean": 6.9233,
+      "test_mean": 5.7947,
+      "train_std": 38.932,
+      "test_std": 37.0457,
+      "mean_shift_pct": 16.3
+    },
+    "dpd_roll_mean_6m": {
+      "psi": 0.0,
+      "ks_statistic": 0.0164,
+      "drift_status": "Stable",
+      "train_mean": 2.1606,
+      "test_mean": 1.5812,
+      "train_std": 13.0869,
+      "test_std": 10.9516,
+      "mean_shift_pct": 26.82
+    },
+    "is_currently_delinquent": {
+      "psi": 0.0,
+      "ks_statistic": 0.0097,
+      "drift_status": "Stable",
+      "train_mean": 0.0281,
+      "test_mean": 0.0184,
+      "train_std": 0.1654,
+      "test_std": 0.1345,
+      "mean_shift_pct": 34.49
+    }
+  }
+}
