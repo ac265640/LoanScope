@@ -52,16 +52,29 @@ make run-all
 
 Or execute task by task:
 ```bash
-make data          # Phase 1: Generate synthetic 50k loans panel data
-make test          # Run automated zero-leakage pytest suite
-make profile       # Task 1: Generate Data Intelligence report
-make train         # Task 2: Train baseline & LightGBM prediction models
-make survival      # Task 3: Fit Kaplan-Meier, Cox PH & Markov transition matrix
-make anomaly       # Task 4: Run Isolation Forest & generate 25 reviewer cases
-make scenarios     # Task 5: Run Base, Adverse Credit & High Prepayment stress
-make explain       # Task 6: Compute SHAP values, error audit, and Model Card
-make copilot       # Task 7: Execute grounded LLM reviewer copilot demo
-make submission    # Generate submission/submission.csv
+make data            # Phase 1: Generate synthetic 50k loans panel data
+make test            # Run 25 automated pytest tests (leakage, schema, rolling features)
+make profile         # Task 1: Generate Data Intelligence report
+make train           # Task 2: Train baseline & LightGBM prediction models
+make thresholds      # Task 2b: Optimize F1 classification thresholds
+make survival        # Task 3: Fit Kaplan-Meier, Cox PH & Markov transition matrix
+make competing-risks # Task 3b: Fit Cause-Specific Cumulative Incidence Functions (CIF)
+make anomaly         # Task 4: Run Isolation Forest & generate 25 reviewer cases
+make scenarios       # Task 5: Run Base, Adverse Credit & High Prepayment stress
+make monte-carlo     # Task 5b: Run 1,000-path Monte Carlo portfolio simulations
+make explain         # Task 6: Compute SHAP values, error audit, and Model Card
+make fairness        # Task 6b: Conduct Algorithmic Fairness & Disparate Impact audit
+make copilot         # Task 7: Execute grounded batch LLM reviewer copilot demo
+make drift           # Task 7b: Run Feature Drift Monitoring dashboard (PSI + KS)
+make submission      # Generate final submission/submission.csv
+```
+
+### Unified CLI Runner
+```bash
+python src/pipeline/cli.py all           # Run complete pipeline
+python src/pipeline/cli.py drift         # Run drift monitor
+python src/pipeline/cli.py fairness      # Run fairness audit
+python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 ```
 
 ---
