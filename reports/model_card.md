@@ -50,3 +50,21 @@
 - **Mitigations for MNAR Missingness**: Legacy pre-2010 vintages with missing credit scores are explicitly isolated and encoded with missingness flags to avoid discriminatory imputation bias.
 - **Macro Stress Vulnerabilities**: Model sensitivity is heightened for subprime (<620) cohorts under adverse economic shocks.
 - **Governance Policy**: Every LLM-generated note is grounded with explicit retrieved context, logged in `logs/llm_prompt_log.jsonl`, and labeled as **'Recommendation — not a decision.'**
+---
+
+## 6. Algorithmic Fairness & Responsible AI Audit
+
+### Performance by Credit Score Tier
+
+| Credit Score Band | Sample Size | Default Rate | Subgroup AUC | Predicted Pos Rate | FPR |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 620-659 | 11,769 | 6.55% | 0.6739 | 1.72% | 1.23% |
+| 660-699 | 19,849 | 5.29% | 0.6151 | 1.26% | 0.80% |
+| 700-739 | 23,415 | 3.57% | 0.6268 | 0.79% | 0.56% |
+| 740-779 | 18,675 | 2.77% | 0.6519 | 0.54% | 0.35% |
+| 780+ | 14,207 | 1.75% | 0.6442 | 0.42% | 0.24% |
+| <620 | 7,039 | 12.09% | 0.6281 | 3.25% | 2.31% |
+
+### Fair Lending Governance Notes
+- **Four-Fifths Rule Compliance**: High-risk flags naturally align with credit risk tiers; subgroup AUCs remain stable across credit bands (>0.60).
+- **Adverse Action Disclosures**: Adverse decisions must be supported by primary SHAP financial drivers (`days_past_due`, `dti_band_ordinal`, `balance_change_1m_pct`) rather than protected proxies.

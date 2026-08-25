@@ -1,0 +1,140 @@
+{
+  "evaluated_target": "next_12m_default_flag",
+  "total_validation_records": 95563,
+  "fairness_by_credit_tier": {
+    "620-659": {
+      "sample_count": 11769,
+      "predicted_positive_rate": 0.0172,
+      "demographic_parity_ratio": 1.5802,
+      "false_positive_rate": 0.0123,
+      "subgroup_roc_auc": 0.6739,
+      "actual_default_rate": 0.0655
+    },
+    "660-699": {
+      "sample_count": 19849,
+      "predicted_positive_rate": 0.0126,
+      "demographic_parity_ratio": 1.1596,
+      "false_positive_rate": 0.008,
+      "subgroup_roc_auc": 0.6151,
+      "actual_default_rate": 0.0529
+    },
+    "700-739": {
+      "sample_count": 23415,
+      "predicted_positive_rate": 0.0079,
+      "demographic_parity_ratio": 0.7274,
+      "false_positive_rate": 0.0056,
+      "subgroup_roc_auc": 0.6268,
+      "actual_default_rate": 0.0357
+    },
+    "740-779": {
+      "sample_count": 18675,
+      "predicted_positive_rate": 0.0054,
+      "demographic_parity_ratio": 0.493,
+      "false_positive_rate": 0.0035,
+      "subgroup_roc_auc": 0.6519,
+      "actual_default_rate": 0.0277
+    },
+    "780+": {
+      "sample_count": 14207,
+      "predicted_positive_rate": 0.0042,
+      "demographic_parity_ratio": 0.3823,
+      "false_positive_rate": 0.0024,
+      "subgroup_roc_auc": 0.6442,
+      "actual_default_rate": 0.0175
+    },
+    "<620": {
+      "sample_count": 7039,
+      "predicted_positive_rate": 0.0325,
+      "demographic_parity_ratio": 2.9951,
+      "false_positive_rate": 0.0231,
+      "subgroup_roc_auc": 0.6281,
+      "actual_default_rate": 0.1209
+    }
+  },
+  "fairness_by_state": {
+    "AZ": {
+      "sample_count": 4820,
+      "predicted_positive_rate": 0.011,
+      "demographic_parity_ratio": 1.0261,
+      "false_positive_rate": 0.0069,
+      "subgroup_roc_auc": 0.6326,
+      "actual_default_rate": 0.0396
+    },
+    "CA": {
+      "sample_count": 5547,
+      "predicted_positive_rate": 0.0081,
+      "demographic_parity_ratio": 0.757,
+      "false_positive_rate": 0.006,
+      "subgroup_roc_auc": 0.6815,
+      "actual_default_rate": 0.0317
+    },
+    "FL": {
+      "sample_count": 5090,
+      "predicted_positive_rate": 0.0106,
+      "demographic_parity_ratio": 0.99,
+      "false_positive_rate": 0.0067,
+      "subgroup_roc_auc": 0.676,
+      "actual_default_rate": 0.0591
+    },
+    "GA": {
+      "sample_count": 4860,
+      "predicted_positive_rate": 0.0119,
+      "demographic_parity_ratio": 1.1136,
+      "false_positive_rate": 0.0072,
+      "subgroup_roc_auc": 0.7108,
+      "actual_default_rate": 0.0317
+    },
+    "NC": {
+      "sample_count": 5149,
+      "predicted_positive_rate": 0.0113,
+      "demographic_parity_ratio": 1.0511,
+      "false_positive_rate": 0.0071,
+      "subgroup_roc_auc": 0.69,
+      "actual_default_rate": 0.0491
+    },
+    "PA": {
+      "sample_count": 4851,
+      "predicted_positive_rate": 0.0109,
+      "demographic_parity_ratio": 1.0195,
+      "false_positive_rate": 0.0097,
+      "subgroup_roc_auc": 0.63,
+      "actual_default_rate": 0.0431
+    },
+    "TN": {
+      "sample_count": 5161,
+      "predicted_positive_rate": 0.011,
+      "demographic_parity_ratio": 1.0306,
+      "false_positive_rate": 0.0086,
+      "subgroup_roc_auc": 0.5746,
+      "actual_default_rate": 0.0312
+    },
+    "VA": {
+      "sample_count": 4806,
+      "predicted_positive_rate": 0.0125,
+      "demographic_parity_ratio": 1.165,
+      "false_positive_rate": 0.0094,
+      "subgroup_roc_auc": 0.6727,
+      "actual_default_rate": 0.0516
+    },
+    "WA": {
+      "sample_count": 4857,
+      "predicted_positive_rate": 0.0103,
+      "demographic_parity_ratio": 0.9606,
+      "false_positive_rate": 0.0074,
+      "subgroup_roc_auc": 0.5073,
+      "actual_default_rate": 0.0498
+    },
+    "WI": {
+      "sample_count": 5062,
+      "predicted_positive_rate": 0.0099,
+      "demographic_parity_ratio": 0.9217,
+      "false_positive_rate": 0.0056,
+      "subgroup_roc_auc": 0.631,
+      "actual_default_rate": 0.0531
+    }
+  },
+  "fairness_guidelines": {
+    "four_fifths_rule": "Demographic parity ratio between 0.80 and 1.25 indicates acceptable parity.",
+    "fpr_parity": "Lower variance in false positive rate across groups prevents disproportionate adverse action."
+  }
+}
