@@ -1,0 +1,382 @@
+{
+  "next_3m_delinquency_flag": {
+    "optimal_threshold": 0.1,
+    "optimal_precision": 0.7493,
+    "optimal_recall": 0.3296,
+    "optimal_f1": 0.4578,
+    "default_05_f1": 0.0,
+    "pr_curve": [
+      {
+        "threshold": 0.05,
+        "precision": 0.0404,
+        "recall": 1.0,
+        "f1": 0.0777
+      },
+      {
+        "threshold": 0.1,
+        "precision": 0.7493,
+        "recall": 0.3296,
+        "f1": 0.4578
+      },
+      {
+        "threshold": 0.15,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.45,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.55,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    ],
+    "roc_auc": 0.7365,
+    "positive_rate": 0.0404
+  },
+  "next_6m_delinquency_flag": {
+    "optimal_threshold": 0.1,
+    "optimal_precision": 0.077,
+    "optimal_recall": 0.8616,
+    "optimal_f1": 0.1414,
+    "default_05_f1": 0.0,
+    "pr_curve": [
+      {
+        "threshold": 0.05,
+        "precision": 0.0627,
+        "recall": 1.0,
+        "f1": 0.1181
+      },
+      {
+        "threshold": 0.1,
+        "precision": 0.077,
+        "recall": 0.8616,
+        "f1": 0.1414
+      },
+      {
+        "threshold": 0.15,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.45,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.55,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    ],
+    "roc_auc": 0.6974,
+    "positive_rate": 0.0627
+  },
+  "next_12m_default_flag": {
+    "optimal_threshold": 0.1,
+    "optimal_precision": 0.3642,
+    "optimal_recall": 0.0877,
+    "optimal_f1": 0.1413,
+    "default_05_f1": 0.0,
+    "pr_curve": [
+      {
+        "threshold": 0.05,
+        "precision": 0.0451,
+        "recall": 1.0,
+        "f1": 0.0863
+      },
+      {
+        "threshold": 0.1,
+        "precision": 0.3642,
+        "recall": 0.0877,
+        "f1": 0.1413
+      },
+      {
+        "threshold": 0.15,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.45,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.55,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    ],
+    "roc_auc": 0.6341,
+    "positive_rate": 0.0451
+  },
+  "next_12m_prepayment_flag": {
+    "optimal_threshold": 0.05,
+    "optimal_precision": 0.0484,
+    "optimal_recall": 0.9967,
+    "optimal_f1": 0.0923,
+    "default_05_f1": 0.0,
+    "pr_curve": [
+      {
+        "threshold": 0.05,
+        "precision": 0.0484,
+        "recall": 0.9967,
+        "f1": 0.0923
+      },
+      {
+        "threshold": 0.1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.15,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.45,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.55,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    ],
+    "roc_auc": 0.5874,
+    "positive_rate": 0.047
+  }
+}
