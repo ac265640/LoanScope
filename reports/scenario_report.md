@@ -46,3 +46,18 @@
 1. **Credit Score (<620) Non-Linear Elasticity**: Under Adverse Credit stress, subprime (<620) default rates surge by over 2.5x, demonstrating high convex sensitivity to rate and unemployment shocks.
 2. **Refinance Wave Duration Risk**: High Prepayment scenarios drive prepayment rates up to 2.5x in recent prime vintages (2019+), accelerating balance run-off and compressing asset duration.
 3. **Geographic Divergence**: Regional housing market deceleration in specific states (FL, TX) compounds credit losses due to higher pre-existing delinquency baselines.
+---
+
+## Monte Carlo Portfolio Simulation
+
+N = 1,000 simulation paths. Metric: 12-month portfolio default rate.
+
+| Scenario | P5 | Median (P50) | P95 | Std Dev |
+|---|---|---|---|---|
+| Base | 8.004% | 8.153% | 8.293% | 0.0009 |
+| Adverse_Credit | 16.551% | 16.749% | 16.952% | 0.0012 |
+| High_Prepayment | 6.007% | 6.132% | 6.254% | 0.0008 |
+
+> **Interpretation**: The P5–P95 spread captures the portfolio volatility due to idiosyncratic
+> loan-level uncertainty under each macro scenario. Adverse Credit shows the widest spread,
+> indicating higher tail risk concentration.
