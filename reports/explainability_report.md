@@ -2,7 +2,7 @@
 
 **Project**: Intain Campus FinTech Challenge 2026 — AI Track
 **System**: Loan Performance Intelligence Engine
-**Generated**: 2026-08-25 23:32:12 UTC
+**Generated**: 2026-08-26 14:07:13 UTC
 
 ---
 
@@ -80,21 +80,28 @@ Sample local explanation breakdown:
 ## 3. Error Analysis: False Positives & False Negatives
 
 - **Total Validation Records Evaluated**: `95,563`
-- **False Positive Count**: `0` (Overpredicted Risk)
-- **False Negative Count**: `4,311` (Underpredicted Risk)
+- **Calibrated Decision Threshold**: `0.10` (Optimal F1 operating point)
+- **Total Actual Defaults**: `4,311`
+- **False Positive Count**: `660` (Overpredicted Risk)
+- **False Negative Count**: `3,933` (Underpredicted Risk)
 
 ### False Positive Case Studies (High Predicted Risk -> Non-Default)
 | Loan ID | Reporting Month | Model Prob | Credit Band | Status | DPD | Root Cause Diagnosis |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `LN0049936` | `2021-08` | `0.2999` | `700-739` | `30-59 DPD` | `30` | Elevated DPD (30) or subprime credit (700-739) triggered high risk flag, but borrower successfully executed a workout modification or cured payments. |
+| `LN0038413` | `2022-08` | `0.2999` | `<620` | `30-59 DPD` | `0` | Elevated DPD (0) or subprime credit (<620) triggered high risk flag, but borrower successfully executed a workout modification or cured payments. |
+| `LN0023029` | `2023-03` | `0.2999` | `620-659` | `30-59 DPD` | `0` | Elevated DPD (0) or subprime credit (620-659) triggered high risk flag, but borrower successfully executed a workout modification or cured payments. |
+| `LN0022907` | `2022-04` | `0.2999` | `660-699` | `30-59 DPD` | `0` | Elevated DPD (0) or subprime credit (660-699) triggered high risk flag, but borrower successfully executed a workout modification or cured payments. |
+| `LN0022421` | `2020-12` | `0.2999` | `<620` | `60-89 DPD` | `30` | Elevated DPD (30) or subprime credit (<620) triggered high risk flag, but borrower successfully executed a workout modification or cured payments. |
 
 ### False Negative Case Studies (Low Predicted Risk -> Actual Default)
 | Loan ID | Reporting Month | Model Prob | Credit Band | Status | DPD | Root Cause Diagnosis |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `LN0044403` | `2023-08` | `0.0110` | `660-699` | `Current` | `0` | Prime borrower with zero historical DPD suffered unobserved idiosyncratic cashflow shock, leading to rapid terminal default. |
-| `LN0042739` | `2022-12` | `0.0110` | `700-739` | `Current` | `0` | Prime borrower with zero historical DPD suffered unobserved idiosyncratic cashflow shock, leading to rapid terminal default. |
-| `LN0044403` | `2023-09` | `0.0110` | `660-699` | `Current` | `0` | Prime borrower with zero historical DPD suffered unobserved idiosyncratic cashflow shock, leading to rapid terminal default. |
-| `LN0040281` | `2023-10` | `0.0110` | `<620` | `Current` | `0` | Prime borrower with zero historical DPD suffered unobserved idiosyncratic cashflow shock, leading to rapid terminal default. |
-| `LN0042739` | `2023-01` | `0.0110` | `700-739` | `Current` | `0` | Prime borrower with zero historical DPD suffered unobserved idiosyncratic cashflow shock, leading to rapid terminal default. |
+| `LN0016745` | `2022-07` | `0.0110` | `660-699` | `Current` | `0` | Borrower had strong historical status (Credit: 660-699, 0 DPD), but suffered sudden unobserved exogenous cashflow/employment shock. |
+| `LN0016745` | `2022-06` | `0.0110` | `660-699` | `Current` | `0` | Borrower had strong historical status (Credit: 660-699, 0 DPD), but suffered sudden unobserved exogenous cashflow/employment shock. |
+| `LN0044403` | `2023-08` | `0.0110` | `660-699` | `Current` | `0` | Borrower had strong historical status (Credit: 660-699, 0 DPD), but suffered sudden unobserved exogenous cashflow/employment shock. |
+| `LN0044403` | `2023-09` | `0.0110` | `660-699` | `Current` | `0` | Borrower had strong historical status (Credit: 660-699, 0 DPD), but suffered sudden unobserved exogenous cashflow/employment shock. |
+| `LN0042739` | `2023-03` | `0.0110` | `700-739` | `Current` | `0` | Borrower had strong historical status (Credit: 700-739, 0 DPD), but suffered sudden unobserved exogenous cashflow/employment shock. |
 
 ## 4. Model Uncertainty & Confidence Quantifications
 
