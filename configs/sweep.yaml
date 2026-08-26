@@ -1,0 +1,35 @@
+experiment_name: "agentic_hyperparameter_sweep"
+target: "next_12m_default_flag"
+description: "Autonomous sweep across model architectures (LogisticRegression, RandomForest, LightGBM) and feature subsets (all, credit, behavioral)"
+
+runs:
+  - model_type: "logistic_regression"
+    feature_set: "all"
+    params:
+      C: 1.0
+  - model_type: "logistic_regression"
+    feature_set: "behavioral"
+    params:
+      C: 0.1
+  - model_type: "random_forest"
+    feature_set: "all"
+    params:
+      n_estimators: 50
+      max_depth: 6
+  - model_type: "random_forest"
+    feature_set: "credit"
+    params:
+      n_estimators: 50
+      max_depth: 4
+  - model_type: "gradient_boosting"
+    feature_set: "all"
+    params:
+      n_estimators: 100
+      learning_rate: 0.04
+      max_depth: 5
+  - model_type: "gradient_boosting"
+    feature_set: "credit"
+    params:
+      n_estimators: 80
+      learning_rate: 0.05
+      max_depth: 4

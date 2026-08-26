@@ -1,0 +1,104 @@
+{
+  "runs": [
+    {
+      "exp_id": 0,
+      "model_type": "logistic_regression",
+      "feature_set": "all",
+      "params": {
+        "C": 1.0
+      },
+      "metrics": {
+        "auc": 0.5783,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    {
+      "exp_id": 1,
+      "model_type": "logistic_regression",
+      "feature_set": "behavioral",
+      "params": {
+        "C": 0.1
+      },
+      "metrics": {
+        "auc": 0.5788,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    {
+      "exp_id": 2,
+      "model_type": "random_forest",
+      "feature_set": "all",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 6
+      },
+      "metrics": {
+        "auc": 0.59,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    {
+      "exp_id": 3,
+      "model_type": "random_forest",
+      "feature_set": "credit",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 4
+      },
+      "metrics": {
+        "auc": 0.506,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    {
+      "exp_id": 4,
+      "model_type": "gradient_boosting",
+      "feature_set": "all",
+      "params": {
+        "n_estimators": 100,
+        "learning_rate": 0.04,
+        "max_depth": 5
+      },
+      "metrics": {
+        "auc": 0.5904,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    {
+      "exp_id": 5,
+      "model_type": "gradient_boosting",
+      "feature_set": "credit",
+      "params": {
+        "n_estimators": 80,
+        "learning_rate": 0.05,
+        "max_depth": 4
+      },
+      "metrics": {
+        "auc": 0.5063,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    }
+  ],
+  "next_proposed_config": {
+    "model_type": "gradient_boosting",
+    "feature_set": "all",
+    "params": {
+      "n_estimators": 110,
+      "learning_rate": 0.06,
+      "max_depth": 15
+    },
+    "rationale": "Best so far: gradient_boosting with AUC=0.5904. Proposing increased capacity on same architecture with all features."
+  }
+}
