@@ -47,17 +47,30 @@
 2. **Refinance Wave Duration Risk**: High Prepayment scenarios drive prepayment rates up to 2.5x in recent prime vintages (2019+), accelerating balance run-off and compressing asset duration.
 3. **Geographic Divergence**: Regional housing market deceleration in specific states (FL, TX) compounds credit losses due to higher pre-existing delinquency baselines.
 ---
+---
 
-## Monte Carlo Portfolio Simulation
+## Monte Carlo Portfolio Simulation (Advanced Feature #2)
 
-N = 1,000 simulation paths. Metric: 12-month portfolio default rate.
+Simulated portfolio outcomes across **N = 1,000** paths using calibrated Beta sampling per loan.
 
-| Scenario | P5 | Median (P50) | P95 | Std Dev |
-|---|---|---|---|---|
-| Base | 8.004% | 8.153% | 8.293% | 0.0009 |
-| Adverse_Credit | 16.551% | 16.749% | 16.952% | 0.0012 |
-| High_Prepayment | 6.007% | 6.132% | 6.254% | 0.0008 |
+### 1. Default Rate Distributions (12-Month Horizon)
 
-> **Interpretation**: The P5–P95 spread captures the portfolio volatility due to idiosyncratic
-> loan-level uncertainty under each macro scenario. Adverse Credit shows the widest spread,
-> indicating higher tail risk concentration.
+| Scenario | P1 | P5 | P25 | Median (P50) | P75 | P95 | P99 | Std Dev |
+|---|---|---|---|---|---|---|---|---|
+| Base | 7.965% | 8.151% | 8.089% | 8.151% | 8.210% | 8.299% | 8.369% | 0.0009 |
+| Adverse_Credit | 16.466% | 16.753% | 16.666% | 16.753% | 16.830% | 16.953% | 17.017% | 0.0012 |
+| High_Prepayment | 5.942% | 6.111% | 6.060% | 6.111% | 6.167% | 6.239% | 6.290% | 0.0008 |
+
+### 2. Prepayment Rate Distributions (12-Month Horizon)
+
+| Scenario | P1 | P5 | P25 | Median (P50) | P75 | P95 | P99 | Std Dev |
+|---|---|---|---|---|---|---|---|---|
+| Base | 6.503% | 6.551% | 6.637% | 6.690% | 6.744% | 6.831% | 6.874% | 0.0008 |
+| Adverse_Credit | 2.803% | 2.835% | 2.895% | 2.932% | 2.967% | 3.017% | 3.045% | 0.0005 |
+| High_Prepayment | 10.461% | 10.522% | 10.618% | 10.684% | 10.750% | 10.847% | 10.915% | 0.0010 |
+
+> **Risk Analytics Insight**: Under the Adverse Credit macro shock (+150 bps rate, +2.5% unemp, -8% HPI),
+> default tail risk expands significantly (P95 default rate rises to ~17.0%). Under High Prepayment,
+> voluntary payoffs surge (P95 prepayment reaches elevated levels), shortening weighted-average asset lives.
+
+Script: `src/scenarios/monte_carlo.py`
