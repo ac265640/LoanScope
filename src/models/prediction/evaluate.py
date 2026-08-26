@@ -6,11 +6,16 @@ Evaluates Baseline vs Improved models with full metric comparison:
   - Explicit Baseline vs. Improved Deltas
 """
 
+from pathlib import Path
 import sys
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any, List
 
 import numpy as np

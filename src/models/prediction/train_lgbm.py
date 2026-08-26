@@ -5,11 +5,16 @@ Trains optimized LightGBM models with hyperparameter tuning, class-imbalance wei
 and out-of-time validation across all 5 prediction targets.
 """
 
+from pathlib import Path
 import sys
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any
 
 import numpy as np
@@ -23,17 +28,17 @@ from src.pipeline.splitter import time_aware_cohort_split
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
 
-ROOT = Path(__file__).resolve().parents[3]
 RAW_DIR = ROOT / "data" / "raw"
 MODELS_DIR = ROOT / "src" / "models" / "saved_models"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
-TARGETS_BINARY = [
-    "next_3m_delinquency_flag",
-    "next_6m_delinquency_flag",
-    "next_12m_default_flag",
-    "next_12m_prepayment_flag",
-]
+TARGETS_CONFIG = {
+    "next_3m_delinquency_flag": {"n_estimators": 150, "learning_rate": 0.04, "num_leaves": 31, "max_depth": 6, "min_child_samples": 40},
+    "next_6m_delinquency_flag": {"n_estimators": 150, "learning_rate": 0.04, "num_leaves": 31, "max_depth": 6, "min_child_samples": 40},
+    "next_12m_default_flag": {"n_estimators": 180, "learning_rate": 0.03, "num_leaves": 31, "max_depth": 6, "min_child_samples": 50},
+    "next_12m_prepayment_flag": {"n_estimators": 100, "learning_rate": 0.03, "num_leaves": 25, "max_depth": 5, "min_child_samples": 80},
+}
+TARGETS_BINARY = list(TARGETS_CONFIG.keys())
 TARGET_MULTICLASS = "next_state"
 
 
@@ -48,23 +53,21 @@ def train_lgbm_models(train_df: pd.DataFrame, val_df: pd.DataFrame) -> Dict[str,
     results: Dict[str, Any] = {}
 
     # 1. Binary Targets
-    for target in TARGETS_BINARY:
+    for target, cfg in TARGETS_CONFIG.items():
         log.info(f"--- Training LightGBM for '{target}' ---")
         y_train = train_df[target].values
         y_val = val_df[target].values
 
         pos_count = y_train.sum()
         neg_count = len(y_train) - pos_count
-        scale_pos_weight = max(1.0, float(neg_count / max(pos_count, 1)))
-        log.info(f"Target '{target}' class balance: Pos={pos_count:,}, Neg={neg_count:,}, ScaleWeight={scale_pos_weight:.2f}")
+        log.info(f"Target '{target}' class balance: Pos={pos_count:,}, Neg={neg_count:,}")
 
         clf = lgb.LGBMClassifier(
-            n_estimators=300,
-            learning_rate=0.04,
-            num_leaves=31,
-            max_depth=6,
-            min_child_samples=30,
-            scale_pos_weight=scale_pos_weight,
+            n_estimators=cfg["n_estimators"],
+            learning_rate=cfg["learning_rate"],
+            num_leaves=cfg["num_leaves"],
+            max_depth=cfg["max_depth"],
+            min_child_samples=cfg["min_child_samples"],
             subsample=0.85,
             colsample_bytree=0.85,
             random_state=42,
@@ -72,12 +75,7 @@ def train_lgbm_models(train_df: pd.DataFrame, val_df: pd.DataFrame) -> Dict[str,
             importance_type="gain",
         )
 
-        clf.fit(
-            X_train,
-            y_train,
-            eval_set=[(X_val, y_val)],
-            callbacks=[lgb.early_stopping(stopping_rounds=30, verbose=False)],
-        )
+        clf.fit(X_train, y_train)
 
         val_probs = clf.predict_proba(X_val)[:, 1]
         val_preds = (val_probs >= 0.5).astype(int)
@@ -101,7 +99,7 @@ def train_lgbm_models(train_df: pd.DataFrame, val_df: pd.DataFrame) -> Dict[str,
 
         results[target] = {
             "model_type": "LightGBM Classifier",
-            "best_iteration": int(clf.best_iteration_) if clf.best_iteration_ else 300,
+            "best_iteration": cfg["n_estimators"],
             "roc_auc": round(auc, 4),
             "pr_auc": round(pr_auc, 4),
             "brier_score": round(brier, 4),

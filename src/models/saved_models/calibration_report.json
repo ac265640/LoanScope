@@ -1,80 +1,192 @@
 {
   "next_3m_delinquency_flag": {
-    "uncalibrated_brier": 0.0388,
-    "calibrated_brier": 0.0297,
-    "uncalibrated_ece": 0.0546,
-    "calibrated_ece": 0.0018,
+    "uncalibrated_brier": 0.0288,
+    "calibrated_brier": 0.0291,
+    "uncalibrated_ece": 0.0062,
+    "calibrated_ece": 0.0014,
     "calibration_method": "Platt Scaling (Sigmoid)",
     "reliability_curve": [
       {
-        "pred_bin": 0.0285,
+        "pred_bin": 0.0269,
         "actual_empirical": 0.0276
       },
       {
-        "pred_bin": 0.6989,
-        "actual_empirical": 0.7493
+        "pred_bin": 0.1482,
+        "actual_empirical": 0.25
+      },
+      {
+        "pred_bin": 0.261,
+        "actual_empirical": 0.6667
+      },
+      {
+        "pred_bin": 0.3534,
+        "actual_empirical": 0.625
+      },
+      {
+        "pred_bin": 0.4449,
+        "actual_empirical": 0.5333
+      },
+      {
+        "pred_bin": 0.5689,
+        "actual_empirical": 0.6
+      },
+      {
+        "pred_bin": 0.6588,
+        "actual_empirical": 0.6198
+      },
+      {
+        "pred_bin": 0.7328,
+        "actual_empirical": 0.6441
+      },
+      {
+        "pred_bin": 0.8334,
+        "actual_empirical": 0.7399
+      },
+      {
+        "pred_bin": 0.9477,
+        "actual_empirical": 0.9349
       }
     ],
     "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_3m_delinquency_flag.joblib"
   },
   "next_6m_delinquency_flag": {
-    "uncalibrated_brier": 0.0595,
-    "calibrated_brier": 0.05,
-    "uncalibrated_ece": 0.04,
-    "calibrated_ece": 0.0046,
+    "uncalibrated_brier": 0.0482,
+    "calibrated_brier": 0.0486,
+    "uncalibrated_ece": 0.0102,
+    "calibrated_ece": 0.0047,
     "calibration_method": "Platt Scaling (Sigmoid)",
     "reliability_curve": [
       {
-        "pred_bin": 0.0454,
-        "actual_empirical": 0.046
+        "pred_bin": 0.0453,
+        "actual_empirical": 0.0444
       },
       {
-        "pred_bin": 0.1317,
-        "actual_empirical": 0.1011
+        "pred_bin": 0.1286,
+        "actual_empirical": 0.1883
       },
       {
-        "pred_bin": 0.6621,
-        "actual_empirical": 0.7593
+        "pred_bin": 0.2294,
+        "actual_empirical": 0.2818
+      },
+      {
+        "pred_bin": 0.3181,
+        "actual_empirical": 0.8571
+      },
+      {
+        "pred_bin": 0.4572,
+        "actual_empirical": 0.5385
+      },
+      {
+        "pred_bin": 0.5703,
+        "actual_empirical": 0.6316
+      },
+      {
+        "pred_bin": 0.6607,
+        "actual_empirical": 0.632
+      },
+      {
+        "pred_bin": 0.7556,
+        "actual_empirical": 0.6219
+      },
+      {
+        "pred_bin": 0.8437,
+        "actual_empirical": 0.7177
+      },
+      {
+        "pred_bin": 0.959,
+        "actual_empirical": 0.9269
       }
     ],
     "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_6m_delinquency_flag.joblib"
   },
   "next_12m_default_flag": {
-    "uncalibrated_brier": 0.0441,
-    "calibrated_brier": 0.0418,
-    "uncalibrated_ece": 0.0419,
-    "calibrated_ece": 0.0016,
+    "uncalibrated_brier": 0.0412,
+    "calibrated_brier": 0.0415,
+    "uncalibrated_ece": 0.0097,
+    "calibrated_ece": 0.0023,
     "calibration_method": "Platt Scaling (Sigmoid)",
     "reliability_curve": [
       {
-        "pred_bin": 0.0424,
-        "actual_empirical": 0.0416
+        "pred_bin": 0.0379,
+        "actual_empirical": 0.0387
       },
       {
-        "pred_bin": 0.1713,
-        "actual_empirical": 0.3571
+        "pred_bin": 0.1322,
+        "actual_empirical": 0.1426
       },
       {
-        "pred_bin": 0.2927,
-        "actual_empirical": 0.3644
+        "pred_bin": 0.237,
+        "actual_empirical": 0.2353
+      },
+      {
+        "pred_bin": 0.3501,
+        "actual_empirical": 0.3831
+      },
+      {
+        "pred_bin": 0.4466,
+        "actual_empirical": 0.3833
+      },
+      {
+        "pred_bin": 0.5453,
+        "actual_empirical": 0.3636
+      },
+      {
+        "pred_bin": 0.6464,
+        "actual_empirical": 0.3704
+      },
+      {
+        "pred_bin": 0.7438,
+        "actual_empirical": 0.3803
+      },
+      {
+        "pred_bin": 0.8453,
+        "actual_empirical": 0.3077
+      },
+      {
+        "pred_bin": 0.9038,
+        "actual_empirical": 0.0
       }
     ],
     "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_12m_default_flag.joblib"
   },
   "next_12m_prepayment_flag": {
-    "uncalibrated_brier": 0.045,
-    "calibrated_brier": 0.0446,
-    "uncalibrated_ece": 0.0199,
-    "calibrated_ece": 0.0,
+    "uncalibrated_brier": 0.0441,
+    "calibrated_brier": 0.0442,
+    "uncalibrated_ece": 0.0023,
+    "calibrated_ece": 0.0018,
     "calibration_method": "Platt Scaling (Sigmoid)",
     "reliability_curve": [
       {
-        "pred_bin": 0.047,
-        "actual_empirical": 0.047
+        "pred_bin": 0.0428,
+        "actual_empirical": 0.0437
       },
       {
-        "pred_bin": 0.2055,
-        "actual_empirical": 0.2
+        "pred_bin": 0.1181,
+        "actual_empirical": 0.1052
+      },
+      {
+        "pred_bin": 0.2306,
+        "actual_empirical": 0.0698
+      },
+      {
+        "pred_bin": 0.3471,
+        "actual_empirical": 0.0
+      },
+      {
+        "pred_bin": 0.4399,
+        "actual_empirical": 0.0
+      },
+      {
+        "pred_bin": 0.6521,
+        "actual_empirical": 0.0
+      },
+      {
+        "pred_bin": 0.7455,
+        "actual_empirical": 0.0
+      },
+      {
+        "pred_bin": 0.8352,
+        "actual_empirical": 0.0
       }
     ],
     "calibrated_model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/calibrated_lgbm_next_12m_prepayment_flag.joblib"

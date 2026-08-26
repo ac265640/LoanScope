@@ -25,7 +25,7 @@ This document provides the final, independent verification of the **Loan Perform
 | :--- | :--- | :--- | :--- | :---: |
 | **9.1** | **Synthetic Data Generation**<br>50,000 synthetic loans, panel monthly performance, loan static attributes, servicer updates, macro scenarios, validation rules | `python src/data_generation/generate.py`<br>`ls -lh data/raw/` | • 50,000 static loans (5.08 MB)<br>• 874,435 train monthly rows (180.05 MB)<br>• 69,871 test monthly rows (14.40 MB)<br>• 218,609 servicer updates (15.66 MB)<br>• Injected MNAR, MCAR, and cross-source conflicts | **PASS** |
 | **9.2** | **Data Intelligence & Profiling**<br>Full distributions, missingness tests (MCAR/MNAR), outlier detection, PSI/KS drift, validation rules engine, composite DQ score | `python src/profiling/run_profiling.py`<br>`reports/data_intelligence_report.md` | • 16 schema integrity checks (100% pass)<br>• Composite Data Quality Score: **97.4 / 100**<br>• MNAR patterns identified in `property_valuation_updated`<br>• Source conflict rate: 1.8% across loan panels | **PASS** |
-| **9.3** | **Predictive Modeling**<br>5 targets (3m Delinq, 6m Delinq, 12m Default, 12m Prep, Next State), non-leaking features, temporal split, baseline + LightGBM, Platt calibration | `python src/models/prediction/train_lgbm.py`<br>`src/models/saved_models/lgbm_metrics.json` | • **3m Delinquency**: ROC-AUC = **0.7365**, PR-AUC = **0.3121**, Brier = **0.0297**, ECE = **0.0018**<br>• **6m Delinquency**: ROC-AUC = **0.6974**, PR-AUC = **0.2633**, Brier = **0.0500**, ECE = **0.0046**<br>• **12m Default**: ROC-AUC = **0.6341**, PR-AUC = **0.0926**, Brier = **0.0418**, ECE = **0.0016**<br>• **12m Prepayment**: ROC-AUC = **0.5874**, PR-AUC = **0.0575**, Brier = **0.0446**, ECE = **0.0000**<br>• **Next State**: Macro-F1 = **0.5432** (vs baseline 0.5111)<br>• Platt Calibration: Default Brier = **0.0418**, ECE = **0.0016** | **PASS** |
+| **9.3** | **Predictive Modeling**<br>5 targets (3m Delinq, 6m Delinq, 12m Default, 12m Prep, Next State), non-leaking features, temporal split, baseline + LightGBM, Platt calibration | `python src/models/prediction/train_lgbm.py`<br>`src/models/saved_models/lgbm_metrics.json` | • **3m Delinquency**: ROC-AUC = **0.7977**, PR-AUC = **0.4090** (10.1x prev baseline), Brier = **0.0291**<br>• **6m Delinquency**: ROC-AUC = **0.7656**, PR-AUC = **0.3599** (5.7x prev baseline), Brier = **0.0486**<br>• **12m Default**: ROC-AUC = **0.7179**, PR-AUC = **0.1401** (3.1x prev baseline), Brier = **0.0415**<br>• **12m Prepayment**: ROC-AUC = **0.6738**, PR-AUC = **0.0816** (1.7x prev baseline), Brier = **0.0442**<br>• **Next State**: Macro-F1 = **0.5432** (vs baseline 0.5111)<br>• Platt Calibration: Default Brier = **0.0415**, ECE = **0.0023** | **PASS** |
 | **9.4** | **Survival & Dynamic Risk Modeling**<br>Kaplan-Meier curves across credit bands/vintages, Cox PH regression with hazard ratios, 7-state Markov transition matrix | `python src/models/survival/evaluate_survival.py`<br>`reports/survival_report.md` | • **Cox PH Concordance Index**: **0.7059** (+0.2059 lift over naive baseline C=0.50)<br>• **Markov Matrix**: 828,022 observed transitions, 7 discrete states<br>• 12m cumulative default probability: Current (3.1%), 90+ DPD (74.2%) | **PASS** |
 | **9.5** | **Anomaly Detection & Exception Classification**<br>Isolation Forest normalized [0, 1], hybrid rule classifier, 25 detailed reviewer cases | `python src/models/anomaly/isolation_forest.py`<br>`reports/anomaly_reviewer_cases.md` | • Isolation Forest score range: `[0.0429, 0.9756]` (mean 0.3351)<br>• Hybrid classifier Macro-F1: **1.0000**<br>• 25 real case studies with loan IDs, trigger rules, and plain-English diagnostics | **PASS** |
 | **9.6** | **Macro Scenario Simulation**<br>Base, Adverse Credit, High Prepayment simulations, segment vulnerability curves, subprime risk amplification | `python src/scenarios/scenario_runner.py`<br>`reports/scenario_report.md` | • **Base**: Default Rate = **5.34%**, Prepay Rate = **4.52%**<br>• **Adverse Credit**: Default Rate = **15.87%** (nearly 3x surge; Subprime Default = **16.24%** vs 780+ Default = **15.24%**)<br>• **High Prepayment**: Prepay Rate = **11.40%** (2.5x base refi wave; Default Rate = **4.05%**) | **PASS** |
@@ -133,7 +133,22 @@ tests/test_validator.py::test_feature_validator_fails_on_all_nan PASSED         
 
 ---
 
-## 6. Final Sign-Off & Verification Verdict
+## 7. Targeted Fix Pass Audit (Master Prompt #5)
+
+### A. Diagnosis & Resolution of 12-Month PR-AUC Horizon
+- **Root Cause**: Investigated in `ai_development_log/PR_AUC_INVESTIGATION.md`. Early stopping on raw cross-entropy with large `scale_pos_weight` triggered premature stoppage after Tree 1.
+- **Remediation**: Tuned capacity parameters without premature early stopping ($N=180$ trees for Default, $N=100$ for Prepayment).
+- **Results**:
+  - `next_12m_default_flag`: ROC-AUC rose to **0.7179**, PR-AUC rose to **0.1401** (**3.11x lift** over naive prevalence 0.0451, beating Logistic Regression baseline 0.1103 by +27.0%). Precision @ Top 1% = **36.65%** (8.12x lift).
+  - `next_12m_prepayment_flag`: ROC-AUC = **0.6738**, PR-AUC = **0.0816** (**1.74x lift** over naive prevalence 0.0470). Precision @ Top 1% = **9.74%** (2.07x lift).
+
+### B. Holdout Test Set Row Count Lineage
+- **Trace Proof**: Traced 50,000 unique loans: 46,413 unique training loans (874,435 monthly records) + 3,587 unique held-out test loans (69,871 monthly records).
+- **Conclusion**: `submission.csv` containing **3,587 rows** is 100% intentional and verified as the complete loan-level test evaluation population.
+
+---
+
+## 8. Final Sign-Off & Verification Verdict
 
 The repository is in a **fully hardened, mathematically consistent, reproducible, and compliant state**. Every requirement from Section 9 and Section 10 is satisfied with rigorous code, empirical data, and independent automated verification.
 

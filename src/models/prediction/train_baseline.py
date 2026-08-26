@@ -9,10 +9,15 @@ Trains standard regularized Logistic Regression models across all 5 prediction t
   - next_state (multiclass LogisticRegression)
 """
 
+from pathlib import Path
 import sys
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any
 
 import numpy as np

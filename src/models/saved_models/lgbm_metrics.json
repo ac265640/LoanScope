@@ -1,65 +1,65 @@
 {
   "next_3m_delinquency_flag": {
     "model_type": "LightGBM Classifier",
-    "best_iteration": 1,
-    "roc_auc": 0.7365,
-    "pr_auc": 0.3121,
-    "brier_score": 0.0388,
-    "f1_score": 0.0,
+    "best_iteration": 150,
+    "roc_auc": 0.7977,
+    "pr_auc": 0.409,
+    "brier_score": 0.0288,
+    "f1_score": 0.4555,
     "top_5_features": [
       "current_status_code",
+      "credit_score_ordinal",
       "ltv_ordinal",
-      "dti_ordinal",
-      "orig_year",
-      "loan_age_months"
+      "is_currently_delinquent",
+      "dti_ordinal"
     ],
     "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_3m_delinquency_flag.joblib"
   },
   "next_6m_delinquency_flag": {
     "model_type": "LightGBM Classifier",
-    "best_iteration": 1,
-    "roc_auc": 0.6974,
-    "pr_auc": 0.2633,
-    "brier_score": 0.0595,
-    "f1_score": 0.0,
+    "best_iteration": 150,
+    "roc_auc": 0.7656,
+    "pr_auc": 0.3599,
+    "brier_score": 0.0482,
+    "f1_score": 0.3336,
     "top_5_features": [
       "current_status_code",
+      "credit_score_ordinal",
       "ltv_ordinal",
       "dti_ordinal",
-      "orig_year",
-      "loan_age_months"
+      "is_currently_delinquent"
     ],
     "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_6m_delinquency_flag.joblib"
   },
   "next_12m_default_flag": {
     "model_type": "LightGBM Classifier",
-    "best_iteration": 1,
-    "roc_auc": 0.6341,
-    "pr_auc": 0.0926,
-    "brier_score": 0.0441,
-    "f1_score": 0.0,
+    "best_iteration": 180,
+    "roc_auc": 0.7179,
+    "pr_auc": 0.1401,
+    "brier_score": 0.0412,
+    "f1_score": 0.0051,
     "top_5_features": [
+      "credit_score_ordinal",
       "current_status_code",
       "ltv_ordinal",
-      "loan_age_months",
       "dti_ordinal",
-      "orig_year"
+      "loan_age_months"
     ],
     "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_12m_default_flag.joblib"
   },
   "next_12m_prepayment_flag": {
     "model_type": "LightGBM Classifier",
-    "best_iteration": 1,
-    "roc_auc": 0.5874,
-    "pr_auc": 0.0575,
-    "brier_score": 0.045,
+    "best_iteration": 100,
+    "roc_auc": 0.6738,
+    "pr_auc": 0.0816,
+    "brier_score": 0.0441,
     "f1_score": 0.0,
     "top_5_features": [
+      "credit_score_ordinal",
       "loan_age_months",
       "current_status_code",
-      "credit_score_is_missing",
-      "original_balance",
-      "state_freq"
+      "seasoning_ratio",
+      "interest_rate_imputed"
     ],
     "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/lgbm_next_12m_prepayment_flag.joblib"
   },

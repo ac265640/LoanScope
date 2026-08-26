@@ -139,6 +139,16 @@ This log documents the incremental engineering process, human review touchpoints
   14. `src/models/anomaly/active_learning.py`: Reviewer accept/reject/correct feedback loop recalibrating anomaly detection thresholds with +8.2pp precision improvement (`reports/active_learning_report.md`).
   15. `src/data_generation/stress_test_data.py`: Edge-case validation testing graceful pipeline degradation against simulated 2008 recession cohorts and severe DQ corruption batches (`reports/stress_test_report.md`).
 
+### Phase 10: Targeted Fix Pass — PR-AUC Horizon & Row Count Verification (Master Prompt #5)
+- **Representative Prompt**:
+  > *"Diagnose why 12-month default and prepayment PR-AUC appeared below baseline, verify ranking behavior at top 1%/5%/10%, resolve holdout test set row count lineage (3,587 rows), and retrain models with balanced capacity."*
+- **Accepted**:
+  - Investigation documented in `ai_development_log/PR_AUC_INVESTIGATION.md`.
+  - Discovered root cause: premature early stopping on raw cross-entropy with large scale_pos_weight caused LightGBM to stop after Tree 1.
+  - Tuned capacity per horizon ($N=180$ for Default, $N=100$ for Prepayment, $N=150$ for Delinquency).
+  - Out-of-time results: 12m Default PR-AUC reached **0.1401** (3.11x naive prevalence baseline 0.0451, beating Logistic Regression 0.1103); Precision @ Top 1% reached **36.65%** (8.12x lift). 12m Prepayment PR-AUC reached **0.0816** (1.74x naive prevalence baseline 0.0470); Precision @ Top 1% reached **9.74%** (2.07x lift).
+  - Traced full dataset lineage: 50,000 unique loans across static data; 46,413 training unique loans (874,435 monthly records) + 3,587 held-out unique test loans (69,871 monthly records). 3,587 rows in `submission.csv` confirmed as 100% of the unique test loan population.
+
 ---
 
 ## 3. Disqualification Self-Audit Checklist
