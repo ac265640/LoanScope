@@ -1,0 +1,138 @@
+{
+  "version": "v1.0.0",
+  "created_at": "2026-08-26T15:54:48.189030",
+  "split": "train",
+  "n_rows": 874435,
+  "n_features": 12,
+  "input_fingerprint": "8fa2d38e8a13",
+  "features": {
+    "loan_age_months": {
+      "description": "Number of months since loan origination",
+      "source_columns": [
+        "loan_age_months"
+      ],
+      "computation": "direct copy",
+      "dtype": "float",
+      "category": "temporal"
+    },
+    "remaining_term_months": {
+      "description": "Remaining months on loan term",
+      "source_columns": [
+        "remaining_term_months"
+      ],
+      "computation": "direct copy",
+      "dtype": "float",
+      "category": "temporal"
+    },
+    "current_balance_ratio": {
+      "description": "Current balance as fraction of original balance",
+      "source_columns": [
+        "current_balance",
+        "original_balance"
+      ],
+      "computation": "current_balance / original_balance",
+      "dtype": "float",
+      "category": "credit"
+    },
+    "interest_rate": {
+      "description": "Current interest rate on loan",
+      "source_columns": [
+        "interest_rate"
+      ],
+      "computation": "direct copy",
+      "dtype": "float",
+      "category": "rate"
+    },
+    "days_past_due_capped": {
+      "description": "Days past due, capped at 90 to reduce outlier impact",
+      "source_columns": [
+        "days_past_due"
+      ],
+      "computation": "min(days_past_due, 90)",
+      "dtype": "float",
+      "category": "delinquency"
+    },
+    "is_delinquent": {
+      "description": "Binary flag: 1 if any days past due > 0",
+      "source_columns": [
+        "days_past_due"
+      ],
+      "computation": "(days_past_due > 0).astype(int)",
+      "dtype": "int",
+      "category": "delinquency"
+    },
+    "modification_flag": {
+      "description": "Binary: loan has been modified",
+      "source_columns": [
+        "modification_flag"
+      ],
+      "computation": "direct copy",
+      "dtype": "int",
+      "category": "credit"
+    },
+    "credit_score_band_encoded": {
+      "description": "Credit score band encoded as ordinal integer",
+      "source_columns": [
+        "credit_score_band"
+      ],
+      "computation": "ordinal encoding: <620=0, 620-659=1, 660-699=2, 700-739=3, 740-779=4, 780+=5",
+      "dtype": "int",
+      "category": "credit"
+    },
+    "ltv_band_encoded": {
+      "description": "LTV band encoded as ordinal integer",
+      "source_columns": [
+        "ltv_band"
+      ],
+      "computation": "ordinal encoding: low to high",
+      "dtype": "int",
+      "category": "credit"
+    },
+    "dti_band_encoded": {
+      "description": "DTI band encoded as ordinal integer",
+      "source_columns": [
+        "dti_band"
+      ],
+      "computation": "ordinal encoding: low to high",
+      "dtype": "int",
+      "category": "credit"
+    },
+    "loan_purpose_encoded": {
+      "description": "Loan purpose encoded as integer category",
+      "source_columns": [
+        "loan_purpose"
+      ],
+      "computation": "label encoding",
+      "dtype": "int",
+      "category": "loan_attributes"
+    },
+    "occupancy_type_encoded": {
+      "description": "Occupancy type encoded as integer category",
+      "source_columns": [
+        "occupancy_type"
+      ],
+      "computation": "label encoding",
+      "dtype": "int",
+      "category": "loan_attributes"
+    }
+  },
+  "feature_columns": [
+    "loan_age_months",
+    "remaining_term_months",
+    "current_balance_ratio",
+    "interest_rate",
+    "days_past_due_capped",
+    "is_delinquent",
+    "modification_flag",
+    "credit_score_band_encoded",
+    "ltv_band_encoded",
+    "dti_band_encoded",
+    "loan_purpose_encoded",
+    "occupancy_type_encoded"
+  ],
+  "files": {
+    "train": "features_train_v1.0.0.parquet",
+    "test": "features_test_v1.0.0.parquet"
+  },
+  "updated_at": "2026-08-26T15:54:48.323968"
+}
