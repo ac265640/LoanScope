@@ -264,3 +264,55 @@ observed DPD and credit band, not the full LightGBM model. In production,
 SHAP TreeExplainer perturbation or DiCE library would be used for exact counterfactuals.
 
 Script: `src/explainability/counterfactuals.py`
+
+## Model Confidence Intervals — Conformal Prediction (Advanced Feature #13)
+
+Produces statistically valid prediction intervals using **split conformal prediction**,
+a model-agnostic method guaranteeing marginal coverage (the interval contains the
+true label at least (1-α) fraction of the time, regardless of model).
+
+### Conformal Prediction Parameters
+
+| Coverage Target | Conformal Quantile (q) | Empirical Coverage | Mean Width |
+|----------------|----------------------|-------------------|-----------|
+| 90% | 0.0913 | 0.903 | 0.1545 |
+| 80% | 0.0847 | 0.805 | 0.1082 |
+
+**Note:** Empirical coverage should be ≥ target coverage. Split conformal
+prediction guarantees this holds by design (finite-sample guarantee).
+
+### Example Prediction Intervals (20 Test Loans)
+
+| Loan # | Point Estimate | 90% Lower | 90% Upper | Width | True Label |
+|--------|--------------|-----------|-----------|-------|-----------|
+| 1 | 0.052 | 0.000 | 0.143 | 0.143 | 0 |
+| 2 | 0.050 | 0.000 | 0.141 | 0.141 | 0 |
+| 3 | 0.048 | 0.000 | 0.139 | 0.139 | 0 |
+| 4 | 0.047 | 0.000 | 0.138 | 0.138 | 0 |
+| 5 | 0.046 | 0.000 | 0.137 | 0.137 | 0 |
+| 6 | 0.046 | 0.000 | 0.137 | 0.137 | 0 |
+| 7 | 0.044 | 0.000 | 0.135 | 0.135 | 0 |
+| 8 | 0.042 | 0.000 | 0.134 | 0.134 | 0 |
+| 9 | 0.041 | 0.000 | 0.132 | 0.132 | 0 |
+| 10 | 0.039 | 0.000 | 0.131 | 0.131 | 0 |
+| 11 | 0.038 | 0.000 | 0.129 | 0.129 | 0 |
+| 12 | 0.036 | 0.000 | 0.128 | 0.128 | 0 |
+| 13 | 0.035 | 0.000 | 0.126 | 0.126 | 0 |
+| 14 | 0.034 | 0.000 | 0.125 | 0.125 | 0 |
+| 15 | 0.032 | 0.000 | 0.124 | 0.124 | 0 |
+| 16 | 0.031 | 0.000 | 0.122 | 0.122 | 0 |
+| 17 | 0.030 | 0.000 | 0.121 | 0.121 | 0 |
+| 18 | 0.029 | 0.000 | 0.120 | 0.120 | 0 |
+| 19 | 0.096 | 0.005 | 0.188 | 0.183 | 0 |
+| 20 | 0.093 | 0.002 | 0.184 | 0.183 | 0 |
+
+### Methodology
+
+1. **Split conformal prediction:** Train on 70%, calibrate on 15%, test on 15%.
+   The nonconformity score is |y_true - y_pred_prob| for each calibration loan.
+   The (1-α) quantile of calibration scores gives threshold q.
+   Prediction interval: [ŷ - q, ŷ + q] clipped to [0, 1].
+2. **Bootstrap uncertainty:** 30 resampled logistic regression models provide
+   per-loan prediction standard deviation as an alternative uncertainty estimate.
+
+Script: `src/explainability/confidence_intervals.py`
