@@ -1,0 +1,100 @@
+{
+  "next_3m_delinquency_flag": {
+    "brier_score": 0.0297,
+    "expected_calibration_error": 0.0018,
+    "max_calibration_error": 0.0504,
+    "bins": [
+      {
+        "bin_range": "[0.00, 0.10)",
+        "sample_count": 93864,
+        "mean_predicted_prob": 0.0285,
+        "empirical_positive_rate": 0.0276,
+        "absolute_gap": 0.0009
+      },
+      {
+        "bin_range": "[0.60, 0.70)",
+        "sample_count": 1699,
+        "mean_predicted_prob": 0.6989,
+        "empirical_positive_rate": 0.7493,
+        "absolute_gap": 0.0504
+      }
+    ]
+  },
+  "next_6m_delinquency_flag": {
+    "brier_score": 0.05,
+    "expected_calibration_error": 0.0046,
+    "max_calibration_error": 0.0972,
+    "bins": [
+      {
+        "bin_range": "[0.00, 0.10)",
+        "sample_count": 86771,
+        "mean_predicted_prob": 0.0454,
+        "empirical_positive_rate": 0.046,
+        "absolute_gap": 0.0006
+      },
+      {
+        "bin_range": "[0.10, 0.20)",
+        "sample_count": 7093,
+        "mean_predicted_prob": 0.1317,
+        "empirical_positive_rate": 0.1011,
+        "absolute_gap": 0.0307
+      },
+      {
+        "bin_range": "[0.60, 0.70)",
+        "sample_count": 1699,
+        "mean_predicted_prob": 0.6621,
+        "empirical_positive_rate": 0.7593,
+        "absolute_gap": 0.0972
+      }
+    ]
+  },
+  "next_12m_default_flag": {
+    "brier_score": 0.0418,
+    "expected_calibration_error": 0.0016,
+    "max_calibration_error": 0.1858,
+    "bins": [
+      {
+        "bin_range": "[0.00, 0.10)",
+        "sample_count": 94525,
+        "mean_predicted_prob": 0.0424,
+        "empirical_positive_rate": 0.0416,
+        "absolute_gap": 0.0008
+      },
+      {
+        "bin_range": "[0.10, 0.20)",
+        "sample_count": 28,
+        "mean_predicted_prob": 0.1713,
+        "empirical_positive_rate": 0.3571,
+        "absolute_gap": 0.1858
+      },
+      {
+        "bin_range": "[0.20, 0.30)",
+        "sample_count": 1010,
+        "mean_predicted_prob": 0.2927,
+        "empirical_positive_rate": 0.3644,
+        "absolute_gap": 0.0717
+      }
+    ]
+  },
+  "next_12m_prepayment_flag": {
+    "brier_score": 0.0446,
+    "expected_calibration_error": 0.0,
+    "max_calibration_error": 0.0055,
+    "bins": [
+      {
+        "bin_range": "[0.00, 0.10)",
+        "sample_count": 95553,
+        "mean_predicted_prob": 0.047,
+        "empirical_positive_rate": 0.047,
+        "absolute_gap": 0.0
+      },
+      {
+        "bin_range": "[0.20, 0.30)",
+        "sample_count": 10,
+        "mean_predicted_prob": 0.2055,
+        "empirical_positive_rate": 0.2,
+        "absolute_gap": 0.0055
+      }
+    ]
+  }
+}
