@@ -28,6 +28,7 @@ RAW_DIR = REPO_ROOT / "data" / "raw"
 if not RAW_DIR.exists():
     RAW_DIR = REPO_ROOT / "data"
 REPORTS_DIR = REPO_ROOT / "reports"
+LOGS_DIR = REPO_ROOT / "logs"
 
 # ---------------------------------------------------------------------------
 # Simulated reviewer logic
@@ -222,6 +223,9 @@ def _write_active_learning_report(improvement: dict, df_feedback: pd.DataFrame):
     # Save JSON log
     log_path = REPORTS_DIR / "active_learning_log.json"
     with open(log_path, "w") as f:
+        json.dump(improvement, f, indent=2, default=str)
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    with open(LOGS_DIR / "active_learning_log.json", "w") as f:
         json.dump(improvement, f, indent=2, default=str)
 
     print(f"[active_learning] Report: {out}")
