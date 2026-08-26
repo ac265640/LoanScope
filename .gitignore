@@ -39,7 +39,10 @@ notebooks/.ipynb_checkpoints/
 *.hdf5
 
 # MLflow / experiment tracking
-mlruns/
+mlruns/*
+!mlruns/.gitkeep
+logs/mlruns/*
+!logs/mlruns/.gitkeep
 mlflow.db
 
 # OS
