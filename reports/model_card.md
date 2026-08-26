@@ -64,7 +64,7 @@
 - **Governance Policy**: Every LLM-generated note is grounded with explicit retrieved context, logged in `logs/llm_prompt_log.jsonl`, and labeled as **'Recommendation — not a decision.'**
 ---
 
-## 6. Algorithmic Fairness & Responsible AI Audit
+## 8. Algorithmic Fairness & Responsible AI Audit
 
 ### Performance by Credit Score Tier
 
