@@ -108,3 +108,55 @@ Sample local explanation breakdown:
 - **Platt Calibrated Probabilities**: Ensure predicted probabilities equal true empirical default rates.
 - **Confidence Grading**: Every prediction outputs an uncertainty flag (`High Confidence`, `Moderate Confidence`, `Borderline Review`).
 - **Human-in-the-Loop Thresholds**: Records with confidence < 0.50 or entropy > 0.85 are automatically routed to secondary credit underwriting review.
+
+## Calibration by Segment (Advanced Feature #5)
+
+Reliability evaluation of predicted default probability separated by
+vintage cohort and credit-score band. ECE > 0.05 is flagged as poor calibration.
+
+
+### Credit Band
+
+| Segment | N | N Positive | Brier Score | ECE | Flag |
+|---------|---|-----------|------------|-----|------|
+| 620-659 | 93,948 | 9,632 | 0.0507 | 0.0762 | ⚠️ POOR |
+| 660-699 | 162,606 | 11,839 | 0.0364 | 0.0542 | ⚠️ POOR |
+| 700-739 | 205,457 | 10,987 | 0.0273 | 0.0407 | ✅ OK |
+| 740-779 | 162,546 | 5,626 | 0.0188 | 0.0276 | ✅ OK |
+| 780+ | 126,380 | 2,319 | 0.0111 | 0.0161 | ✅ OK |
+| <620 | 60,659 | 9,353 | 0.0760 | 0.1140 | ⚠️ POOR |
+| nan | 62,839 | 5,785 | 0.0454 | 0.0685 | ⚠️ POOR |
+
+**Poorest calibration in credit_band:** <620 (ECE=0.1140), 620-659 (ECE=0.0762), nan (ECE=0.0685)
+
+### Vintage Year
+
+| Segment | N | N Positive | Brier Score | ECE | Flag |
+|---------|---|-----------|------------|-----|------|
+| 2003 | 43,363 | 3,719 | 0.0428 | 0.0641 | ⚠️ POOR |
+| 2004 | 46,519 | 3,747 | 0.0402 | 0.0603 | ⚠️ POOR |
+| 2005 | 44,213 | 3,656 | 0.0403 | 0.0601 | ⚠️ POOR |
+| 2006 | 45,226 | 3,881 | 0.0418 | 0.0624 | ⚠️ POOR |
+| 2007 | 44,375 | 3,462 | 0.0397 | 0.0592 | ⚠️ POOR |
+| 2008 | 44,924 | 3,230 | 0.0362 | 0.0541 | ⚠️ POOR |
+| 2009 | 46,488 | 3,590 | 0.0394 | 0.0586 | ⚠️ POOR |
+| 2010 | 45,239 | 3,007 | 0.0333 | 0.0493 | ✅ OK |
+| 2011 | 46,817 | 2,546 | 0.0272 | 0.0404 | ✅ OK |
+| 2012 | 47,396 | 2,749 | 0.0299 | 0.0445 | ✅ OK |
+| 2013 | 46,823 | 2,612 | 0.0285 | 0.0424 | ✅ OK |
+| 2014 | 46,268 | 2,495 | 0.0278 | 0.0416 | ✅ OK |
+| 2015 | 47,248 | 2,442 | 0.0263 | 0.0385 | ✅ OK |
+| 2016 | 46,036 | 2,528 | 0.0287 | 0.0426 | ✅ OK |
+| 2017 | 46,505 | 2,502 | 0.0270 | 0.0399 | ✅ OK |
+| 2018 | 46,619 | 2,447 | 0.0284 | 0.0425 | ✅ OK |
+| 2019 | 44,813 | 2,617 | 0.0308 | 0.0460 | ✅ OK |
+| 2020 | 47,829 | 2,029 | 0.0222 | 0.0328 | ✅ OK |
+| 2021 | 47,734 | 2,282 | 0.0254 | 0.0377 | ✅ OK |
+
+**Poorest calibration in vintage_year:** 2003 (ECE=0.0641), 2006 (ECE=0.0624), 2004 (ECE=0.0603)
+
+
+**Methodology:** ECE = Expected Calibration Error (10-bin), Brier Score = mean squared error
+of predicted probability. Lower is better for both metrics.
+
+Script: `src/explainability/calibration_by_segment.py`
