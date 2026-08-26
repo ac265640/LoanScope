@@ -160,3 +160,107 @@ vintage cohort and credit-score band. ECE > 0.05 is flagged as poor calibration.
 of predicted probability. Lower is better for both metrics.
 
 Script: `src/explainability/calibration_by_segment.py`
+
+## Counterfactual Explanations (Advanced Feature #11)
+
+For each borderline/high-risk loan, counterfactual explanations show what single
+feature change would most reduce the predicted default probability.
+
+**Methodology:** Manual perturbation-and-rescore. Each feature is improved by one
+ordinal level (e.g., credit band from '620-659' to '660-699'),
+and the delta in predicted probability is computed.
+
+
+### Loan `LN0000005` — Base Default Prob: 20.0%
+
+- Credit Band: 620-659 | DTI: 20-28% | DPD: 0
+
+**credit_score_band:** If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 20.0% to 14.0% (−6.0%).
+**dti_band:** If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 20.0% to 16.0% (−4.0%).
+**ltv_band:** If ltv_band improved from '>95%' to '90-95%', predicted default probability would drop from 20.0% to 17.0% (−3.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000005` is improving `credit_score_band` (reduces default prob by 6.0%).
+
+
+### Loan `LN0000008` — Base Default Prob: 13.0%
+
+- Credit Band: 620-659 | DTI: 20-28% | DPD: 0
+
+**credit_score_band:** If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 13.0% to 7.0% (−6.0%).
+**dti_band:** If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 13.0% to 9.0% (−4.0%).
+**ltv_band:** If ltv_band improved from '70-80%' to '60-70%', predicted default probability would drop from 13.0% to 10.0% (−3.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000008` is improving `credit_score_band` (reduces default prob by 6.0%).
+
+
+### Loan `LN0000009` — Base Default Prob: 99.0%
+
+- Credit Band: 660-699 | DTI: <20% | DPD: 357
+
+**credit_score_band:** If credit_score_band improved from '660-699' to '700-739', predicted default probability would drop from 99.0% to 93.0% (−6.0%).
+**ltv_band:** If ltv_band improved from '60-70%' to '<60%', predicted default probability would drop from 99.0% to 96.0% (−3.0%).
+**days_past_due:** If days_past_due were cured to 0 from 357 DPD, predicted default probability would drop from 99.0% to 91.0% (−8.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000009` is improving `days_past_due` (reduces default prob by 8.0%).
+
+
+### Loan `LN0000015` — Base Default Prob: 13.0%
+
+- Credit Band: 620-659 | DTI: 20-28% | DPD: 0
+
+**credit_score_band:** If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 13.0% to 7.0% (−6.0%).
+**dti_band:** If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 13.0% to 9.0% (−4.0%).
+**ltv_band:** If ltv_band improved from '60-70%' to '<60%', predicted default probability would drop from 13.0% to 10.0% (−3.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000015` is improving `credit_score_band` (reduces default prob by 6.0%).
+
+
+### Loan `LN0000016` — Base Default Prob: 17.0%
+
+- Credit Band: 620-659 | DTI: 36-43% | DPD: 0
+
+**credit_score_band:** If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 17.0% to 11.0% (−6.0%).
+**dti_band:** If dti_band improved from '36-43%' to '28-36%', predicted default probability would drop from 17.0% to 13.0% (−4.0%).
+**ltv_band:** If ltv_band improved from '80-90%' to '70-80%', predicted default probability would drop from 17.0% to 14.0% (−3.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000016` is improving `credit_score_band` (reduces default prob by 6.0%).
+
+
+### Loan `LN0000017` — Base Default Prob: 13.0%
+
+- Credit Band: 620-659 | DTI: 28-36% | DPD: 0
+
+**credit_score_band:** If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 13.0% to 7.0% (−6.0%).
+**dti_band:** If dti_band improved from '28-36%' to '20-28%', predicted default probability would drop from 13.0% to 9.0% (−4.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000017` is improving `credit_score_band` (reduces default prob by 6.0%).
+
+
+### Loan `LN0000021` — Base Default Prob: 25.7%
+
+- Credit Band: 740-779 | DTI: >43% | DPD: 30
+
+**credit_score_band:** If credit_score_band improved from '740-779' to '780+', predicted default probability would drop from 25.7% to 19.7% (−6.0%).
+**dti_band:** If dti_band improved from '>43%' to '36-43%', predicted default probability would drop from 25.7% to 21.7% (−4.0%).
+**ltv_band:** If ltv_band improved from '80-90%' to '70-80%', predicted default probability would drop from 25.7% to 22.7% (−3.0%).
+**days_past_due:** If days_past_due were cured to 0 from 30 DPD, predicted default probability would drop from 25.7% to 17.7% (−8.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000021` is improving `days_past_due` (reduces default prob by 8.0%).
+
+
+### Loan `LN0000022` — Base Default Prob: 20.0%
+
+- Credit Band: 620-659 | DTI: 36-43% | DPD: 0
+
+**credit_score_band:** If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 20.0% to 14.0% (−6.0%).
+**dti_band:** If dti_band improved from '36-43%' to '28-36%', predicted default probability would drop from 20.0% to 16.0% (−4.0%).
+**ltv_band:** If ltv_band improved from '90-95%' to '80-90%', predicted default probability would drop from 20.0% to 17.0% (−3.0%).
+
+> **Actionable insight:** The single highest-impact intervention for loan `LN0000022` is improving `credit_score_band` (reduces default prob by 6.0%).
+
+
+**Note:** Counterfactual probabilities use a proxy scoring model based on
+observed DPD and credit band, not the full LightGBM model. In production,
+SHAP TreeExplainer perturbation or DiCE library would be used for exact counterfactuals.
+
+Script: `src/explainability/counterfactuals.py`

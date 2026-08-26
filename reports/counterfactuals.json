@@ -1,0 +1,371 @@
+[
+  {
+    "loan_id": "LN0000005",
+    "base_probability": 0.2,
+    "credit_score_band": "620-659",
+    "dti_band": "20-28%",
+    "days_past_due": 0,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "620-659",
+        "counterfactual_value": "660-699",
+        "base_probability": 0.2,
+        "counterfactual_probability": 0.14,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 20.0% to 14.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "20-28%",
+        "counterfactual_value": "<20%",
+        "base_probability": 0.2,
+        "counterfactual_probability": 0.16,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 20.0% to 16.0% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": ">95%",
+        "counterfactual_value": "90-95%",
+        "base_probability": 0.2,
+        "counterfactual_probability": 0.17,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '>95%' to '90-95%', predicted default probability would drop from 20.0% to 17.0% (\u22123.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000008",
+    "base_probability": 0.13,
+    "credit_score_band": "620-659",
+    "dti_band": "20-28%",
+    "days_past_due": 0,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "620-659",
+        "counterfactual_value": "660-699",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.07,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 13.0% to 7.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "20-28%",
+        "counterfactual_value": "<20%",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.09,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 13.0% to 9.0% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "70-80%",
+        "counterfactual_value": "60-70%",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.1,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '70-80%' to '60-70%', predicted default probability would drop from 13.0% to 10.0% (\u22123.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000009",
+    "base_probability": 0.99,
+    "credit_score_band": "660-699",
+    "dti_band": "<20%",
+    "days_past_due": 357,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "660-699",
+        "counterfactual_value": "700-739",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.93,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '660-699' to '700-739', predicted default probability would drop from 99.0% to 93.0% (\u22126.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "60-70%",
+        "counterfactual_value": "<60%",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.96,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '60-70%' to '<60%', predicted default probability would drop from 99.0% to 96.0% (\u22123.0%)."
+      },
+      {
+        "feature": "days_past_due",
+        "current_value": "357 days",
+        "counterfactual_value": "0 days (current)",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.91,
+        "probability_reduction": 0.08,
+        "interpretation": "If days_past_due were cured to 0 from 357 DPD, predicted default probability would drop from 99.0% to 91.0% (\u22128.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000015",
+    "base_probability": 0.13,
+    "credit_score_band": "620-659",
+    "dti_band": "20-28%",
+    "days_past_due": 0,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "620-659",
+        "counterfactual_value": "660-699",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.07,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 13.0% to 7.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "20-28%",
+        "counterfactual_value": "<20%",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.09,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 13.0% to 9.0% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "60-70%",
+        "counterfactual_value": "<60%",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.1,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '60-70%' to '<60%', predicted default probability would drop from 13.0% to 10.0% (\u22123.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000016",
+    "base_probability": 0.17,
+    "credit_score_band": "620-659",
+    "dti_band": "36-43%",
+    "days_past_due": 0,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "620-659",
+        "counterfactual_value": "660-699",
+        "base_probability": 0.17,
+        "counterfactual_probability": 0.11,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 17.0% to 11.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "36-43%",
+        "counterfactual_value": "28-36%",
+        "base_probability": 0.17,
+        "counterfactual_probability": 0.13,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '36-43%' to '28-36%', predicted default probability would drop from 17.0% to 13.0% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "80-90%",
+        "counterfactual_value": "70-80%",
+        "base_probability": 0.17,
+        "counterfactual_probability": 0.14,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '80-90%' to '70-80%', predicted default probability would drop from 17.0% to 14.0% (\u22123.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000017",
+    "base_probability": 0.13,
+    "credit_score_band": "620-659",
+    "dti_band": "28-36%",
+    "days_past_due": 0,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "620-659",
+        "counterfactual_value": "660-699",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.07,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 13.0% to 7.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "28-36%",
+        "counterfactual_value": "20-28%",
+        "base_probability": 0.13,
+        "counterfactual_probability": 0.09,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '28-36%' to '20-28%', predicted default probability would drop from 13.0% to 9.0% (\u22124.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000021",
+    "base_probability": 0.25666666666666665,
+    "credit_score_band": "740-779",
+    "dti_band": ">43%",
+    "days_past_due": 30,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "740-779",
+        "counterfactual_value": "780+",
+        "base_probability": 0.257,
+        "counterfactual_probability": 0.197,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '740-779' to '780+', predicted default probability would drop from 25.7% to 19.7% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": ">43%",
+        "counterfactual_value": "36-43%",
+        "base_probability": 0.257,
+        "counterfactual_probability": 0.217,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '>43%' to '36-43%', predicted default probability would drop from 25.7% to 21.7% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "80-90%",
+        "counterfactual_value": "70-80%",
+        "base_probability": 0.257,
+        "counterfactual_probability": 0.227,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '80-90%' to '70-80%', predicted default probability would drop from 25.7% to 22.7% (\u22123.0%)."
+      },
+      {
+        "feature": "days_past_due",
+        "current_value": "30 days",
+        "counterfactual_value": "0 days (current)",
+        "base_probability": 0.257,
+        "counterfactual_probability": 0.177,
+        "probability_reduction": 0.08,
+        "interpretation": "If days_past_due were cured to 0 from 30 DPD, predicted default probability would drop from 25.7% to 17.7% (\u22128.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000022",
+    "base_probability": 0.2,
+    "credit_score_band": "620-659",
+    "dti_band": "36-43%",
+    "days_past_due": 0,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "620-659",
+        "counterfactual_value": "660-699",
+        "base_probability": 0.2,
+        "counterfactual_probability": 0.14,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '620-659' to '660-699', predicted default probability would drop from 20.0% to 14.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "36-43%",
+        "counterfactual_value": "28-36%",
+        "base_probability": 0.2,
+        "counterfactual_probability": 0.16,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '36-43%' to '28-36%', predicted default probability would drop from 20.0% to 16.0% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "90-95%",
+        "counterfactual_value": "80-90%",
+        "base_probability": 0.2,
+        "counterfactual_probability": 0.17,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '90-95%' to '80-90%', predicted default probability would drop from 20.0% to 17.0% (\u22123.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000023",
+    "base_probability": 0.99,
+    "credit_score_band": "700-739",
+    "dti_band": "20-28%",
+    "days_past_due": 182,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "700-739",
+        "counterfactual_value": "740-779",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.93,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '700-739' to '740-779', predicted default probability would drop from 99.0% to 93.0% (\u22126.0%)."
+      },
+      {
+        "feature": "dti_band",
+        "current_value": "20-28%",
+        "counterfactual_value": "<20%",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.95,
+        "probability_reduction": 0.04,
+        "interpretation": "If dti_band improved from '20-28%' to '<20%', predicted default probability would drop from 99.0% to 95.0% (\u22124.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "80-90%",
+        "counterfactual_value": "70-80%",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.96,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '80-90%' to '70-80%', predicted default probability would drop from 99.0% to 96.0% (\u22123.0%)."
+      },
+      {
+        "feature": "days_past_due",
+        "current_value": "182 days",
+        "counterfactual_value": "0 days (current)",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.91,
+        "probability_reduction": 0.08,
+        "interpretation": "If days_past_due were cured to 0 from 182 DPD, predicted default probability would drop from 99.0% to 91.0% (\u22128.0%)."
+      }
+    ]
+  },
+  {
+    "loan_id": "LN0000033",
+    "base_probability": 0.99,
+    "credit_score_band": "740-779",
+    "dti_band": "<20%",
+    "days_past_due": 399,
+    "counterfactuals": [
+      {
+        "feature": "credit_score_band",
+        "current_value": "740-779",
+        "counterfactual_value": "780+",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.93,
+        "probability_reduction": 0.06,
+        "interpretation": "If credit_score_band improved from '740-779' to '780+', predicted default probability would drop from 99.0% to 93.0% (\u22126.0%)."
+      },
+      {
+        "feature": "ltv_band",
+        "current_value": "90-95%",
+        "counterfactual_value": "80-90%",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.96,
+        "probability_reduction": 0.03,
+        "interpretation": "If ltv_band improved from '90-95%' to '80-90%', predicted default probability would drop from 99.0% to 96.0% (\u22123.0%)."
+      },
+      {
+        "feature": "days_past_due",
+        "current_value": "399 days",
+        "counterfactual_value": "0 days (current)",
+        "base_probability": 0.99,
+        "counterfactual_probability": 0.91,
+        "probability_reduction": 0.08,
+        "interpretation": "If days_past_due were cured to 0 from 399 DPD, predicted default probability would drop from 99.0% to 91.0% (\u22128.0%)."
+      }
+    ]
+  }
+]
