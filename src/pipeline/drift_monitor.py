@@ -11,8 +11,13 @@ Run: PYTHONPATH=. python src/pipeline/drift_monitor.py
 """
 
 import json
+import sys
 import logging
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 import numpy as np
 import pandas as pd

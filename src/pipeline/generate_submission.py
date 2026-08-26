@@ -6,11 +6,15 @@ and formats final output into `submission/submission.csv` matching `submission_t
 """
 
 import sys
-import joblib
 import logging
 from pathlib import Path
 from typing import Dict, Any, List
 
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+import joblib
 import numpy as np
 import pandas as pd
 

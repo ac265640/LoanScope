@@ -11,16 +11,15 @@ Run: PYTHONPATH=. python src/pipeline/experiment_runner.py --sweep configs/sweep
 import argparse
 import json
 import os
+import sys
 import warnings
 from pathlib import Path
 from typing import Dict, List, Any
 
-import numpy as np
-import pandas as pd
-
-warnings.filterwarnings("ignore")
-
 REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 RAW_DIR = REPO_ROOT / "data" / "raw"
 if not RAW_DIR.exists():
     RAW_DIR = REPO_ROOT / "data"
