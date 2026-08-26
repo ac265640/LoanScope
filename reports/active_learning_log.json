@@ -1,0 +1,25 @@
+{
+  "flagged_before": 500,
+  "flagged_after": 402,
+  "false_positive_rate_before": 0.394,
+  "new_threshold": 0.5949,
+  "metrics_before": {
+    "auc": 1.0,
+    "precision": 0.336,
+    "recall": 1.0,
+    "f1": 0.503
+  },
+  "metrics_after": {
+    "auc": 1.0,
+    "precision": 0.4179,
+    "recall": 1.0,
+    "f1": 0.5895
+  },
+  "reviewer_decisions": {
+    "accept": 252,
+    "reject": 197,
+    "correct": 51
+  },
+  "accepted": 303,
+  "rejected": 197
+}
