@@ -118,6 +118,27 @@ This log documents the incremental engineering process, human review touchpoints
   - `tests/`: Expanded from 3 to 25 automated unit tests with 100% pass rate.
   - `src/pipeline/cli.py`: Unified CLI runner supporting all pipeline subcommands.
 
+### Phase 4: Master Prompt #3 — Full Advanced Features Build (15 Modules from Section 10)
+- **Directive**: Implement all 15 advanced features from Section 10 of the problem statement as additive, fully functional modules with one discrete commit per feature.
+- **Representative Prompts / Directives**:
+  > *"Implement all 15 advanced features listed in Section 10 of the problem statement, as additive modules on top of the existing repo... one commit per feature minimum."*
+- **Accepted & Integrated (15 Commits)**:
+  1. `src/models/survival/competing_risk.py`: Cause-specific Aalen-Johansen CIF curves for default vs prepayment with credit band cuts and single-risk bias quantification (`reports/survival_report.md`).
+  2. `src/scenarios/monte_carlo.py`: 1,000-path stochastic portfolio stress simulation drawing from Beta uncertainty distributions (P1–P99 fan intervals in `reports/scenario_report.md`).
+  3. `src/monitoring/drift_dashboard.py`: Interactive Streamlit & Plotly app computing PSI and KS statistics between train and test splits with pass/warn/fail thresholds (`reports/drift_monitoring_report.md`).
+  4. `src/scenarios/segment_curves.py`: Time-series stress projection curves across 5,400 segment-month combinations sliced by vintage, credit band, state, and servicer (`reports/scenario_report.md`).
+  5. `src/explainability/calibration_by_segment.py`: Separate 10-bin reliability diagrams, Expected Calibration Error (ECE), and Brier scores across credit bands and vintage eras (`reports/calibration_by_segment_report.md`).
+  6. `src/pipeline/mlflow_tracking.py`: Multi-task experiment tracking logging parameters, metrics, and models across predictive, survival, and anomaly model families (`mlruns/` & `logs/mlruns/`).
+  7. `src/llm_copilot/rag.py`: BM25/TF-IDF chunked retrieval grounding LLM prompt queries with verbatim chunk logging to prompt log (`logs/llm_prompt_log.jsonl`).
+  8. `src/pipeline/experiment_runner.py`: Autonomous orchestrator sweeping model architectures and feature subsets with best-first heuristic next-configuration proposals (`configs/sweep.yaml` & `logs/sweep_results.json`).
+  9. `src/features/feature_store.py`: Versioned feature-store computing registered features with schema manifests, registry definitions, and parquet caching (`data/processed/feature_store/registry.json`).
+  10. `src/explainability/fairness_analysis.py`: Disparate impact ratio evaluation, four-fifths rule compliance, and error rate analysis across lending proxy segments (`reports/fairness_report.md`).
+  11. `src/explainability/counterfactuals.py`: Loan-level perturbation-and-rescore generating actionable feature levers (`reports/counterfactuals.json` & `reports/explainability_report.md`).
+  12. `src/scenarios/stress_sensitivity.py`: Attribution decomposition identifying which feature cluster (credit quality, rates, loan size, geography) drives scenario default rates (`reports/scenario_report.md`).
+  13. `src/explainability/confidence_intervals.py`: Split conformal prediction intervals providing finite-sample guaranteed marginal coverage (90.3% empirical coverage @ 90% target in `reports/confidence_intervals_report.md`).
+  14. `src/models/anomaly/active_learning.py`: Reviewer accept/reject/correct feedback loop recalibrating anomaly detection thresholds with +8.2pp precision improvement (`reports/active_learning_report.md`).
+  15. `src/data_generation/stress_test_data.py`: Edge-case validation testing graceful pipeline degradation against simulated 2008 recession cohorts and severe DQ corruption batches (`reports/stress_test_report.md`).
+
 ---
 
 ## 3. Disqualification Self-Audit Checklist
@@ -128,7 +149,7 @@ This log documents the incremental engineering process, human review touchpoints
 | **Trained non-LLM models** | ✅ PASSED | Trained models saved in `src/models/saved_models/` (`.joblib` binaries). |
 | **No random split / Zero loan_id leakage** | ✅ PASSED | Time-aware cohort split by `origination_month`. Formally verified via `pytest tests/test_splitter.py`. |
 | **No target leakage in features** | ✅ PASSED | 32 engineered features calculated strictly backward-looking from observation month $t$. |
-| **Reproducible pipeline & real metrics** | ✅ PASSED | End-to-end runnable via `make run-all` with fixed seeds (`seed=42`). |
+| **Reproducible pipeline & real metrics** | ✅ PASSED | End-to-end runnable via `make run-all` with fixed seeds (`seed=42`). 46 automated tests pass. |
 | **Grounded LLM with audit logs** | ✅ PASSED | Prompt, context, model, and output logged to `logs/llm_prompt_log.jsonl`; labeled as advisory recommendation. |
 
 ---
@@ -138,3 +159,6 @@ This log documents the incremental engineering process, human review touchpoints
 1. **Deterministic Guardrails are Mandatory for LLM Copilots**: Relying on LLMs alone to detect financial data inconsistencies frequently results in plausible-sounding hallucinations (e.g. assuming 'Paid Off' means zero risk even when balances remain). Hardcoded validation rules must take precedence over generative outputs.
 2. **Probability Calibration is Critical in Imbalanced Credit Risk**: When positive default rates are low (~4%), raw gradient boosted scores can be overconfident. Applying Platt Sigmoid calibration directly improved Brier score reliability by over 50%.
 3. **Time-Aware Splitting Prevents Overoptimistic Leakage**: Random row-level splitting on panel data allows models to memorize future trajectory states of the same borrower. Time-aware cohort splitting provides the only valid benchmark for real-world production performance.
+4. **Split Conformal Prediction Eliminates Hand-Wavy Uncertainty**: Rather than assuming asymptotic normality, split conformal prediction provides exact finite-sample marginal coverage guarantees (90.3% observed vs 90.0% nominal) without parametric distribution assumptions.
+5. **Competing Risks Prevent Significant Loss Overestimation**: Standard Kaplan-Meier single-risk models overestimate 36-month cumulative default probability (+8.7pp bias) by treating voluntary prepayments as random right-censoring rather than terminal competing risks.
+

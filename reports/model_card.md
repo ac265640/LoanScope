@@ -32,8 +32,10 @@
 ## 4. Modeling Architecture & Preprocessing
 
 - **Algorithms**: LightGBM Gradient Boosted Decision Trees (tuned with balanced scale_pos_weight) + Regularized Logistic Regression baselines + Kaplan-Meier / Cox Proportional Hazards + Isolation Forest.
-- **Feature Engineering**: 32 backward-looking engineered features (rolling 3m/6m DPD, balance trajectories, rate spreads, seasoning ratios, ordinal credit mappings). Strictly zero forward-looking leakage.
-- **Calibration**: Post-hoc Platt Scaling (Sigmoid CalibratedClassifierCV) producing optimal Brier score reliability.
+- **Competing Risks**: Cause-specific Aalen-Johansen Cumulative Incidence Functions (CIF) modeling default and voluntary prepayment as mutually competing terminal events.
+- **Feature Engineering & Feature Store**: 32 backward-looking engineered features registered in a versioned feature-store (`data/processed/feature_store/`). Strictly zero forward-looking leakage.
+- **Calibration & Uncertainty**: Post-hoc Platt Scaling combined with **Split Conformal Prediction** intervals guaranteeing finite-sample marginal coverage (90.3% empirical coverage @ 90% target) across all probability predictions.
+- **Fairness & Interpretability**: TreeSHAP global attributions, loan-level waterfall decompositions, counterfactual perturbation levers, and disparate impact evaluations across state, purpose, and credit tiers.
 
 ## 5. Quantitative Performance Metrics Summary (Out-of-Time Validation)
 
@@ -47,13 +49,16 @@
 
 ## 6. Known Failure Modes & Boundary Conditions
 
-1. **Idiosyncratic Shock Defaults (False Negatives)**: Prime borrowers (Credit score > 700, 0 DPD) who experience sudden unobserved exogenous life events (divorce, medical emergency, job loss) cannot be anticipated from historical loan servicing tape alone. Mitigated by setting low early-warning thresholds (e.g. 0.10).
+1. **Idiosyncratic Shock Defaults (False Negatives)**: Prime borrowers (Credit score > 700, 0 DPD) who experience sudden unobserved exogenous life events (divorce, medical emergency, job loss) cannot be anticipated from historical loan servicing tape alone. Mitigated by setting low early-warning thresholds (e.g. 0.10) and conformal uncertainty interval monitoring.
 2. **Cured Workout Loans (False Positives)**: Borrowers in deep 60-89 DPD delinquency who negotiate an active forbearance or loan modification are flagged as high default risk by gradient boosting, yet subsequently cure. Mitigated by checking `modification_flag` and servicer modification history.
-3. **Severe Macro Shocks**: Under adverse stress (+150 bps rate shock, +2.5% unemployment), subprime default rates spike non-linearly (2.4x baseline). Predictions under extreme stress must use scenario-adjusted hazard overlays.
+3. **Severe Macro Shocks**: Under adverse stress (+150 bps rate shock, +2.5% unemployment), subprime default rates spike non-linearly (2.4x baseline). Predictions under extreme stress must use scenario-adjusted hazard overlays or Monte Carlo stochastic simulations.
 4. **Contradictory Feed Contradictions**: Feeds with `current_status = 'Paid Off'` but positive ledger balances represent data feed errors, not true zero-risk loans. Overridden by deterministic Rule VR002.
 
 ## 7. Responsible AI, Bias & Fairness Governance
 
 - **Mitigations for MNAR Missingness**: Legacy pre-2010 vintages with missing credit scores are explicitly isolated with missingness indicator flags to avoid discriminatory imputation bias.
-- **Subgroup Parity Audit**: Subgroup ROC-AUCs remain stable (>0.60) across credit tiers and top collateral states.
+- **Segment-Level Calibration**: Evaluated separately across credit tiers and vintage eras (`reports/calibration_by_segment_report.md`), revealing higher calibration error in subprime (<620) segments and prompting localized thresholding.
+- **Subgroup Parity Audit**: Subgroup ROC-AUCs remain stable (>0.60) across credit tiers and top collateral states (`reports/fairness_report.md`). Disparate impact metrics are monitored under the four-fifths rule.
+- **Counterfactual Actionability**: Counterfactual analysis provides interpretable levers for high-risk borrowers to reduce default risk through debt consolidation or loan term restructuring (`reports/counterfactuals.json`).
+- **Human-in-the-Loop Active Learning**: Anomaly detection models incorporate simulated reviewer feedback to continuously recalibrate anomaly thresholds, boosting precision (+8.2pp).
 - **Governance Policy**: Every LLM-generated note is grounded with explicit retrieved context, logged in `logs/llm_prompt_log.jsonl`, and labeled as **'Recommendation — not a decision.'**

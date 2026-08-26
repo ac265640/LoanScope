@@ -126,10 +126,11 @@ class TFIDFRetriever:
             if term in self.vocab:
                 q_vec[self.vocab[term]] = cnt
 
-        # Cosine similarity
-        norms = np.linalg.norm(self._tfidf_matrix, axis=1) + 1e-9
-        q_norm = np.linalg.norm(q_vec) + 1e-9
-        scores = self._tfidf_matrix @ q_vec / (norms * q_norm)
+        # Cosine similarity (use float64 for stable dot product)
+        norms = np.linalg.norm(self._tfidf_matrix, axis=1).astype(np.float64) + 1e-7
+        q_norm = float(np.linalg.norm(q_vec)) + 1e-7
+        dots = np.dot(self._tfidf_matrix.astype(np.float64), q_vec.astype(np.float64))
+        scores = np.nan_to_num(dots / (norms * q_norm), nan=0.0, posinf=0.0, neginf=0.0)
 
         top_idx = np.argsort(scores)[::-1][:top_k]
         return [(float(scores[i]), self.chunks[i]) for i in top_idx if scores[i] > 0]

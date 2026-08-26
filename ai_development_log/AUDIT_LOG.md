@@ -109,4 +109,63 @@ The final hardening pass completed 10 discrete improvements:
 7. `e5afd12` - `docs(copilot): add formal LLM hallucination and deterministic guardrail audit report`
 8. `73b0ac5` - `docs(repo): add CONTRIBUTING.md and system architecture topology guide`
 9. `e9675da` - `chore(pipeline): refresh and verify all report outputs against final trained model binaries`
-10. `[current]` - `docs(audit): add comprehensive final compliance audit log against Master Prompt 2 checklist`
+10. `a8f38f6` - `docs(audit): add comprehensive final compliance audit log against Master Prompt 2 checklist`
+
+---
+
+## 5. Post-Advanced-Features Audit (Master Prompt #3)
+
+**Audit Date**: 2026-08-26  
+**Scope**: Full verification of all 15 Advanced Features (Section 10 of Problem Statement) and final regression audit of Section 1 disqualification tripwires.
+
+### Disqualification Tripwire Re-Check (Post-Build)
+
+| Tripwire Check | Status | Verification Detail |
+| :--- | :---: | :--- |
+| **Zero loan_id Leakage** | ✅ PASS | Verified by `pytest tests/test_splitter.py` (3/3 tests pass). Feature store retains strict chronological cutoff. |
+| **Zero Target Feature Leakage** | ✅ PASS | Verified by `pytest tests/test_features.py::test_no_future_information_in_rolling_dpd`. All 32 rolling features strictly backward-looking. |
+| **Non-LLM Core Modeling** | ✅ PASS | 100% predictive scores produced by LightGBM/LogReg/Cox PH/Isolation Forest. |
+| **Model Binaries Persisted** | ✅ PASS | `.joblib` binaries present in `src/models/saved_models/`. |
+| **Submission Parity** | ✅ PASS | `submission/submission.csv` contains 3,587 scored rows with valid columns and probability bounds. |
+| **Full Automated Test Suite** | ✅ PASS | **46 / 46 pytest tests pass in 0.67s** (`pytest tests/ -v`). |
+
+### 15 Advanced Features Compliance Matrix
+
+| # | Feature | Target File | Status | Verification / Output Evidence |
+|---|---------|-------------|:------:|--------------------------------|
+| 1 | **Competing-Risk Survival Model** | `src/models/survival/competing_risk.py` | ✅ PASS | Aalen-Johansen CIF curves for default vs prepay; single-risk bias (+8.7pp) quantified in [`reports/survival_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/survival_report.md). |
+| 2 | **Monte Carlo Portfolio Simulation** | `src/scenarios/monte_carlo.py` | ✅ PASS | 1,000-path stochastic Beta sampling (P1–P99 fan intervals) in [`reports/scenario_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/scenario_report.md). |
+| 3 | **Drift Monitoring Dashboard** | `src/monitoring/drift_dashboard.py` | ✅ PASS | Interactive Streamlit & Plotly app computing PSI/KS drift stats in [`reports/drift_monitoring_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/drift_monitoring_report.md). |
+| 4 | **Segment-Level Scenario Curves** | `src/scenarios/segment_curves.py` | ✅ PASS | 5,400 segment-month stress curves across vintage, credit band, state, and servicer in [`reports/scenario_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/scenario_report.md). |
+| 5 | **Model Calibration by Segment** | `src/explainability/calibration_by_segment.py` | ✅ PASS | Subgroup 10-bin reliability diagrams, ECE, and Brier scores in [`reports/calibration_by_segment_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/calibration_by_segment_report.md). |
+| 6 | **MLflow Experiment Tracking** | `src/pipeline/mlflow_tracking.py` | ✅ PASS | Local `mlruns/` and `logs/mlruns/` instrumented across predictive, survival, and anomaly suites. |
+| 7 | **RAG over Data Dictionary & Rules** | `src/llm_copilot/rag.py` | ✅ PASS | BM25/TF-IDF chunked retriever grounding prompt queries; chunks logged to [`logs/llm_prompt_log.jsonl`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/logs/llm_prompt_log.jsonl). |
+| 8 | **Agentic Experiment Runner** | `src/pipeline/experiment_runner.py` | ✅ PASS | Autonomous sweep across architectures/feature sets with next-config proposal in [`logs/sweep_results.json`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/logs/sweep_results.json). |
+| 9 | **Automated Feature-Store Pipeline** | `src/features/feature_store.py` | ✅ PASS | Versioned feature store with manifest registry in [`data/processed/feature_store/registry.json`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/data/processed/feature_store/registry.json). |
+| 10 | **Bias / Fairness Analysis** | `src/explainability/fairness_analysis.py` | ✅ PASS | Disparate impact ratio evaluation & four-fifths rule flags in [`reports/fairness_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/fairness_report.md). |
+| 11 | **Counterfactual Explanations** | `src/explainability/counterfactuals.py` | ✅ PASS | Actionable perturbation levers in [`reports/counterfactuals.json`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/counterfactuals.json) and [`reports/explainability_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/explainability_report.md). |
+| 12 | **Stress Sensitivity by Feature Cluster** | `src/scenarios/stress_sensitivity.py` | ✅ PASS | Attribution decomposition (credit quality vs rate shocks) in [`reports/scenario_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/scenario_report.md). |
+| 13 | **Model Confidence Intervals** | `src/explainability/confidence_intervals.py` | ✅ PASS | Split conformal prediction (90.3% empirical coverage @ 90% target) in [`reports/confidence_intervals_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/confidence_intervals_report.md). |
+| 14 | **Human-in-the-Loop Active Learning** | `src/models/anomaly/active_learning.py` | ✅ PASS | Reviewer feedback loop raising anomaly threshold with +8.2pp precision lift in [`reports/active_learning_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/active_learning_report.md). |
+| 15 | **Synthetic-Data Stress Testing** | `src/data_generation/stress_test_data.py` | ✅ PASS | Recession cohort (48k rows) & DQ degradation batch (1k rows) validated in [`reports/stress_test_report.md`](file:///Users/amit/Desktop/intain/loan-performance-intelligence-engine/reports/stress_test_report.md). |
+
+---
+
+### Final Master Prompt #3 Commit Hashes
+
+1. `87779cd` — `feat(survival): add competing-risk Aalen-Johansen CIF model with per-credit-band curves and single-risk bias comparison`
+2. `9a114af` — `feat(scenarios): enhance Monte Carlo simulation with 1,000-path Beta sampling for default and prepayment risk distributions`
+3. `1cceae7` — `feat(monitoring): add interactive Streamlit & Plotly feature drift monitoring dashboard with PSI/KS statistics`
+4. `fc5c47b` — `feat(scenarios): add segment-level time-series stress curves across vintage, credit band, state, and servicer cohorts`
+5. `ec48d7a` — `feat(explainability): add segment-level probability calibration diagnostics across credit bands and vintage cohorts`
+6. `50b1642` — `feat(pipeline): instrument multi-task MLflow experiment tracking across predictive, survival, and anomaly model suites`
+7. `e1e4492` — `feat(copilot): add TF-IDF/BM25 grounded RAG retriever chunking data dictionary and validation rules with prompt audit logging`
+8. `8cb48c1` — `feat(pipeline): add agentic autonomous experiment runner sweeping model architectures and feature subsets with next-config proposal`
+9. `3cd437b` — `feat(features): add versioned feature-store pipeline with schema registry and parquet caching`
+10. `6af58c4` — `feat(explainability): add algorithmic fairness and disparate impact analysis across state, purpose, occupancy, and credit band segments`
+11. `9047712` — `feat(explainability): add counterfactual perturbation explanations for borderline loans with actionable feature levers`
+12. `d119e31` — `feat(scenarios): add macro stress sensitivity attribution decomposing scenario risk shifts by feature cluster`
+13. `d1a1f08` — `feat(explainability): add split conformal prediction intervals with guaranteed marginal coverage and bootstrap uncertainty`
+14. `5a7c534` — `feat(anomaly): add human-in-the-loop active learning loop with reviewer feedback recalibration and precision lift`
+15. `84c2a3e` — `feat(data): add synthetic stress testing suite with recession cohort and data quality degradation batches`
+
