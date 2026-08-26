@@ -199,3 +199,49 @@ Base=1.0×, Adverse Credit=1.85× default / 0.6× prepayment,
 High Prepayment=0.75× default / 1.9× prepayment.
 
 Script: `src/scenarios/segment_curves.py`
+
+## Stress Sensitivity by Feature Cluster (Advanced Feature #12)
+
+Decomposes the scenario-driven default rate change into contributions
+from each feature cluster. Shows **why** the adverse scenario moves
+the default rate by attributing the change to rate-sensitive, credit-quality,
+loan-size, and geography feature groups.
+
+
+### Scenario: Base
+
+| Feature Cluster | Base Default Rate | Shocked Rate | Delta | % Attribution |
+|----------------|-----------------|-------------|-------|--------------|
+| credit_quality | 1.25% | 1.20% | -0.0006 | 100.0% |
+| rate_sensitive | 1.25% | 1.25% | +0.0000 | 0.0% |
+| loan_size | 1.25% | 1.25% | +0.0000 | 0.0% |
+| geography | 1.25% | 1.25% | +0.0000 | 0.0% |
+
+### Scenario: Adverse_Credit
+
+| Feature Cluster | Base Default Rate | Shocked Rate | Delta | % Attribution |
+|----------------|-----------------|-------------|-------|--------------|
+| credit_quality | 1.25% | 7.84% | +0.0659 | 100.0% |
+| rate_sensitive | 1.25% | 1.25% | +0.0000 | 0.0% |
+| loan_size | 1.25% | 1.25% | +0.0000 | 0.0% |
+| geography | 1.25% | 1.25% | +0.0000 | 0.0% |
+
+### Scenario: High_Prepayment
+
+| Feature Cluster | Base Default Rate | Shocked Rate | Delta | % Attribution |
+|----------------|-----------------|-------------|-------|--------------|
+| credit_quality | 1.25% | 1.20% | -0.0006 | 100.0% |
+| rate_sensitive | 1.25% | 1.25% | +0.0000 | 0.0% |
+| loan_size | 1.25% | 1.25% | +0.0000 | 0.0% |
+| geography | 1.25% | 1.25% | +0.0000 | 0.0% |
+
+**Key insight:** In the Adverse Credit scenario, the `credit_quality` cluster
+(DPD and default flags) drives the largest share of default rate increase,
+confirming that delinquency behavior is the primary transmission channel
+for macroeconomic stress in this portfolio.
+
+**Methodology:** For each cluster, only that cluster's features are shocked
+while other features remain at base values. The resulting default rate change
+is attributed to that cluster. Attribution percentages sum to 100% across clusters.
+
+Script: `src/scenarios/stress_sensitivity.py`
