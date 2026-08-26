@@ -62,3 +62,4 @@ htmlcov/
 
 # SHAP / plot caches
 *.npz
+data/stress_test/*.csv
