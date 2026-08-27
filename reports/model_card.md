@@ -25,9 +25,14 @@
 
 ## 3. Training & Validation Data Lineage
 
-- **Dataset**: Historical loan monthly performance panel (50,000 unique loans across 20 US states).
-- **Time-Aware Splitting Methodology**: Cohort partition by `origination_month` (Train: <= 2019-12, Validation: 2020-01 to 2021-12, Test: >= 2022-01).
-- **Zero-Leakage Guarantee**: Formally asserted zero `loan_id` intersection between train and validation partitions (`Intersection(Train_IDs, Val_IDs) == Ø`).
+- **Dataset Scale**: **50,000 unique loans** total across 20 US states (`data/raw/loan_static_attributes.csv`).
+  - **Historical Training Panel**: **874,435 monthly records** across **46,413 loans** (originated $\le$ 2021-12 in `data/raw/loan_monthly_performance_train.csv`).
+  - **Held-Out Test Panel**: **69,871 monthly records** across **3,587 loans** (originated $\ge$ 2022-01 in `data/raw/loan_monthly_performance_test.csv`).
+- **Time-Aware Splitting Methodology**: Cohort partition by `origination_month`:
+  - **Train Partition**: **778,872 rows** (41,477 unique loans, originated $\le$ 2019-12).
+  - **Validation Partition**: **95,563 rows** (4,936 unique loans, originated 2020-01 to 2021-12).
+  - **Holdout Test Partition**: **69,871 rows** (3,587 unique loans, originated $\ge$ 2022-01).
+- **Zero-Leakage Guarantee**: Formally asserted zero `loan_id` intersection between train, validation, and test partitions (`Intersection(Train_IDs, Val_IDs, Test_IDs) == Ø`).
 
 ## 4. Modeling Architecture & Preprocessing
 
