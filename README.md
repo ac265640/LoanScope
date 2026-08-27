@@ -123,7 +123,7 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 | **LLM Prompt Log** | [`logs/llm_prompt_log.jsonl`](logs/llm_prompt_log.jsonl) | Verbatim audit log of all grounded copilot prompt payloads and responses. |
 | **LLM Hallucination Audit** | [`reports/llm_hallucination_audit.md`](reports/llm_hallucination_audit.md) | Grounded copilot deterministic guardrails and hallucination interception audit. |
 | **Walkthrough Notebook** | [`notebooks/end_to_end_walkthrough.ipynb`](notebooks/end_to_end_walkthrough.ipynb) | End-to-end reproducible walkthrough notebook across all 8 tasks. |
-| **Demo Video Outline** | [`demo_script.md`](demo_script.md) | Exact 5-minute video presentation script matching Section 14 flow. |
+| **Fairness & Governance Report** | [`reports/fairness_report.md`](reports/fairness_report.md) | Subgroup disparate impact ratios, four-fifths rule compliance, and error parity audits. |
 
 ---
 

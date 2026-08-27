@@ -68,3 +68,4 @@ data/processed/feature_store/*.parquet
 # Internal development notes & scratch tests
 ai_development_log/
 fresh_clone_test/
+demo_script.md
