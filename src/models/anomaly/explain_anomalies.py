@@ -68,7 +68,11 @@ def generate_reviewer_anomaly_cases(df: pd.DataFrame, n_cases: int = 25) -> List
         bal = row.get("current_balance", 0.0)
         dpd = row.get("days_past_due", 0)
         ir = row.get("interest_rate_imputed", 0.0)
-        etype = row.get("exception_type", "General Outlier")
+        raw_etype = row.get("exception_type", None)
+        if pd.isna(raw_etype) or str(raw_etype).lower() in ("nan", "none"):
+            etype = "Unsupervised Behavioral Outlier"
+        else:
+            etype = str(raw_etype)
 
         reasons = []
         if status == "Paid Off" and bal > 1000:
@@ -94,6 +98,8 @@ def generate_reviewer_anomaly_cases(df: pd.DataFrame, n_cases: int = 25) -> List
             recommended_action = "Audit foreclosure/charge-off legal timestamp"
         elif "note rate" in explanation:
             recommended_action = "Verify note rate against loan agreement schedule"
+        elif "chronic delinquency" in explanation:
+            recommended_action = "Refer to special servicing / default workout desk"
 
         cases.append({
             "loan_id": row["loan_id"],

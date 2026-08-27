@@ -1,20 +1,38 @@
 {
-  "exception_required": {
-    "model_type": "Hybrid LightGBM Classifier",
-    "f1_score": 1.0,
-    "roc_auc": 1.0,
-    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/exception_required_model.joblib"
-  },
-  "exception_type": {
-    "model_type": "Hybrid LightGBM Multiclass Classifier",
-    "macro_f1": 1.0,
-    "classes": [
-      "Data Conflict",
-      "Date Anomaly",
-      "Missing Document",
-      "Valuation Discrepancy",
-      "nan"
+  "deterministic_rule_engine": {
+    "component": "Component A (Deterministic Validation Rules Engine)",
+    "rules_evaluated": [
+      "VR001_date_anomaly",
+      "VR002_paidoff_balance",
+      "VR003_default_low_dpd",
+      "VR004_mod_missing_doc",
+      "VR005_excessive_balance_growth"
     ],
-    "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/exception_type_model.joblib"
-  }
+    "rule_match_rate": 1.0,
+    "nature": "Deterministic rule execution (100% conformance by construction on explicit schema/logic violations)"
+  },
+  "learned_ml_models": {
+    "component": "Component B (Learned ML Exception Models - Non-Circular)",
+    "features_used": 33,
+    "features_note": "Trained strictly on raw/engineered behavioral features and unsupervised anomaly score. Rule indicator signals explicitly excluded.",
+    "exception_required": {
+      "model_type": "Learned LightGBM Classifier",
+      "roc_auc": 0.831,
+      "f1_score_at_05": 0.7361,
+      "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/exception_required_model.joblib"
+    },
+    "exception_type": {
+      "model_type": "Learned LightGBM Multiclass Classifier",
+      "macro_f1": 0.5914,
+      "classes": [
+        "Data Conflict",
+        "Date Anomaly",
+        "Missing Document",
+        "Valuation Discrepancy",
+        "nan"
+      ],
+      "model_path": "/Users/amit/Desktop/intain/loan-performance-intelligence-engine/src/models/saved_models/exception_type_model.joblib"
+    }
+  },
+  "hybrid_inference_strategy": "Two-stage pipeline: (1) Component A executes deterministic validation rules first, flagging hard constraint breaches (VR001-VR005) with 100% precision. (2) Component B evaluates remaining records with gradient boosted trees and Isolation Forest to score probabilistic anomaly and exception risk."
 }

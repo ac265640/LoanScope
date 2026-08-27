@@ -100,7 +100,11 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 | `next_6m_delinquency_flag` | 0.7464 | **0.7656** (+0.0192) | 0.0627 | 0.2607 | **0.3599** (+0.0992, 5.7x prev) | **0.0486** | **39.66%** (6.3x lift) |
 | `next_12m_default_flag` | 0.7008 | **0.7179** (+0.0171) | 0.0451 | 0.1103 | **0.1401** (+0.0298, 3.1x prev) | **0.0415** | **18.52%** (4.1x lift) |
 | `next_12m_prepayment_flag` | 0.6773 | **0.6738** (-0.0035) | 0.0470 | 0.0828 | **0.0816** (-0.0011, 1.7x prev) | **0.0442** | **10.69%** (2.3x lift) |
-| `next_state` (Multiclass) | Macro-F1: 0.5111 | **Macro-F1: 0.5432** (+0.0321) | — | — | — | — | Top-1 Acc: **84.2%** |
+| `next_state` (6-class) | N/A | **N/A** | N/A | Macro-F1: 0.5111 | **Macro-F1: 0.5432** (+0.0321) | N/A | Top-1 Acc: **84.2%** |
+
+### Task 4: Anomaly & Exception Classification (Separated by Component)
+- **Component A (Deterministic Rule Engine)**: Evaluates hard constraints (VR001–VR005) with **100.00% Rule Match Rate** (by construction).
+- **Component B (Learned ML Model)**: Non-circular LightGBM on 32 behavioral features achieves **ROC-AUC: 0.8310**, **F1 @ 0.50: 0.7361**, and **Macro-F1: 0.5914**.
 
 *Note: All models use time-aware cohort splits by `origination_month` with formally asserted zero `loan_id` data leakage.*
 

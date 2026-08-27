@@ -42,7 +42,7 @@ All 15 advanced features are fully implemented, independently tested, and docume
 
 | # | Feature Name | Executable Script | Output Artifact | Key Empirical Finding / Metric | Status |
 | :-: | :--- | :--- | :--- | :--- | :---: |
-| **10.1** | **Competing-Risk Survival Model** | `src/models/survival/competing_risks.py` | `reports/survival_report.md`<br>`competing_risks_results.json` | Cause-specific Aalen-Johansen CIF: 46,413 loans, 6,789 defaults, 4,827 prepayments. Single-risk Kaplan-Meier overestimates 36m default risk by +2.14 percentage points due to competing prepayment censoring. | **PASS** |
+| **10.1** | **Competing-Risk Survival Model** | `src/models/survival/competing_risks.py` | `reports/survival_report.md`<br>`competing_risks_results.json` | Cause-specific Aalen-Johansen CIF: 46,413 loans, 6,789 defaults, 4,827 prepayments. Single-risk Kaplan-Meier overestimates 36m default risk by **+8.72 percentage points** (23.13% single-risk vs. 14.41% CIF) due to competing voluntary prepayment censoring. | **PASS** |
 | **10.2** | **Monte Carlo Portfolio Simulation** | `src/scenarios/monte_carlo.py` | `reports/scenario_report.md`<br>`monte_carlo_results.json` | 1,000-path stochastic simulation drawing from Beta uncertainty distributions. Adverse Credit Scenario: Default rate P5 = **8.01%**, P50 = **8.15%**, P95 = **8.29%** (P1–P99 fan interval `[7.96%, 8.35%]`). | **PASS** |
 | **10.3** | **Feature Drift Monitoring Dashboard** | `src/pipeline/drift_monitor.py`<br>`src/monitoring/drift_dashboard.py` | `reports/drift_monitoring_report.md`<br>`drift_monitoring_results.json` | 32 numeric features evaluated between train and test distributions: 22 Stable (PSI < 0.10), 1 Moderate Drift (`cur_bal_to_orig_ratio`, PSI = 0.11), 9 Severe Drift (frequency encodings & vintage indicators due to temporal shift). | **PASS** |
 | **10.4** | **Segment-Level Scenario Curves** | `src/scenarios/segment_curves.py` | `reports/scenario_report.md` | Time-series stress projection curves computed across 5,400 segment-month combinations sliced by vintage era, credit band, property state, and servicer name. | **PASS** |
@@ -207,7 +207,39 @@ pytest:            ✓ 46 passed in 0.63s
 
 ---
 
-## 10. Final Sign-Off & Verification Verdict
+## 10. Exception Classifier Circularity & Reporting Hardening (Master Prompt #7) — 2026-08-27
+
+### A. Exception Classifier Circularity Diagnosis & Resolution
+- **Investigation**: Documented in `ai_development_log/EXCEPTION_CLASSIFIER_INVESTIGATION.md`.
+- **Finding**: Original 1.0000 Macro-F1 was caused by target leakage: indicator flags computed from deterministic validation rules (`sig_*`) were fed as input features to LightGBM to predict `exception_required` (which had been constructed from those same rules).
+- **Remediation**: Separated into two distinct components:
+  1. **Component A (Deterministic Rule Engine)**: Evaluates hard constraints (VR001-VR005) with **100.00% Rule Match Rate** (by construction).
+  2. **Component B (Learned ML Exception Predictor)**: Retrained strictly on 32 non-circular behavioral features + Isolation Forest anomaly score (with zero rule indicator features).
+- **Non-Circular Out-of-Time Results**:
+  - `exception_required` (Binary): **ROC-AUC = 0.8310**, **F1 @ 0.50 = 0.7361**
+  - `exception_type` (Multiclass): **Macro-F1 = 0.5914**
+  - Two-stage hybrid pipeline: Component A catches deterministic breaches first; Component B evaluates continuous multi-attribute anomaly risk.
+
+### B. Rare-Event F1 & Decision Threshold Reporting
+- **Honest F1 Reporting at 0.50 Cutoff**:
+  - 12m Default: Baseline LR F1 = **0.1620**, LightGBM F1 = **0.0561** ($\Delta = -0.1059$).
+  - 12m Prepayment: Baseline LR F1 = **0.1318**, LightGBM F1 = **0.0000** ($\Delta = -0.1318$).
+- **Threshold-Optimized & Operational Queue Reporting**:
+  - 12m Default: Optimal F1 ($t=0.0568$) = **0.2002** (Recall: 39.76%, Precision: 13.38%); Top-5% Queue ($t=0.0877$) = **0.1945** (Precision: **18.52%**, an **8.12x lift** over 4.51% baseline).
+  - 12m Prepayment: Optimal F1 ($t=0.0602$) = **0.1460** (Recall: 46.38%, Precision: 8.66%); Top-5% Queue ($t=0.1023$) = **0.1068** (Precision: **10.69%**, a **2.28x lift** over 4.70% baseline).
+- Documented in `reports/model_card.md` explaining why 0.50 cutoff is inappropriate for ~4.5% prevalence events and establishing Precision@Top-k as the standard operational lens.
+
+### C. Reconciled Competing-Risk Survival Statistic
+- **Verified Calculation**: Single-risk Kaplan-Meier overestimates 36-month cumulative default probability by **+8.72 percentage points** (23.13% single-risk vs. 14.41% Aalen-Johansen CIF) due to voluntary prepayment censoring.
+- Reconciled across `reports/survival_report.md`, `reports/model_card.md`, `README.md`, and `FINAL_VERIFICATION.md` (removing any stale prototype references).
+
+### D. Data Quality Score Sensitivity & Calibration Tradeoff
+- **DQ Score Sensitivity**: Verified that clean records score **97.74** while corrupted records average **75.80** (a steep drop of **21.94 points**), confirming the penalty formula is sensitive to injected anomalies.
+- **Platt Calibration Tradeoff**: Documented that post-calibration Brier scores are marginally higher (+0.0003 across targets) due to Platt sigmoid probability shrinkage towards the empirical base rate, while Expected Calibration Error (ECE) drops by up to **76.3%** (e.g. 0.0097 to 0.0023 on Default).
+
+---
+
+## 11. Final Sign-Off & Verification Verdict
 
 The repository is in a **fully hardened, mathematically consistent, reproducible, and compliant state**. Every requirement from Section 9 and Section 10 is satisfied with rigorous code, empirical data, and independent automated verification.
 

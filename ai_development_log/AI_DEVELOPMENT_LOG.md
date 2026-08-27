@@ -147,7 +147,16 @@ This log documents the incremental engineering process, human review touchpoints
   - Discovered root cause: premature early stopping on raw cross-entropy with large scale_pos_weight caused LightGBM to stop after Tree 1.
   - Tuned capacity per horizon ($N=180$ for Default, $N=100$ for Prepayment, $N=150$ for Delinquency).
   - Out-of-time results: 12m Default PR-AUC reached **0.1401** (3.11x naive prevalence baseline 0.0451, beating Logistic Regression 0.1103); Precision @ Top 1% reached **36.65%** (8.12x lift). 12m Prepayment PR-AUC reached **0.0816** (1.74x naive prevalence baseline 0.0470); Precision @ Top 1% reached **9.74%** (2.07x lift).
-  - Traced full dataset lineage: 50,000 unique loans across static data; 46,413 training unique loans (874,435 monthly records) + 3,587 held-out unique test loans (69,871 monthly records). 3,587 rows in `submission.csv` confirmed as 100% of the unique test loan population.
+### Phase 11: Exception Classifier Circularity & Reporting Hardening (Master Prompt #7)
+- **Representative Prompt**:
+  > *"Investigate and fix the Hybrid Rule Classifier's Macro-F1 = 1.0000 circularity, report honest rare-event F1 with threshold-optimized metrics, reconcile the competing-risk bias statistic across all reports, document calibration Brier tradeoffs, and verify DQ score sensitivity."*
+- **Accepted**:
+  - Investigated root cause in `ai_development_log/EXCEPTION_CLASSIFIER_INVESTIGATION.md`: rule indicator flags (`sig_*`) had been fed as input features to LightGBM to predict rule-derived targets.
+  - Separated into Component A (Deterministic Rule Engine, 100% rule conformance by construction) and Component B (Learned ML Model, non-circular LightGBM on 32 behavioral features + Isolation Forest score with zero rule signals).
+  - Out-of-time results for non-circular ML model: `exception_required` ROC-AUC = **0.8310**, F1 = **0.7361**; `exception_type` Macro-F1 = **0.5914**.
+  - Reported honest rare-event F1 deltas at 0.50 cutoff alongside business-relevant threshold metrics (12m Default Optimal F1 = **0.2002**, Precision @ Top 5% = **18.52%** / 4.1x lift; 12m Prepayment Optimal F1 = **0.1460**, Precision @ Top 5% = **10.69%** / 2.3x lift).
+  - Reconciled competing-risk CIF bias across all documentation to **+8.72 percentage points** at 36 months (single-risk 23.13% vs. CIF 14.41%).
+  - Verified Data Quality score sensitivity: clean records average **97.74** while corrupted records drop steeply to **75.80** (-21.94 point penalty).
 
 ---
 

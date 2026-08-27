@@ -6,7 +6,7 @@
     "current_balance": 105044.96,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 1.0,
     "top_drivers": [
       "days_past_due",
@@ -23,7 +23,7 @@
     "current_balance": 105083.34,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 1.0,
     "top_drivers": [
       "days_past_due",
@@ -40,7 +40,7 @@
     "current_balance": 0.0,
     "interest_rate": 2.0,
     "days_past_due": 267,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.997,
     "top_drivers": [
       "days_past_due",
@@ -48,7 +48,7 @@
       "dpd_roll_max_6m"
     ],
     "plain_english_explanation": "Severe chronic delinquency with 267 days past due.",
-    "recommended_action": "Manual Servicer Reconciliation & Data Audit"
+    "recommended_action": "Refer to special servicing / default workout desk"
   },
   {
     "loan_id": "LN0027221",
@@ -57,7 +57,7 @@
     "current_balance": 197202.75,
     "interest_rate": 3.29,
     "days_past_due": 394,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9963,
     "top_drivers": [
       "days_past_due",
@@ -65,7 +65,7 @@
       "dpd_roll_max_6m"
     ],
     "plain_english_explanation": "Severe chronic delinquency with 394 days past due.",
-    "recommended_action": "Manual Servicer Reconciliation & Data Audit"
+    "recommended_action": "Refer to special servicing / default workout desk"
   },
   {
     "loan_id": "LN0026208",
@@ -74,7 +74,7 @@
     "current_balance": 105121.0,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9953,
     "top_drivers": [
       "days_past_due",
@@ -91,7 +91,7 @@
     "current_balance": 196540.71,
     "interest_rate": 3.29,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9926,
     "top_drivers": [
       "dpd_roll_max_3m",
@@ -108,7 +108,7 @@
     "current_balance": 105264.8,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9918,
     "top_drivers": [
       "days_past_due",
@@ -125,7 +125,7 @@
     "current_balance": 105157.97,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9918,
     "top_drivers": [
       "days_past_due",
@@ -142,7 +142,7 @@
     "current_balance": 105580.59,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9916,
     "top_drivers": [
       "days_past_due",
@@ -159,7 +159,7 @@
     "current_balance": 105636.96,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9915,
     "top_drivers": [
       "days_past_due",
@@ -176,7 +176,7 @@
     "current_balance": 105609.04,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9915,
     "top_drivers": [
       "days_past_due",
@@ -193,7 +193,7 @@
     "current_balance": 105229.85,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9909,
     "top_drivers": [
       "days_past_due",
@@ -210,7 +210,7 @@
     "current_balance": 244131.25,
     "interest_rate": 6.45,
     "days_past_due": 265,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.99,
     "top_drivers": [
       "days_past_due",
@@ -218,7 +218,7 @@
       "dpd_roll_max_6m"
     ],
     "plain_english_explanation": "Severe chronic delinquency with 265 days past due.",
-    "recommended_action": "Manual Servicer Reconciliation & Data Audit"
+    "recommended_action": "Refer to special servicing / default workout desk"
   },
   {
     "loan_id": "LN0026208",
@@ -227,7 +227,7 @@
     "current_balance": 105551.6,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9898,
     "top_drivers": [
       "days_past_due",
@@ -244,7 +244,7 @@
     "current_balance": 105398.24,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9891,
     "top_drivers": [
       "days_past_due",
@@ -261,7 +261,7 @@
     "current_balance": 105365.81,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9891,
     "top_drivers": [
       "days_past_due",
@@ -278,7 +278,7 @@
     "current_balance": 105332.77,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9891,
     "top_drivers": [
       "days_past_due",
@@ -295,7 +295,7 @@
     "current_balance": 105194.25,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9891,
     "top_drivers": [
       "days_past_due",
@@ -312,7 +312,7 @@
     "current_balance": 105299.1,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9891,
     "top_drivers": [
       "days_past_due",
@@ -329,7 +329,7 @@
     "current_balance": 0.0,
     "interest_rate": 4.52,
     "days_past_due": 304,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9884,
     "top_drivers": [
       "days_past_due",
@@ -337,7 +337,7 @@
       "dpd_roll_max_6m"
     ],
     "plain_english_explanation": "Severe chronic delinquency with 304 days past due.",
-    "recommended_action": "Manual Servicer Reconciliation & Data Audit"
+    "recommended_action": "Refer to special servicing / default workout desk"
   },
   {
     "loan_id": "LN0026208",
@@ -346,7 +346,7 @@
     "current_balance": 105522.06,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.988,
     "top_drivers": [
       "days_past_due",
@@ -363,7 +363,7 @@
     "current_balance": 105664.37,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.987,
     "top_drivers": [
       "days_past_due",
@@ -380,7 +380,7 @@
     "current_balance": 105430.07,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9864,
     "top_drivers": [
       "days_past_due",
@@ -397,7 +397,7 @@
     "current_balance": 0.0,
     "interest_rate": 4.59,
     "days_past_due": 367,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9859,
     "top_drivers": [
       "days_past_due",
@@ -405,7 +405,7 @@
       "dpd_roll_max_6m"
     ],
     "plain_english_explanation": "Severe chronic delinquency with 367 days past due.",
-    "recommended_action": "Manual Servicer Reconciliation & Data Audit"
+    "recommended_action": "Refer to special servicing / default workout desk"
   },
   {
     "loan_id": "LN0026208",
@@ -414,7 +414,7 @@
     "current_balance": 105491.97,
     "interest_rate": 22.65,
     "days_past_due": 120,
-    "exception_type": NaN,
+    "exception_type": "Unsupervised Behavioral Outlier",
     "anomaly_score": 0.9844,
     "top_drivers": [
       "days_past_due",

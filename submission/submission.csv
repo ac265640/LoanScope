@@ -351,7 +351,7 @@ LN0005094,2024-01,0.024,0.0388,0.0299,0.0488,Current,0,None,0.149,interest_rate_
 LN0005098,2024-09,0.0239,0.0392,0.0269,0.0238,Current,0,None,0.2363,interest_rate_imputed,balance_change_1m_pct,credit_score_ordinal,Standard Portfolio Surveillance,0.9462
 LN0005101,2023-10,0.0241,0.0399,0.0293,0.0442,Current,0,None,0.2352,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9414
 LN0005119,2024-05,0.023,0.0354,0.0278,0.0374,Current,0,None,0.1995,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9444
-LN0005130,2025-02,0.9088,0.9381,0.023,0.0152,90+ DPD,0,None,0.8612,days_past_due,dpd_roll_max_6m,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
+LN0005130,2025-02,0.9088,0.9381,0.023,0.0152,90+ DPD,1,Missing Document,0.8612,days_past_due,dpd_roll_max_6m,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
 LN0005134,2023-02,0.0209,0.0303,0.023,0.0151,Default,1,Data Conflict,0.3138,interest_rate_imputed,balance_change_1m_pct,credit_score_ordinal,Audit & Data Quality Exception Review,0.9539
 LN0005140,2023-03,0.0228,0.0355,0.0299,0.07,Current,0,None,0.1518,credit_score_ordinal,balance_change_1m_pct,interest_rate_imputed,Standard Portfolio Surveillance,0.9403
 LN0005181,2024-12,0.0227,0.033,0.0249,0.0181,Current,0,None,0.4831,balance_change_1m_pct,credit_score_ordinal,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9502
@@ -454,7 +454,7 @@ LN0006560,2024-04,0.0224,0.0343,0.0266,0.0938,Current,0,None,0.2027,credit_score
 LN0006574,2025-04,0.0245,0.0345,0.0251,0.0179,Current,0,None,0.2629,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9498
 LN0006615,2023-07,0.0209,0.0303,0.0231,0.0148,Default,1,Data Conflict,0.3885,balance_change_1m_pct,interest_rate_imputed,balance_to_orig_ratio,Audit & Data Quality Exception Review,0.9537
 LN0006641,2024-12,0.0229,0.0338,0.0253,0.0211,Current,0,None,0.2581,interest_rate_imputed,credit_score_ordinal,balance_change_1m_pct,Standard Portfolio Surveillance,0.9494
-LN0006656,2025-10,0.9008,0.9217,0.023,0.0145,90+ DPD,0,None,0.9084,days_past_due,dpd_roll_max_6m,balance_change_1m_pct,Audit & Data Quality Exception Review,0.954
+LN0006656,2025-10,0.9008,0.9217,0.023,0.0145,90+ DPD,1,Missing Document,0.9084,days_past_due,dpd_roll_max_6m,balance_change_1m_pct,Audit & Data Quality Exception Review,0.954
 LN0006687,2024-05,0.0209,0.0304,0.0231,0.015,Default,1,Data Conflict,0.5743,days_past_due,dpd_roll_max_6m,interest_rate_imputed,Audit & Data Quality Exception Review,0.9538
 LN0006712,2024-05,0.0209,0.0303,0.023,0.0147,Default,1,Data Conflict,0.2518,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Audit & Data Quality Exception Review,0.9539
 LN0006717,2025-03,0.0217,0.0322,0.0249,0.0359,Current,0,None,0.4461,balance_change_1m_pct,credit_score_ordinal,interest_rate_imputed,Standard Portfolio Surveillance,0.9502
@@ -784,7 +784,7 @@ LN0011376,2024-01,0.0263,0.0454,0.0388,0.0235,Current,0,None,0.1586,credit_score
 LN0011414,2023-09,0.0222,0.0337,0.0264,0.0888,Current,0,None,0.131,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9472
 LN0011415,2025-11,0.0215,0.0318,0.0263,0.0278,Current,0,None,0.2902,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9475
 LN0011420,2023-06,0.0296,0.0536,0.0394,0.0642,Current,0,None,0.2313,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9211
-LN0011428,2025-07,0.0224,0.0344,0.0259,0.0333,Prepaid,0,None,0.4172,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9482
+LN0011428,2025-07,0.0224,0.0344,0.0259,0.0333,Prepaid,1,Missing Document,0.4172,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Audit & Data Quality Exception Review,0.9482
 LN0011436,2024-03,0.0209,0.0305,0.0231,0.0147,Default,1,Data Conflict,0.3245,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Audit & Data Quality Exception Review,0.9538
 LN0011446,2026-01,0.0217,0.0322,0.0244,0.0242,Prepaid,0,None,0.3547,credit_score_ordinal,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9512
 LN0011467,2023-12,0.0277,0.0481,0.0445,0.0347,Current,0,None,0.1576,credit_score_ordinal,balance_change_1m_pct,interest_rate_imputed,Standard Portfolio Surveillance,0.911
@@ -807,7 +807,7 @@ LN0011642,2024-05,0.0264,0.0436,0.0346,0.0301,Current,0,None,0.3266,interest_rat
 LN0011680,2023-07,0.0209,0.0303,0.023,0.0146,Prepaid,0,None,0.5927,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Standard Portfolio Surveillance,0.954
 LN0011685,2023-08,0.0249,0.042,0.0349,0.032,Current,0,None,0.2252,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9302
 LN0011713,2022-11,0.0209,0.0302,0.023,0.0145,Prepaid,0,None,0.5388,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Standard Portfolio Surveillance,0.954
-LN0011730,2023-01,0.0209,0.0303,0.023,0.0147,Prepaid,0,None,0.6545,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
+LN0011730,2023-01,0.0209,0.0303,0.023,0.0147,Prepaid,1,Missing Document,0.6545,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
 LN0011733,2024-07,0.0237,0.0383,0.0281,0.0389,Current,0,None,0.3975,balance_change_1m_pct,interest_rate_imputed,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9438
 LN0011737,2025-06,0.0219,0.0325,0.0243,0.0472,Current,0,None,0.2766,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9513
 LN0011761,2023-08,0.0235,0.0372,0.0298,0.0706,Current,0,None,0.2422,credit_score_ordinal,balance_change_1m_pct,interest_rate_imputed,Standard Portfolio Surveillance,0.9404
@@ -1793,7 +1793,7 @@ LN0025640,2024-01,0.0245,0.0389,0.031,0.0256,Current,0,None,0.254,credit_score_o
 LN0025654,2022-12,0.0231,0.0368,0.0287,0.0966,Current,0,None,0.2562,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9426
 LN0025704,2023-08,0.0293,0.0492,0.047,0.0186,Current,0,None,0.2646,credit_score_ordinal,balance_change_1m_pct,interest_rate_imputed,Standard Portfolio Surveillance,0.906
 LN0025705,2024-10,0.0271,0.0442,0.0292,0.0198,Current,0,None,0.3317,credit_score_ordinal,balance_change_1m_pct,interest_rate_imputed,Standard Portfolio Surveillance,0.9416
-LN0025720,2023-12,0.0339,0.0713,0.0597,0.0239,30-59 DPD,0,None,0.2577,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.8805
+LN0025720,2023-12,0.0339,0.0713,0.0597,0.0239,30-59 DPD,1,Missing Document,0.2577,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Audit & Data Quality Exception Review,0.8805
 LN0025742,2024-05,0.0249,0.038,0.0284,0.0356,Current,0,None,0.7541,days_past_due,dpd_roll_max_6m,interest_rate_imputed,Audit & Data Quality Exception Review,0.9432
 LN0025746,2025-08,0.0223,0.0339,0.0259,0.0319,Current,0,None,0.1947,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9483
 LN0025756,2025-01,0.0227,0.035,0.0269,0.0297,Current,0,None,0.1818,credit_score_ordinal,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9461
@@ -2244,7 +2244,7 @@ LN0031890,2025-02,0.031,0.0607,0.0371,0.0224,30-59 DPD,0,None,0.4391,balance_cha
 LN0031898,2023-12,0.0209,0.0302,0.023,0.0147,Prepaid,0,None,0.6897,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
 LN0031924,2024-06,0.0317,0.0594,0.0464,0.0311,30-59 DPD,0,None,0.1313,credit_score_ordinal,interest_rate_imputed,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9072
 LN0031939,2023-06,0.0222,0.0344,0.026,0.0588,Current,0,None,0.2416,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.948
-LN0031964,2024-09,0.0209,0.0304,0.023,0.0146,Default,0,None,0.7122,days_past_due,dpd_roll_max_6m,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
+LN0031964,2024-09,0.0209,0.0304,0.023,0.0146,Default,1,Missing Document,0.7122,days_past_due,dpd_roll_max_6m,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
 LN0031976,2024-06,0.0259,0.0436,0.0325,0.0233,Current,0,None,0.2314,balance_change_1m_pct,credit_score_ordinal,interest_rate_imputed,Standard Portfolio Surveillance,0.935
 LN0031993,2023-04,0.0209,0.0304,0.0231,0.015,Prepaid,0,None,0.7587,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Audit & Data Quality Exception Review,0.9539
 LN0031998,2025-02,0.0285,0.0549,0.0467,0.0275,Current,0,None,0.2025,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9067
@@ -2598,7 +2598,7 @@ LN0036639,2024-06,0.0209,0.0303,0.023,0.0146,Prepaid,0,None,0.6392,balance_chang
 LN0036640,2025-09,0.0226,0.0344,0.026,0.0223,Current,0,None,0.2607,interest_rate_imputed,credit_score_ordinal,balance_change_1m_pct,Standard Portfolio Surveillance,0.948
 LN0036650,2023-07,0.0233,0.0367,0.0302,0.0391,Current,0,None,0.1145,balance_change_1m_pct,interest_rate_imputed,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9396
 LN0036655,2025-03,0.0227,0.0354,0.0274,0.0332,Current,0,None,0.3603,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9451
-LN0036661,2022-10,0.0209,0.0302,0.023,0.0146,Prepaid,0,None,0.6497,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Standard Portfolio Surveillance,0.954
+LN0036661,2022-10,0.0209,0.0302,0.023,0.0146,Prepaid,1,Data Conflict,0.6497,balance_change_1m_pct,balance_to_orig_ratio,credit_score_ordinal,Audit & Data Quality Exception Review,0.954
 LN0036668,2023-10,0.0237,0.0395,0.0307,0.0632,Current,0,None,0.2545,interest_rate_imputed,balance_change_1m_pct,credit_score_ordinal,Standard Portfolio Surveillance,0.9387
 LN0036685,2025-08,0.0215,0.0316,0.0238,0.0182,Current,0,None,0.4355,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9525
 LN0036689,2026-03,0.0214,0.0318,0.0242,0.0183,Current,0,None,0.3978,credit_score_ordinal,balance_change_1m_pct,interest_rate_imputed,Standard Portfolio Surveillance,0.9515
@@ -3285,7 +3285,7 @@ LN0045969,2024-05,0.0215,0.0315,0.0243,0.0563,Current,0,None,0.4286,balance_chan
 LN0045976,2025-07,0.0238,0.0361,0.0258,0.021,Current,0,None,0.3839,dpd_roll_max_6m,credit_score_ordinal,balance_change_1m_pct,Standard Portfolio Surveillance,0.9484
 LN0045982,2023-05,0.0209,0.0303,0.023,0.0146,Prepaid,0,None,0.5364,balance_change_1m_pct,balance_to_orig_ratio,interest_rate_imputed,Standard Portfolio Surveillance,0.9539
 LN0045983,2025-01,0.0265,0.0483,0.0427,0.0309,Current,0,None,0.22,interest_rate_imputed,balance_change_1m_pct,credit_score_ordinal,Standard Portfolio Surveillance,0.9146
-LN0045986,2024-10,0.0281,0.0509,0.0425,0.0209,Current,0,None,0.3084,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.915
+LN0045986,2024-10,0.0281,0.0509,0.0425,0.0209,Current,1,Missing Document,0.3084,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Audit & Data Quality Exception Review,0.915
 LN0046032,2025-05,0.0273,0.047,0.036,0.0308,Current,0,None,0.1104,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9281
 LN0046037,2024-06,0.0345,0.073,0.0779,0.0383,Current,0,None,0.3951,interest_rate_imputed,balance_change_1m_pct,balance_to_orig_ratio,Standard Portfolio Surveillance,0.8442
 LN0046046,2023-12,0.6678,0.7906,0.3,0.0183,60-89 DPD,0,None,0.6349,days_past_due,dpd_roll_max_6m,balance_change_1m_pct,Active Credit Workout & Pre-Foreclosure Outreach,0.6
@@ -3474,7 +3474,7 @@ LN0048530,2023-09,0.0263,0.0447,0.0378,0.044,Current,0,None,0.2141,interest_rate
 LN0048538,2024-07,0.0238,0.0375,0.0283,0.0431,Current,0,None,0.3241,balance_change_1m_pct,interest_rate_imputed,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9435
 LN0048563,2023-03,0.0221,0.0335,0.0261,0.0968,Current,0,None,0.2284,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9478
 LN0048568,2023-02,0.0228,0.0349,0.0267,0.0657,Current,0,None,0.1369,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9467
-LN0048588,2024-12,0.9399,0.9551,0.0231,0.0148,90+ DPD,0,None,0.9025,days_past_due,dpd_roll_max_6m,balance_change_1m_pct,Audit & Data Quality Exception Review,0.9539
+LN0048588,2024-12,0.9399,0.9551,0.0231,0.0148,90+ DPD,1,Missing Document,0.9025,days_past_due,dpd_roll_max_6m,balance_change_1m_pct,Audit & Data Quality Exception Review,0.9539
 LN0048599,2025-07,0.0209,0.0304,0.023,0.0151,Default,0,None,0.639,days_past_due,dpd_roll_max_6m,balance_change_1m_pct,Standard Portfolio Surveillance,0.9539
 LN0048600,2025-01,0.0235,0.0371,0.0287,0.0209,Current,0,None,0.2567,credit_score_ordinal,interest_rate_imputed,balance_change_1m_pct,Standard Portfolio Surveillance,0.9426
 LN0048631,2023-10,0.0278,0.0483,0.0368,0.0373,Current,0,None,0.211,balance_change_1m_pct,interest_rate_imputed,balance_to_orig_ratio,Standard Portfolio Surveillance,0.9264

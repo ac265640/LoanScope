@@ -20,7 +20,7 @@ import pandas as pd
 
 from src.features.feature_engineer import engineer_panel_features, get_feature_columns
 from src.models.anomaly.isolation_forest import predict_anomaly_scores
-from src.models.anomaly.exception_predictor import compute_rule_violation_signals
+from src.models.anomaly.exception_predictor import compute_rule_violation_signals, predict_hybrid_exceptions
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
@@ -77,29 +77,8 @@ def generate_final_submission():
     anom_scores = predict_anomaly_scores(feat_df)
     feat_df["learned_anomaly_score"] = anom_scores
 
-    # 5. Exception Prediction (Hybrid Model)
-    rule_df = compute_rule_violation_signals(feat_df)
-    hybrid_X = pd.concat([X, rule_df, pd.Series(anom_scores, name="learned_anomaly_score", index=feat_df.index)], axis=1)
-
-    req_path = MODELS_DIR / "exception_required_model.joblib"
-    if req_path.exists():
-        clf_req = joblib.load(req_path)
-        pred_req = (clf_req.predict_proba(hybrid_X)[:, 1] >= 0.5).astype(int)
-    else:
-        pred_req = (rule_df["total_rule_violations"] > 0).astype(int)
-
-    type_path = MODELS_DIR / "exception_type_model.joblib"
-    if type_path.exists():
-        type_dict = joblib.load(type_path)
-        clf_type = type_dict["model"]
-        idx_to_type = type_dict["idx_to_type"]
-        type_preds_idx = clf_type.predict(hybrid_X)
-        pred_types = [idx_to_type[i] for i in type_preds_idx]
-    else:
-        pred_types = ["None" if r == 0 else "Data Conflict" for r in pred_req]
-
-    # Clean nan exception types
-    pred_types = ["None" if pd.isna(t) or str(t) == "nan" else str(t) for t in pred_types]
+    # 5. Hybrid Exception Prediction (Rule Engine + Learned ML Model)
+    pred_req, pred_types = predict_hybrid_exceptions(feat_df)
 
     # 6. Top SHAP Drivers & Actions
     top_driver_1, top_driver_2, top_driver_3 = [], [], []
