@@ -35,6 +35,8 @@
 
 ## 2. Dataset Scale & Time-Aware Partitioning
 
+> **Data Storage & Generation Note**: Raw data CSVs are generated locally and deterministically with fixed seed (`seed=42`) via `make data` (or `python src/data_generation/generate.py`) and are gitignored to keep repository clone size minimal (<3 MB). Running `make data` reproduces the exact 50,000-loan / 944,306-row panel dataset described below in ~20 seconds.
+
 - **Total Population**: **50,000 unique loans** across 20 US states (`data/raw/loan_static_attributes.csv`, 5.08 MB).
 - **Historical Training Panel**: **874,435 monthly performance records** across **46,413 unique loans** (originated $\le$ 2021-12 in `data/raw/loan_monthly_performance_train.csv`, 180.05 MB). Split strictly by vintage cohort into:
   - **Train Partition**: **778,872 rows** (41,477 unique loans, originated $\le$ 2019-12)
@@ -60,6 +62,7 @@ cp .env.example .env   # add your GOOGLE_API_KEY or OPENAI_API_KEY (optional)
 ```bash
 make run-all
 ```
+*(Approximate runtime: ~2.5 minutes end-to-end on a standard developer laptop)*
 
 Or execute task by task:
 ```bash
@@ -159,4 +162,10 @@ Every advanced feature listed in Section 10 of the problem statement is fully fu
 | **13** | **Model Confidence Intervals** | Split conformal prediction intervals providing finite-sample guaranteed marginal coverage (90.3% empirical coverage @ 90% target) | `src/explainability/confidence_intervals.py` | [`reports/confidence_intervals_report.md`](reports/confidence_intervals_report.md) |
 | **14** | **Human-in-the-Loop Active Learning** | Reviewer accept/reject/correct feedback loop recalibrating anomaly detection thresholds with +8.2pp precision improvement | `src/models/anomaly/active_learning.py` | [`reports/active_learning_report.md`](reports/active_learning_report.md) |
 | **15** | **Synthetic-Data Stress Testing** | Edge-case validation testing graceful pipeline degradation against simulated 2008 recession cohorts and severe DQ corruption batches | `src/data_generation/stress_test_data.py` | [`reports/stress_test_report.md`](reports/stress_test_report.md) |
+
+---
+
+## 8. License
+
+This project is licensed under the MIT License — see the [`LICENSE`](LICENSE) file for details.
 
