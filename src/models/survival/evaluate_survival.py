@@ -5,16 +5,21 @@ Compares sophisticated survival models (Kaplan-Meier & Cox PH) against naive bas
 (flat empirical hazard rate) to quantify model lift, Concordance Index, and Integrated Brier Score.
 """
 
-import sys
 import json
 import logging
-from pathlib import Path
 from typing import Dict, Any
 
 import numpy as np
 import pandas as pd
 from lifelines import KaplanMeierFitter, CoxPHFitter
 from sklearn.metrics import brier_score_loss
+
+from pathlib import Path
+import sys
+
+_ROOT = Path(__file__).resolve().parents[3]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from src.models.survival.kaplan_meier import prepare_survival_dataset
 

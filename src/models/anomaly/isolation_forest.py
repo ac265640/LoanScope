@@ -5,11 +5,16 @@ Fits an unsupervised Isolation Forest model on multi-attribute continuous & enco
 Generates normalized record-level anomaly scores in [0.0, 1.0] where 1.0 indicates extreme deviation.
 """
 
+from pathlib import Path
 import sys
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any, Tuple
 
 import numpy as np
@@ -21,7 +26,6 @@ from src.features.feature_engineer import engineer_panel_features, get_feature_c
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
 
-ROOT = Path(__file__).resolve().parents[3]
 RAW_DIR = ROOT / "data" / "raw"
 MODELS_DIR = ROOT / "src" / "models" / "saved_models"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)

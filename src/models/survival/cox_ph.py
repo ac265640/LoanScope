@@ -5,16 +5,21 @@ Fits semi-parametric Cox Proportional Hazards regression to quantify hazard rati
 and survival trajectories conditional on credit score, LTV, DTI, interest rate, and vintage.
 """
 
-import sys
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any
 
 import numpy as np
 import pandas as pd
 from lifelines import CoxPHFitter
+
+from pathlib import Path
+import sys
+
+_ROOT = Path(__file__).resolve().parents[3]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from src.models.survival.kaplan_meier import prepare_survival_dataset
 from src.features.feature_engineer import CREDIT_BAND_MAP, LTV_BAND_MAP, DTI_BAND_MAP

@@ -5,15 +5,20 @@ Extracts top contributing driver features for anomalous records and compiles
 at least 20 detailed, reviewer-ready anomaly case files with plain-English explanations.
 """
 
-import sys
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any, List
 
 import numpy as np
 import pandas as pd
+
+from pathlib import Path
+import sys
+
+_ROOT = Path(__file__).resolve().parents[3]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from src.features.feature_engineer import engineer_panel_features, get_feature_columns
 from src.models.anomaly.isolation_forest import predict_anomaly_scores

@@ -4,16 +4,21 @@ Local Explainability Engine (SHAP Waterfall Attributions per Loan)
 Computes instance-level local feature contributions (base value + feature impacts = predicted log-odds).
 """
 
-import sys
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any, List
 
 import numpy as np
 import pandas as pd
 import shap
+
+from pathlib import Path
+import sys
+
+_ROOT = Path(__file__).resolve().parents[2]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from src.features.feature_engineer import engineer_panel_features, get_feature_columns
 

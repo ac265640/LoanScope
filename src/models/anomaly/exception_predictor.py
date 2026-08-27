@@ -5,11 +5,16 @@ Combines deterministic validation rule violations with learned unsupervised anom
 to accurately predict `exception_required` (binary) and `exception_type` (multiclass).
 """
 
+from pathlib import Path
 import sys
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import json
 import joblib
 import logging
-from pathlib import Path
 from typing import Dict, Any, Tuple
 
 import numpy as np
@@ -23,7 +28,6 @@ from src.models.anomaly.isolation_forest import predict_anomaly_scores
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger(__name__)
 
-ROOT = Path(__file__).resolve().parents[3]
 RAW_DIR = ROOT / "data" / "raw"
 MODELS_DIR = ROOT / "src" / "models" / "saved_models"
 

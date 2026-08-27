@@ -17,12 +17,17 @@ Run: PYTHONPATH=. python src/scenarios/monte_carlo.py
 
 import json
 import logging
-import sys
-from pathlib import Path
 
 import joblib
 import numpy as np
 import pandas as pd
+
+from pathlib import Path
+import sys
+
+_ROOT = Path(__file__).resolve().parents[2]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from src.features.feature_engineer import engineer_panel_features, get_feature_columns
 from src.pipeline.splitter import time_aware_cohort_split
