@@ -148,7 +148,66 @@ tests/test_validator.py::test_feature_validator_fails_on_all_nan PASSED         
 
 ---
 
-## 8. Final Sign-Off & Verification Verdict
+## 9. Fresh-Clone Reproducibility Test (Master Prompt #6) — 2026-08-27
+
+### Environment
+- **Clone URL**: `https://github.com/ac265640/LoanScope.git`
+- **Tested Commit**: `0245d3b` (fix: sys.path.insert before src imports in all standalone scripts)
+- **Test Directory**: `/Users/amit/Desktop/intain/fresh_clone_test/LoanScope` (fully deleted and re-cloned)
+- **Date / Time**: 2026-08-27 21:51 IST (16:21 UTC)
+
+### Commands Run (verbatim, following README Section 3)
+```bash
+rm -rf /Users/amit/Desktop/intain/fresh_clone_test
+git clone https://github.com/ac265640/LoanScope.git
+cd LoanScope
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+
+# Pipeline
+python src/data_generation/generate.py
+python src/models/prediction/train_baseline.py
+python src/models/prediction/train_lgbm.py
+python src/models/prediction/calibration.py
+python src/models/anomaly/isolation_forest.py
+python src/models/anomaly/exception_predictor.py
+python src/pipeline/generate_submission.py
+
+# Verification
+pytest tests/ -v
+```
+
+### Attempt 1 — FAILED
+**Error**: `ModuleNotFoundError: No module named 'src'` in `isolation_forest.py` and `exception_predictor.py`. Root cause: `sys.path.insert(0, ROOT)` was placed *after* `from src.*` import lines in 12 scripts, which works when running from the project root with `PYTHONPATH=.` (as `make` does via Makefile's `PYTHON = PYTHONPATH=. python`) but fails when running `python src/...` directly as the README instructs.
+
+**Fix Applied**: Moved `sys.path.insert(0, ROOT)` to the very top (before all `from src.*` imports) in 12 scripts across `src/models/anomaly/`, `src/explainability/`, `src/models/survival/`, and `src/scenarios/`. Committed as `0245d3b` and pushed.
+
+### Attempt 2 — PASS ✅
+```
+Data generation:   ✓ train.csv (874,435 rows, 46,413 loans), test.csv (69,871 rows, 3,587 loans)
+Model training:    ✓ LightGBM trained for all 5 targets
+Calibration:       ✓ Platt/Isotonic calibration completed
+Anomaly:           ✓ Isolation Forest trained and saved
+Exception:         ✓ Hybrid exception classifier trained and saved
+Submission:        ✓ submission/submission.csv (3,587 rows)
+pytest:            ✓ 46 passed in 0.63s
+```
+
+### Submission Spot-Check (Post-Fix Model Confirmation)
+| Column | Mean | Std | Min | Max | Spread | Flat? |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `prob_next_12m_default` | 0.0347 | 0.0340 | 0.0229 | 0.6995 | 0.6766 | **NO — post-fix confirmed** |
+| `prob_next_12m_prepayment` | 0.0310 | 0.0188 | 0.0145 | 0.1736 | 0.1591 | **NO — post-fix confirmed** |
+
+**Top-1% Default Risk**: 36 loans, min score 0.1623, mean score 0.3098 — confirms strong discrimination at the top of the surveillance queue (pre-fix underfit model gave ~0.05 uniformly for all loans).
+
+**Verdict**: **PASS** — Fresh-clone pipeline reproducible end-to-end with no manual intervention beyond README-documented steps. Post-fix LightGBM models confirmed active in the fresh run.
+
+---
+
+## 10. Final Sign-Off & Verification Verdict
 
 The repository is in a **fully hardened, mathematically consistent, reproducible, and compliant state**. Every requirement from Section 9 and Section 10 is satisfied with rigorous code, empirical data, and independent automated verification.
 
