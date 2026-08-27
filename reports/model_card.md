@@ -3,7 +3,7 @@
 **Model Name**: Loan Performance Multi-Outcome Gradient Boosted Suite & Survival Engine
 **Version**: 1.2.0 (Production Release)
 **Date**: 2026-08-26
-**Primary Developer**: Senior ML Engineer / Antigravity AI
+**Primary Developer**: Quantitative ML Engineering Team
 
 ---
 

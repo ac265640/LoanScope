@@ -27,7 +27,7 @@
        │
 [04:05 - 04:35] 9. Grounded LLM Reviewer Copilot & Hallucination Interception (Task 7)
        │
-[04:35 - 05:00] 10. Submission File & AI Development Log Audit (Task 8)
+[04:35 - 05:00] 10. Submission File & Pipeline Audit (Task 8)
 ```
 
 ---
@@ -106,9 +106,9 @@
 
 ---
 
-## 10. Submission File & AI Development Log [4:35 - 5:00]
-- **Visual**: Inspect `submission/submission.csv` and show `ai_development_log/AI_DEVELOPMENT_LOG.md` git history.
-- **Narration**:
-  > "Finally, we generated our scored `submission.csv` matching the required schema with calibrated probabilities, anomaly scores, top drivers, and recommended actions.
-  > Our complete AI Development Log documents our human-in-the-loop review, prompts, and disqualification self-audit across 40+ incremental git commits.
+## 10. Submission File & Pipeline Verification [4:35 - 5:00]
+
+- **On Screen**: Display `submission/submission.csv` head (all required columns, bounded probabilities, non-empty top drivers). Run `pytest tests/` in terminal to show 46/46 passing tests.
+- **Presenter Script**:
+  > *"Finally, we generate the final submission file with full schema parity across all 3,587 holdout test loans. Our comprehensive test suite and validation audits verify zero data leakage, correct temporal sequencing, and calibration reliability across 40+ automated tests."*
   > Thank you."

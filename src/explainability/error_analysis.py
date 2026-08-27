@@ -192,7 +192,7 @@ def generate_model_card() -> str:
     md.append("\n**Model Name**: Loan Performance Multi-Outcome Gradient Boosted Suite & Survival Engine")
     md.append("**Version**: 1.2.0 (Production Release)")
     md.append(f"**Date**: {pd.Timestamp.now().strftime('%Y-%m-%d')}")
-    md.append("**Primary Developer**: Senior ML Engineer / Antigravity AI")
+    md.append("**Primary Developer**: Quantitative ML Engineering Team")
     md.append("\n---\n")
 
     md.append("## 1. Model Overview & Objectives\n")

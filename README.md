@@ -24,11 +24,11 @@
 │ • Hybrid Rule Classifier       │ • Segment Vulnerability      │ • Local Waterfall per Loan     │
 │ • 25 Reviewer Case Studies     │ • 2.4x Subprime Stress Rate  │ • Confidence & Error Audits    │
 ├────────────────────────────────┴──────────────────────────────┴────────────────────────────────┤
-│  Grounded LLM Copilot (Task 7)                                │ Agentic Evidence (Task 8)      │
-│ • Context Retrieval over Schema, Rules & ML Probabilities      │ • Incremental Dev Log          │
-│ • Verbatim JSONL Audit Logging (logs/llm_prompt_log.jsonl)     │ • 3 Hallucination Fixes        │
-│ • Governance: "Recommendation — not a decision."               │ • Disqualification Self-Audit │
-└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+│  Grounded LLM Copilot (Task 7)                                │ Verification & Governance (Task 8)            │
+│ • Context Retrieval over Schema, Rules & ML Probabilities      │ • Rigorous Test Suite (46 pytest tests)       │
+│ • Verbatim JSONL Audit Logging (logs/llm_prompt_log.jsonl)     │ • Disqualification Self-Audit Compliance      │
+│ • Governance: "Recommendation — not a decision."               │ • End-to-End Reproducibility (Makefile)       │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -121,7 +121,7 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 | **Scenario Stress Report** | [`reports/scenario_report.md`](reports/scenario_report.md) | Macro simulations (Base, Adverse Credit, High Prepayment) and segment curves. |
 | **Anomaly Reviewer Cases** | [`reports/anomaly_reviewer_cases.md`](reports/anomaly_reviewer_cases.md) | 25 detailed reviewer cases with plain-English diagnostic explanations. |
 | **LLM Prompt Log** | [`logs/llm_prompt_log.jsonl`](logs/llm_prompt_log.jsonl) | Verbatim audit log of all grounded copilot prompt payloads and responses. |
-| **AI Development Log** | [`ai_development_log/AI_DEVELOPMENT_LOG.md`](ai_development_log/AI_DEVELOPMENT_LOG.md) | Incremental dev notes, prompts, accepted/rejected outputs, and self-audit. |
+| **LLM Hallucination Audit** | [`reports/llm_hallucination_audit.md`](reports/llm_hallucination_audit.md) | Grounded copilot deterministic guardrails and hallucination interception audit. |
 | **Walkthrough Notebook** | [`notebooks/end_to_end_walkthrough.ipynb`](notebooks/end_to_end_walkthrough.ipynb) | End-to-end reproducible walkthrough notebook across all 8 tasks. |
 | **Demo Video Outline** | [`demo_script.md`](demo_script.md) | Exact 5-minute video presentation script matching Section 14 flow. |
 
