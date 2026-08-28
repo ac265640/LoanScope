@@ -422,7 +422,7 @@ def generate_servicer_updates(train_df: pd.DataFrame) -> pd.DataFrame:
     return sample
 
 
-def main(n_loans: int = N_LOANS, max_months: int = MAX_MONTHS):
+def main(n_loans: int = N_LOANS, max_months: int = MAX_MONTHS, skip_targets: bool = False):
     np.random.seed(SEED)
     random.seed(SEED)
     log.info(f"=== Synthetic Data Generation (N_LOANS={n_loans:,}) ===")
@@ -434,7 +434,8 @@ def main(n_loans: int = N_LOANS, max_months: int = MAX_MONTHS):
 
     # 2. Panel
     panel = generate_panel_fast(statics, max_months=max_months)
-    panel = add_forward_targets_and_exceptions(panel)
+    if not skip_targets:
+        panel = add_forward_targets_and_exceptions(panel)
 
     # 3. Time-aware split: Train <= 2021-12, Test >= 2022-01
     dates = pd.to_datetime(panel["origination_month"] + "-01")
@@ -453,6 +454,10 @@ def main(n_loans: int = N_LOANS, max_months: int = MAX_MONTHS):
     test_df.to_csv(RAW_DIR / "loan_monthly_performance_test.csv", index=False)
     log.info(f"✓ train.csv ({len(train_df):,} rows, {train_df['loan_id'].nunique():,} loans)")
     log.info(f"✓ test.csv  ({len(test_df):,} rows, {test_df['loan_id'].nunique():,} loans)")
+
+    if skip_targets:
+        log.info("✅ Fast Data Generation for Dashboard Complete!")
+        return
 
     # 4. Servicer updates
     servicer = generate_servicer_updates(train_df)

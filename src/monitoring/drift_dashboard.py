@@ -49,8 +49,8 @@ TEST_FILE = RAW_DIR / "loan_monthly_performance_test.csv"
 # with DASHBOARD_LITE=1 for testing.
 _LITE_ENV = os.environ.get("DASHBOARD_LITE", "").strip().lower()
 LITE_MODE = _LITE_ENV in ("1", "true", "yes")
-LITE_N_LOANS = 7_000
-LITE_MAX_MONTHS = 24
+LITE_N_LOANS = 3_000
+LITE_MAX_MONTHS = 18
 
 # ---------------------------------------------------------------------------
 # Core drift computation (standalone — no model artifacts required)
@@ -138,7 +138,7 @@ def _generate_sample_data(n_loans: int, max_months: int) -> None:
     sys.modules["_dashboard_generate"] = gen_mod
     spec.loader.exec_module(gen_mod)
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    gen_mod.main(n_loans=n_loans, max_months=max_months)
+    gen_mod.main(n_loans=n_loans, max_months=max_months, skip_targets=True)
 
 
 # ---------------------------------------------------------------------------
@@ -190,7 +190,7 @@ def run_dashboard() -> None:
         with st.spinner(
             f"⏳ **First load** — generating sample dataset "
             f"({LITE_N_LOANS:,} loans, {LITE_MAX_MONTHS} months). "
-            "This takes ~30–60 s and only happens once per deployment…"
+            "This takes ~5–10 s and only happens once per deployment…"
         ):
             is_demo = _ensure_data_once()
     else:
