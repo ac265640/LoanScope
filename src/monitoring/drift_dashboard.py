@@ -142,18 +142,35 @@ def _generate_sample_data(n_loans: int, max_months: int) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Streamlit dashboard
+# Streamlit cached helpers (defined at module level for stable cache keys)
+# ---------------------------------------------------------------------------
+
+def _ensure_data_resource() -> bool:
+    """Return True if data had to be generated (demo mode), False otherwise."""
+    if TRAIN_FILE.exists() and TEST_FILE.exists() and not LITE_MODE:
+        return False
+    if TRAIN_FILE.exists() and TEST_FILE.exists() and LITE_MODE:
+        return True
+    _generate_sample_data(n_loans=LITE_N_LOANS, max_months=LITE_MAX_MONTHS)
+    return True
+
+
+try:
+    import streamlit as st
+    import plotly.express as px
+    _ensure_data_cached = st.cache_resource(show_spinner=False)(_ensure_data_resource)
+    _compute_drift_cached = st.cache_data(show_spinner=False)(compute_drift_metrics)
+except Exception:
+    _ensure_data_cached = _ensure_data_resource
+    _compute_drift_cached = compute_drift_metrics
+
+
+# ---------------------------------------------------------------------------
+# Streamlit dashboard UI
 # ---------------------------------------------------------------------------
 
 def run_dashboard() -> None:
-    """Launch the Streamlit drift monitoring dashboard."""
-    try:
-        import streamlit as st
-        import plotly.express as px
-    except ImportError:
-        print("Install streamlit and plotly: pip install streamlit plotly")
-        return
-
+    """Render the Streamlit drift monitoring dashboard."""
     st.set_page_config(
         page_title="LoanScope — Drift Monitoring Dashboard",
         page_icon="📊",
@@ -170,31 +187,17 @@ def run_dashboard() -> None:
     # ------------------------------------------------------------------
     # Step 1: Ensure data exists — self-generate on first cloud load
     # ------------------------------------------------------------------
-    # cache_resource persists for the lifetime of the server process,
-    # so generation only happens once per deployment — not on every
-    # page refresh or user visit.
-    @st.cache_resource(show_spinner=False)
-    def _ensure_data_once() -> bool:
-        """Return True if data had to be generated (demo mode), False otherwise."""
-        if TRAIN_FILE.exists() and TEST_FILE.exists() and not LITE_MODE:
-            return False  # full data already present
-        if TRAIN_FILE.exists() and TEST_FILE.exists() and LITE_MODE:
-            return True   # lite flag forced; data present but mark as demo
-        # Generate lite sample dataset
-        _generate_sample_data(n_loans=LITE_N_LOANS, max_months=LITE_MAX_MONTHS)
-        return True
-
     data_was_missing = not (TRAIN_FILE.exists() and TEST_FILE.exists())
 
     if data_was_missing:
         with st.spinner(
             f"⏳ **First load** — generating sample dataset "
             f"({LITE_N_LOANS:,} loans, {LITE_MAX_MONTHS} months). "
-            "This takes ~5–10 s and only happens once per deployment…"
+            "This takes ~2–5 s and only happens once per deployment…"
         ):
-            is_demo = _ensure_data_once()
+            is_demo = _ensure_data_cached()
     else:
-        is_demo = _ensure_data_once()
+        is_demo = _ensure_data_cached()
 
     # ------------------------------------------------------------------
     # Step 2: Show demo-mode banner (honest framing)
@@ -210,14 +213,10 @@ def run_dashboard() -> None:
         )
 
     # ------------------------------------------------------------------
-    # Step 3: Compute drift metrics (cached per Streamlit session)
+    # Step 3: Compute drift metrics (cached)
     # ------------------------------------------------------------------
-    @st.cache_data(show_spinner=False)
-    def _cached_drift() -> pd.DataFrame:
-        return compute_drift_metrics()
-
     with st.spinner("📐 Computing drift metrics…"):
-        df = _cached_drift()
+        df = _compute_drift_cached()
 
     # ------------------------------------------------------------------
     # KPI summary row
@@ -287,20 +286,30 @@ def run_dashboard() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Entry point
+# Entry point: Detect whether invoked via Streamlit or pure Python CLI
 # ---------------------------------------------------------------------------
 
-if __name__ == "__main__":
-    # Plain `python drift_dashboard.py` — compute metrics and write report.
-    # Data must already exist (use `make generate-data` first).
+def _is_running_under_streamlit() -> bool:
+    """Return True if executing inside an active Streamlit server session."""
+    try:
+        import streamlit.runtime
+        return streamlit.runtime.exists()
+    except Exception:
+        return False
+
+
+if _is_running_under_streamlit():
+    # Streamlit execution (`streamlit run ...` or Streamlit Cloud runner)
+    run_dashboard()
+elif __name__ == "__main__":
+    # CLI execution (`python src/monitoring/drift_dashboard.py`)
     if not (TRAIN_FILE.exists() and TEST_FILE.exists()):
-        print(
-            "Data files not found. Run `make generate-data` first, or launch via "
-            "`streamlit run src/monitoring/drift_dashboard.py` for auto-generation."
-        )
-        sys.exit(1)
+        print("Data files not found. Auto-generating lite dataset...")
+        _generate_sample_data(n_loans=LITE_N_LOANS, max_months=LITE_MAX_MONTHS)
+
     df = compute_drift_metrics()
     print(df.to_string(index=False))
+
     out = REPO_ROOT / "reports" / "drift_monitoring_report.md"
     lines = [
         "# Feature Drift Monitoring Report\n",
@@ -321,15 +330,4 @@ if __name__ == "__main__":
     ]
     out.write_text("\n".join(lines))
     print(f"\nReport written to {out}")
-else:
-    # When `streamlit run` executes this file, it is NOT __main__ — it runs
-    # as a regular module.  Guard with the Streamlit runtime check so that
-    # plain `import drift_dashboard` in tests does NOT trigger run_dashboard().
-    try:
-        import streamlit.runtime
-        _running_under_streamlit = streamlit.runtime.exists()
-    except Exception:
-        _running_under_streamlit = False
 
-    if _running_under_streamlit:
-        run_dashboard()
