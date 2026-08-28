@@ -299,8 +299,15 @@ def _is_running_under_streamlit() -> bool:
 
 
 if _is_running_under_streamlit():
-    # Streamlit execution (`streamlit run ...` or Streamlit Cloud runner)
-    run_dashboard()
+    # Streamlit Cloud execution: Load and render the full multi-page showcase
+    import importlib.util
+    app_path = Path(__file__).resolve().parent / "app.py"
+    if app_path.exists():
+        spec = importlib.util.spec_from_file_location("showcase_app", app_path)
+        app_mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(app_mod)
+    else:
+        run_dashboard()
 elif __name__ == "__main__":
     # CLI execution (`python src/monitoring/drift_dashboard.py`)
     if not (TRAIN_FILE.exists() and TEST_FILE.exists()):
