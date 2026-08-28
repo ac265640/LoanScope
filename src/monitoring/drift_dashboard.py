@@ -173,15 +173,13 @@ def run_dashboard() -> None:
     """Render the Streamlit drift monitoring dashboard."""
     st.set_page_config(
         page_title="LoanScope — Drift Monitoring Dashboard",
-        page_icon="📊",
         layout="wide",
     )
 
-    st.title("📊 LoanScope — Feature Drift Monitoring Dashboard")
+    st.title("Feature Drift Surveillance Dashboard")
     st.markdown(
-        "**PSI thresholds:** 🟢 PASS (< 0.10) &nbsp;|&nbsp; 🟡 WARN (0.10–0.25) "
-        "&nbsp;|&nbsp; 🔴 FAIL (> 0.25) &nbsp;&nbsp; — "
-        "Comparing **train** vs **test** feature distributions."
+        "**PSI Thresholds:** PASS (< 0.10) | WARN (0.10–0.25) | FAIL (> 0.25) — "
+        "Comparing **historical train** vs **out-of-time test** distributions."
     )
 
     # ------------------------------------------------------------------
@@ -191,9 +189,8 @@ def run_dashboard() -> None:
 
     if data_was_missing:
         with st.spinner(
-            f"⏳ **First load** — generating sample dataset "
-            f"({LITE_N_LOANS:,} loans, {LITE_MAX_MONTHS} months). "
-            "This takes ~2–5 s and only happens once per deployment…"
+            f"Generating sample dataset "
+            f"({LITE_N_LOANS:,} loans, {LITE_MAX_MONTHS} months)..."
         ):
             is_demo = _ensure_data_cached()
     else:
@@ -204,27 +201,24 @@ def run_dashboard() -> None:
     # ------------------------------------------------------------------
     if is_demo:
         st.info(
-            "🔬 **Hosted Demo Mode** — This deployment uses a reduced-scale sample "
-            f"(**{LITE_N_LOANS:,} loans × {LITE_MAX_MONTHS} months**) for free-tier "
-            "performance reasons. Drift statistics and charts are real and representative. "
-            "For the full-scale run (50,000 loans × 36 months), clone the repo and run "
-            "`make run-all` locally.",
-            icon="ℹ️",
+            "**Hosted Demo Mode** — Reduced-scale sample "
+            f"({LITE_N_LOANS:,} loans × {LITE_MAX_MONTHS} months). "
+            "Drift metrics are real and representative. Full run available via `make run-all`."
         )
 
     # ------------------------------------------------------------------
     # Step 3: Compute drift metrics (cached)
     # ------------------------------------------------------------------
-    with st.spinner("📐 Computing drift metrics…"):
+    with st.spinner("Computing drift metrics..."):
         df = _compute_drift_cached()
 
     # ------------------------------------------------------------------
     # KPI summary row
     # ------------------------------------------------------------------
     col1, col2, col3 = st.columns(3)
-    col1.metric("✅ PASS Features", int((df["status"] == "PASS").sum()))
-    col2.metric("⚠️ WARN Features", int((df["status"] == "WARN").sum()))
-    col3.metric("🚨 FAIL Features", int((df["status"] == "FAIL").sum()))
+    col1.metric("PASS Features", int((df["status"] == "PASS").sum()))
+    col2.metric("WARN Features", int((df["status"] == "WARN").sum()))
+    col3.metric("FAIL Features", int((df["status"] == "FAIL").sum()))
 
     # ------------------------------------------------------------------
     # PSI bar chart

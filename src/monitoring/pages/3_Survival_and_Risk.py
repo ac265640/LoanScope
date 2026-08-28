@@ -8,23 +8,20 @@ naive Kaplan-Meier single-risk overestimation (+8.72pp bias).
 from pathlib import Path
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.graph_objects as go
-import plotly.express as px
 
-st.set_page_config(page_title="Survival & Risk | LoanScope", page_icon="⏳", layout="wide")
+st.set_page_config(page_title="Survival & Risk | LoanScope", layout="wide")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### ⏳ Survival Engine")
+    st.markdown("### Survival Analysis")
     st.caption("Aalen-Johansen Competing Risks")
     st.info(
-        "🔬 **Hosted Demo Mode**\n\n"
-        "Pre-computed survival analytics from portfolio event history.",
-        icon="ℹ️"
+        "**Hosted Demo Mode**\n\n"
+        "Pre-computed survival analytics from portfolio event history."
     )
 
-st.title("⏳ Survival Analysis & Competing-Risk CIF Modeling")
+st.title("Survival Analysis & Competing-Risk CIF Modeling")
 st.markdown(
     "In mortgage and consumer debt portfolios, **voluntary prepayment** and **involuntary default** "
     "are mutually competing terminal events. When a borrower prepays in full, they can no longer default."
@@ -48,7 +45,7 @@ st.markdown("---")
 col_left, col_right = st.columns([1.3, 1])
 
 with col_left:
-    st.subheader("📈 Cumulative Incidence Functions (Aalen-Johansen CIF)")
+    st.subheader("Cumulative Incidence Functions (Aalen-Johansen CIF)")
     
     # Horizons and CIF data from reports/survival_report.md
     months = [0, 6, 12, 18, 24, 30, 36]
@@ -98,7 +95,7 @@ with col_left:
     st.plotly_chart(fig, use_container_width=True)
 
 with col_right:
-    st.subheader("💡 Why Competing Risks Matter in FinTech")
+    st.subheader("Competing Risk Dynamics in Portfolio Surveillance")
     st.markdown(
         """
         Standard single-risk survival models (like naive Kaplan-Meier) treat voluntary payoffs 
@@ -123,7 +120,7 @@ with col_right:
 
 st.markdown("---")
 
-st.subheader("📊 Cumulative Incidence Rates by Credit Score Band")
+st.subheader("Cumulative Incidence Rates by Credit Score Band")
 
 credit_cif_df = pd.DataFrame([
     {"Credit Band": "<620 (Subprime)", "12M CIF Default": "19.57%", "12M CIF Prepayment": "0.00%", "36M CIF Default": "32.61%", "36M CIF Prepayment": "0.00%", "Primary Risk": "Severe Credit Default"},
@@ -135,4 +132,4 @@ credit_cif_df = pd.DataFrame([
 ])
 
 st.dataframe(credit_cif_df, use_container_width=True)
-st.caption("Data source: `reports/survival_report.md` | Model: Cause-specific Aalen-Johansen non-parametric estimator.")
+st.caption("Data source: reports/survival_report.md | Estimator: Aalen-Johansen non-parametric competing risk model.")

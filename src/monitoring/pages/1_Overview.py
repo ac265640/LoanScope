@@ -8,23 +8,21 @@ data lineage, zero-leakage partitions, architecture diagram, and full scorecard.
 from pathlib import Path
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 
-st.set_page_config(page_title="Overview | LoanScope", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Overview | LoanScope", layout="wide")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### 📊 System Overview")
+    st.markdown("### System Overview")
     st.caption("Architecture & Data Lineage")
     st.info(
-        "🔬 **Hosted Demo Mode**\n\n"
-        "Operating on a representative sample dataset. Full-scale run available via `make run-all`.",
-        icon="ℹ️"
+        "**Hosted Demo Mode**\n\n"
+        "Operating on a representative sample dataset. Full-scale run available via `make run-all`."
     )
 
-st.title("📊 LoanScope — System Overview & Architecture")
+st.title("System Overview & Architecture")
 st.markdown(
-    "**LoanScope** is a comprehensive, production-grade Quantitative Credit Risk & Loan Surveillance "
+    "**LoanScope** is an institutional quantitative credit risk and loan surveillance "
     "platform built for the Intain Campus FinTech Challenge 2026. It unifies multi-horizon hazard classification, "
     "cause-specific competing-risk survival modeling, hybrid anomaly detection, and macroeconomic stress simulation."
 )
@@ -36,7 +34,7 @@ col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     st.metric("Total Dataset Scale", "50,000 Loans", "874,435 Monthly Records")
 with col2:
-    st.metric("Early Warning ROC-AUC", "0.7977", "+0.0197 over Baseline LR")
+    st.metric("Early Warning ROC-AUC", "0.7977", "+0.0197 vs Baseline LR")
 with col3:
     st.metric("Early Warning PR-AUC", "0.4090", "10.1x Base Rate (0.0404)")
 with col4:
@@ -48,17 +46,17 @@ st.markdown("---")
 
 # Tabbed Deep-Dive
 tab_arch, tab_lineage, tab_scorecard, tab_fairness = st.tabs([
-    "🏗️ System Architecture",
-    "📂 Data Lineage & Cohorts",
-    "📋 Quantitative Scorecard",
-    "⚖️ Responsible AI & Fairness"
+    "System Architecture",
+    "Data Lineage & Cohorts",
+    "Quantitative Scorecard",
+    "Responsible AI & Fairness"
 ])
 
 with tab_arch:
-    st.subheader("Institutional Multi-Engine Architecture")
+    st.subheader("Multi-Engine Architecture Flow")
     st.markdown(
         """
-        The platform is engineered as a modular pipeline across 6 specialized sub-systems:
+        The platform operates as a modular pipeline across 6 specialized sub-systems:
         """
     )
     
@@ -83,10 +81,10 @@ with tab_arch:
             """
         )
     with col_b:
-        st.markdown("#### Core Engineering Highlights:")
-        st.markdown("- **Strict Zero-Leakage Guarantee**: Temporal cohort split by origination month. Zero loan ID overlap across train, val, and test partitions.")
+        st.markdown("#### Core Technical Principles:")
+        st.markdown("- **Zero-Leakage Temporal Split**: Cohort partition by origination month. Zero loan ID overlap across train, val, and test partitions.")
         st.markdown("- **32 Versioned Engineered Features**: Rolling payment trajectory, spread-to-market, DTI/LTV stress ratios, and payment acceleration signals.")
-        st.markdown("- **Dual-Engine Anomaly Interception**: Component A (Deterministic Rule Engine VR001-VR005) + Component B (Unsupervised Isolation Forest + Learned LightGBM).")
+        st.markdown("- **Dual-Engine Anomaly Interception**: Component A (Deterministic Rule Engine VR001-VR005) + Component B (Isolation Forest + Learned LightGBM).")
         st.markdown("- **Split Conformal Prediction**: 90.3% empirical marginal coverage at 90% target, giving underwriters rigorous uncertainty bounds.")
 
 with tab_lineage:
@@ -100,9 +98,8 @@ with tab_lineage:
     st.dataframe(lineage_data, use_container_width=True)
     
     st.info(
-        "🔒 **Formal Mathematical Assertion**: `Intersection(Train_IDs, Val_IDs, Test_IDs) == ∅`. "
-        "All lag and rolling features only incorporate backward-looking historical observations.",
-        icon="✅"
+        "**Formal Mathematical Assertion**: `Intersection(Train_IDs, Val_IDs, Test_IDs) == ∅`. "
+        "All lag and rolling features only incorporate backward-looking historical observations."
     )
 
 with tab_scorecard:
@@ -167,7 +164,7 @@ with tab_scorecard:
     ])
     
     st.dataframe(scorecard_df, use_container_width=True)
-    st.caption("*Note: Evaluated on out-of-time validation cohort. Macro-F1 shown for multiclass state transition model.")
+    st.caption("Evaluated on out-of-time validation cohort. Macro-F1 shown for multiclass state transition model.")
 
 with tab_fairness:
     st.subheader("Responsible AI, Subgroup Parity & Fair Lending Audit")
@@ -184,8 +181,8 @@ with tab_fairness:
     
     st.markdown(
         """
-        - **Four-Fifths Rule Compliance**: Model rankings remain consistent across credit tiers without spurious proxy bias.
-        - **Adverse Action Transparency**: All adverse recommendations are accompanied by primary non-protected SHAP drivers (`days_past_due`, `dti_band`, `balance_change_1m_pct`).
+        - **Four-Fifths Rule Compliance**: Model rankings remain consistent across credit tiers without proxy bias.
+        - **Adverse Action Transparency**: Adverse recommendations are accompanied by primary non-protected SHAP drivers (`days_past_due`, `dti_band`, `balance_change_1m_pct`).
         - **Advisory Governance**: Model outputs are strictly advisory recommendations for underwriters, not automated credit denials.
         """
     )

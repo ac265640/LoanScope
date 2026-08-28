@@ -10,21 +10,19 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import plotly.express as px
 
-st.set_page_config(page_title="Predictions & Calibration | LoanScope", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="Predictions & Calibration | LoanScope", layout="wide")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### 🎯 Predictive Models")
-    st.caption("LightGBM & Calibration Suite")
+    st.markdown("### Predictive Suite")
+    st.caption("LightGBM & Probability Calibration")
     st.info(
-        "🔬 **Hosted Demo Mode**\n\n"
-        "Pre-computed validation results from 95,563 out-of-time loans.",
-        icon="ℹ️"
+        "**Hosted Demo Mode**\n\n"
+        "Pre-computed validation results from 95,563 out-of-time loans."
     )
 
-st.title("🎯 Predictive Modeling & Probability Calibration")
+st.title("Predictive Modeling & Probability Calibration")
 st.markdown(
     "Evaluation of multi-horizon gradient boosted decision tree (LightGBM) classifiers against "
     "regularized Logistic Regression baselines on the **out-of-time validation cohort** (N = 95,563 rows)."
@@ -54,7 +52,7 @@ TARGET_METRICS = {
             {"bin": "[0.40, 0.60)", "count": 900, "pred": 0.4920, "true": 0.4850},
             {"bin": "[0.60, 0.80)", "count": 1699, "pred": 0.6989, "true": 0.7493},
         ],
-        "notes": "Early delinquency surveillance achieves 10.1x lift over naive base rate, identifying over 80% of distressed borrowers 3 months before default."
+        "notes": "Early delinquency surveillance achieves 10.1x lift over naive base rate, identifying over 80% of distressed borrowers 3 months before formal default."
     },
     "next_6m_delinquency_flag": {
         "title": "6-Month Delinquency Watchlist (next_6m_delinquency_flag)",
@@ -98,7 +96,7 @@ TARGET_METRICS = {
             {"bin": "[0.20, 0.40)", "count": 2200, "pred": 0.2750, "true": 0.2810},
             {"bin": "[0.40, 0.80)", "count": 863, "pred": 0.5210, "true": 0.5340},
         ],
-        "notes": "Low base rate (~4.5%) means scores rarely exceed 0.50; evaluating at operational threshold t*=0.057 yields F1=0.2002 and 4.1x lift in top 5% queue."
+        "notes": "Low base rate (~4.5%) means calibrated scores rarely exceed 0.50; evaluating at operational threshold t*=0.057 yields F1=0.2002 and 4.1x lift in top 5% queue."
     },
     "next_12m_prepayment_flag": {
         "title": "12-Month Prepayment / Flight Risk (next_12m_prepayment_flag)",
@@ -142,22 +140,21 @@ with c2:
 with c3:
     st.metric("Calibrated Brier Loss", f"{meta['brier']:.4f}", "Platt Sigmoid Scaled")
 with c4:
-    st.metric("Optimal Threshold (t*)", f"{meta['optimal_t']:.3f}", f"F1: {meta['f1_opt']:.4f}")
+    st.metric("Optimal Cutoff (t*)", f"{meta['optimal_t']:.3f}", f"F1: {meta['f1_opt']:.4f}")
 with c5:
     st.metric("Top-5% Precision", meta['prec_top5'], "Queue Surveillance")
 
-st.info(f"💡 **Analyst Finding**: {meta['notes']}", icon="📌")
+st.info(f"**Performance Note**: {meta['notes']}")
 
 st.markdown("---")
 
 col_left, col_right = st.columns([1.2, 1])
 
 with col_left:
-    st.subheader("📈 Empirical Probability Calibration (Reliability Diagram)")
+    st.subheader("Empirical Probability Calibration (Reliability Diagram)")
     
     bins_df = pd.DataFrame(meta["bins"])
     
-    # Plotly Calibration Curve
     fig = go.Figure()
     
     # Perfect Calibration Diagonal
@@ -179,7 +176,7 @@ with col_left:
     ))
     
     fig.update_layout(
-        title=f"Reliability Diagram — {selected_target_key}",
+        title=f"Reliability Diagram: {selected_target_key}",
         xaxis_title="Mean Predicted Probability",
         yaxis_title="Empirical True Event Frequency",
         xaxis=dict(range=[0, 0.85]),
@@ -192,7 +189,7 @@ with col_left:
     st.plotly_chart(fig, use_container_width=True)
 
 with col_right:
-    st.subheader("⚖️ Decision Threshold & F1 Tradeoff")
+    st.subheader("Decision Threshold & F1 Tradeoff")
     st.markdown(
         """
         In low-prevalence credit settings (e.g., 4.5% default rate), calibrated probabilities reflect 
@@ -201,13 +198,13 @@ with col_right:
     )
     
     thresh_table = pd.DataFrame([
-        {"Operating Decision Cutoff": "Default Cutoff (t = 0.50)", "F1 Score": f"{meta['f1_050']:.4f}", "Role": "Standard academic benchmark (misaligned with rare events)"},
+        {"Operating Decision Cutoff": "Default Cutoff (t = 0.50)", "F1 Score": f"{meta['f1_050']:.4f}", "Role": "Standard benchmark (misaligned with rare events)"},
         {"Operating Decision Cutoff": f"Optimal Threshold (t* = {meta['optimal_t']:.3f})", "F1 Score": f"{meta['f1_opt']:.4f}", "Role": "Max-F1 operational cut for active workout desk"},
         {"Operating Decision Cutoff": "Top 5% Highest Risk Queue", "F1 Score": meta['prec_top5'], "Role": "Fixed capacity special servicing queue"},
     ])
     st.dataframe(thresh_table, use_container_width=True)
     
-    st.markdown("#### Calibration Bin Distribution:")
+    st.markdown("#### Calibration Bin Frequency Table:")
     st.dataframe(bins_df.rename(columns={
         "bin": "Score Bin", "count": "Loan Count", "pred": "Predicted Prob", "true": "Observed Frequency"
     }), use_container_width=True)
@@ -215,7 +212,7 @@ with col_right:
 st.markdown("---")
 
 # Full Comparative Multi-Outcome Matrix
-st.subheader("📊 Full Multi-Outcome Model Comparison Matrix")
+st.subheader("Multi-Outcome Model Performance Summary")
 all_targets_df = pd.DataFrame([
     {"Target Outcome": "next_3m_delinquency_flag", "Horizon": "90 Days", "Base LR ROC-AUC": 0.7780, "LightGBM ROC-AUC": 0.7977, "PR-AUC (Lift)": "0.4090 (10.1x)", "Calibrated Brier": 0.0291, "Top-5% Precision": "33.82%"},
     {"Target Outcome": "next_6m_delinquency_flag", "Horizon": "180 Days", "Base LR ROC-AUC": 0.7464, "LightGBM ROC-AUC": 0.7656, "PR-AUC (Lift)": "0.3599 (5.7x)", "Calibrated Brier": 0.0486, "Top-5% Precision": "39.66%"},

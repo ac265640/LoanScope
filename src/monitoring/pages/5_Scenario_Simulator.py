@@ -8,23 +8,21 @@ segment-level vulnerability curves, and 1,000-path Monte Carlo risk distribution
 from pathlib import Path
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 
-st.set_page_config(page_title="Scenario Simulator | LoanScope", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="Scenario Simulator | LoanScope", layout="wide")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### ⚡ Scenario Simulator")
+    st.markdown("### Scenario Simulator")
     st.caption("Stress Testing & Monte Carlo")
     st.info(
-        "🔬 **Hosted Demo Mode**\n\n"
-        "Pre-computed 1,000-path Monte Carlo simulations from `reports/scenario_report.md`.",
-        icon="ℹ️"
+        "**Hosted Demo Mode**\n\n"
+        "Pre-computed 1,000-path Monte Carlo simulations from reports/scenario_report.md."
     )
 
-st.title("⚡ Macroeconomic Scenario Stress Simulator & Monte Carlo")
+st.title("Macroeconomic Scenario Stress Simulator & Monte Carlo")
 st.markdown(
     "Evaluation of loan portfolio resilience under macroeconomic rate, unemployment, and housing price shocks. "
     "Features deterministic scenario projections alongside **1,000-path Monte Carlo stochastic risk distributions**."
@@ -103,9 +101,8 @@ with p_col2:
         "12M Prepayment": "{:.2f}%"
     }), use_container_width=True)
     st.info(
-        "💡 **Key Finding**: Under Adverse Credit, default rates surge nearly **3x** (5.39% → 15.87%), "
-        "while High Prepayment drives voluntary payoff rates to **11.40%** (shortening duration).",
-        icon="📌"
+        "**Key Analytical Finding**: Under Adverse Credit, default rates surge nearly **3x** (5.39% → 15.87%), "
+        "while High Prepayment drives voluntary payoff rates to **11.40%** (shortening duration)."
     )
 
 st.markdown("---")
@@ -165,4 +162,4 @@ mc_df = pd.DataFrame([
     {"Scenario": "High Prepayment", "P1": "5.94%", "P5": "6.11%", "P25": "6.06%", "Median (P50)": "6.11%", "P75": "6.17%", "P95": "6.24%", "P99 (Tail VaR)": "6.29%", "Std Dev": "0.08%"},
 ])
 st.dataframe(mc_df, use_container_width=True)
-st.caption("Data source: `reports/scenario_report.md` | Module: `src/scenarios/monte_carlo.py`")
+st.caption("Data source: reports/scenario_report.md | Module: src/scenarios/monte_carlo.py")

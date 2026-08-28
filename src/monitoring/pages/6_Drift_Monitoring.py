@@ -21,7 +21,6 @@ warnings.filterwarnings("ignore")
 # Page config
 st.set_page_config(
     page_title="Drift Monitoring | LoanScope",
-    page_icon="📐",
     layout="wide",
 )
 
@@ -50,12 +49,11 @@ CATEGORICAL_COLS = [
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### 📐 Drift Monitoring")
+    st.markdown("### Drift Monitoring")
     st.caption("PSI & KS Distribution Stability")
     st.info(
-        "🔬 **Hosted Demo Mode**\n\n"
-        f"Comparing train vs test distributions ({LITE_N_LOANS:,} loans sample).",
-        icon="ℹ️"
+        "**Hosted Demo Mode**\n\n"
+        f"Comparing train vs test distributions ({LITE_N_LOANS:,} loans sample)."
     )
 
 # ---------------------------------------------------------------------------
@@ -151,36 +149,34 @@ def _compute_drift_cached() -> pd.DataFrame:
 
 
 # Main Page Body
-st.title("📐 Feature Drift Surveillance Dashboard")
+st.title("Feature Drift Surveillance Dashboard")
 st.markdown(
-    "**PSI thresholds:** 🟢 PASS (< 0.10) &nbsp;|&nbsp; 🟡 WARN (0.10–0.25) "
-    "&nbsp;|&nbsp; 🔴 FAIL (> 0.25) &nbsp;&nbsp; — "
+    "**PSI Thresholds:** PASS (< 0.10) | WARN (0.10–0.25) | FAIL (> 0.25) — "
     "Comparing **historical train** vs **out-of-time test** distributions."
 )
 
 data_was_missing = not (TRAIN_FILE.exists() and TEST_FILE.exists())
 if data_was_missing:
-    with st.spinner("⏳ Auto-generating sample dataset..."):
+    with st.spinner("Generating sample dataset..."):
         is_demo = _ensure_data_resource()
 else:
     is_demo = _ensure_data_resource()
 
 if is_demo:
     st.info(
-        "🔬 **Hosted Demo Mode** — Reduced-scale sample "
-        f"(**{LITE_N_LOANS:,} loans × {LITE_MAX_MONTHS} months**). "
-        "Drift metrics are real and representative. Full run available via `make run-all`.",
-        icon="ℹ️",
+        "**Hosted Demo Mode** — Reduced-scale sample "
+        f"({LITE_N_LOANS:,} loans × {LITE_MAX_MONTHS} months). "
+        "Drift metrics are real and representative. Full run available via `make run-all`."
     )
 
-with st.spinner("📐 Computing drift metrics…"):
+with st.spinner("Computing drift metrics..."):
     df = _compute_drift_cached()
 
 # Summary KPIs
 col1, col2, col3 = st.columns(3)
-col1.metric("✅ PASS Features", int((df["status"] == "PASS").sum()))
-col2.metric("⚠️ WARN Features", int((df["status"] == "WARN").sum()))
-col3.metric("🚨 FAIL Features", int((df["status"] == "FAIL").sum()))
+col1.metric("PASS Features", int((df["status"] == "PASS").sum()))
+col2.metric("WARN Features", int((df["status"] == "WARN").sum()))
+col3.metric("FAIL Features", int((df["status"] == "FAIL").sum()))
 
 # PSI bar chart
 color_map = {"PASS": "#27ae60", "WARN": "#f39c12", "FAIL": "#e74c3c"}

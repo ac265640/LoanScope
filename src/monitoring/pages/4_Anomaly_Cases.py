@@ -8,21 +8,19 @@ Component A (Deterministic Rule Engine VR001-VR005) vs Component B (Learned ML E
 from pathlib import Path
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 
-st.set_page_config(page_title="Anomaly Cases | LoanScope", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="Anomaly Cases | LoanScope", layout="wide")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### 🛡️ Anomaly Engine")
+    st.markdown("### Anomaly Surveillance")
     st.caption("Rule Engine & Isolation Forest")
     st.info(
-        "🔬 **Hosted Demo Mode**\n\n"
-        "25 curated reviewer cases from `reports/anomaly_reviewer_cases.md`.",
-        icon="ℹ️"
+        "**Hosted Demo Mode**\n\n"
+        "25 curated reviewer cases from reports/anomaly_reviewer_cases.md."
     )
 
-st.title("🛡️ Anomaly Detection & Exception Reviewer Cases")
+st.title("Anomaly Detection & Exception Reviewer Cases")
 st.markdown(
     "Dual-engine anomaly surveillance combining **deterministic business constraints** (Component A) "
     "with **unsupervised Isolation Forest and gradient boosted behavioral outlier scoring** (Component B)."
@@ -36,7 +34,7 @@ with col_a:
     st.markdown(
         """
         <div style="background-color: #1e293b; border-left: 4px solid #38bdf8; padding: 1rem; border-radius: 4px;">
-            <h4 style="color: #38bdf8; margin: 0 0 0.5rem 0;">⚙️ Component A: Deterministic Rule Engine</h4>
+            <h4 style="color: #38bdf8; margin: 0 0 0.5rem 0;">Component A: Deterministic Rule Engine</h4>
             <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1;">
                 Validates explicit ledger & tape rules (<b>VR001–VR005</b>) including paid-off balance contradictions, date chronology, and modification document verification.
                 <br><b>Rule Match Rate: 100.00%</b> (Zero false-positive risk).
@@ -50,7 +48,7 @@ with col_b:
     st.markdown(
         """
         <div style="background-color: #1e293b; border-left: 4px solid #a855f7; padding: 1rem; border-radius: 4px;">
-            <h4 style="color: #a855f7; margin: 0 0 0.5rem 0;">🧠 Component B: Learned ML Exception Model</h4>
+            <h4 style="color: #a855f7; margin: 0 0 0.5rem 0;">Component B: Learned ML Exception Model</h4>
             <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1;">
                 Non-circular LightGBM trained on 32 engineered features + Isolation Forest continuous scores to detect multi-attribute behavioral anomalies.
                 <br><b>ROC-AUC: 0.8310 | F1 @ 0.50: 0.7361</b>.
@@ -79,7 +77,7 @@ ANOMALY_CASES = [
 ]
 
 # Interactive Filter Controls
-st.subheader("🔍 Filter & Explore Anomaly Review Queue")
+st.subheader("Filter & Explore Anomaly Review Queue")
 f_col1, f_col2, f_col3 = st.columns([1, 1, 1.5])
 with f_col1:
     min_score = st.slider("Minimum Anomaly Score", min_value=0.80, max_value=1.00, value=0.90, step=0.01)
@@ -116,7 +114,7 @@ st.dataframe(
 st.markdown("---")
 
 # Deep Dive Case Inspection
-st.subheader("🔎 Case Deep-Dive & Diagnostic Explainability")
+st.subheader("Case Deep-Dive & Diagnostic Explainability")
 selected_loan = st.selectbox("Select Loan ID for Detailed Underwriter Breakdown:", options=filtered["Loan ID"].unique())
 
 if selected_loan:
@@ -144,30 +142,30 @@ if selected_loan:
 st.markdown("---")
 
 # Pre-Logged LLM Copilot Notes (Zero Live Calls)
-st.subheader("📝 Pre-Generated Grounded LLM Copilot Audit Note (Logged Example)")
-st.caption("🔒 **Security Guarantee**: Static pre-logged sample from `logs/llm_prompt_log.jsonl`. No live LLM calls or API keys used.")
+st.subheader("Grounded Reviewer Copilot Audit Note (Logged Example)")
+st.caption("Security Guarantee: Static pre-logged sample from logs/llm_prompt_log.jsonl. No live LLM API calls executed.")
 
 st.markdown(
     """
     ```markdown
     ### Reviewer Note: Loan LN0004821 (Reporting Month: 2023-05)
 
-    **Part A: Key Risk & Underwriting Assessment**
+    Part A: Key Risk & Underwriting Assessment
     - Risk Tier: High Risk (Calibrated 12M Default Probability: 24.50%, 3M Delinquency Probability: 68.40%).
-    - Current Performance: Status is `30-59 DPD` with 45 DPD and active balance of $284,500.00 (FL Collateral).
-    - Top SHAP Risk Drivers: `days_past_due`, `credit_score_ordinal` (620-659 tier), `rate_to_market_spread`.
+    - Current Performance: Status is 30-59 DPD with 45 DPD and active balance of $284,500.00 (FL Collateral).
+    - Top SHAP Risk Drivers: days_past_due, credit_score_ordinal (620-659 tier), rate_to_market_spread.
 
-    **Part B: Data Quality & Anomaly Assessment**
+    Part B: Data Quality & Anomaly Assessment
     - Anomaly Score: 0.4820 / 1.0 (Elevated behavioral volatility).
     - Documentation Status: Complete. Deterministic rules VR001-VR005: PASSED.
 
-    **Part C: Recommended Action Plan**
+    Part C: Recommended Action Plan
     - Initiate pre-foreclosure borrower outreach desk and verify borrower liquidity.
     - Confirm whether loan modification workout is pending.
 
     ----------------------------------------------------------------------
-    *Recommendation — not a decision.*
+    Recommendation — not a decision.
     ```
     """
 )
-st.info("Every LLM summary is strictly grounded in deterministic context and concludes with the explicit disclaimer: *Recommendation — not a decision.*")
+st.info("Every copilot summary is strictly grounded in deterministic context and concludes with the disclaimer: Recommendation — not a decision.")
