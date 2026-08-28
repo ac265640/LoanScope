@@ -1,52 +1,127 @@
-# Loan Performance Intelligence Engine
+# Loan Performance Intelligence Engine (LoanScope)
 
 > **Intain Campus FinTech Challenge 2026 — AI Track**  
-> An ML-first, production-grade platform for loan-level data profiling, multi-outcome performance prediction, survival modeling, anomaly detection, macro stress simulations, explainability, and grounded LLM reviewer assistance.
+> An ML-first, production-grade platform for loan-level data profiling, multi-outcome performance prediction, cause-specific competing-risk survival modeling, hybrid anomaly detection, macroeconomic stress simulation, explainability, and grounded LLM reviewer assistance.
+
+**Live Streamlit Showcase Demo**: [https://loanscope-drift.streamlit.app](https://loanscope-drift.streamlit.app)  
+**Primary Developer**: Quantitative ML Engineering Team | **Version**: 1.2.0 (Production Release)
 
 ---
 
-## 1. System Architecture
+## 1. System Architecture & Live Showcase
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 Loan Performance Intelligence Engine                            │
-├───────────────────┬─────────────────────┬────────────────────────┬──────────────────────────────┤
-│  Data Generation  │  Data Intelligence  │  Predictive Modeling   │  Survival & Transitions      │
-│  (Phase 1)        │  (Task 1)           │  (Task 2)              │  (Task 3)                    │
-│                   │                     │                        │                              │
-│ • 50k loans panel │ • Column Profiling  │ • LightGBM + LogReg    │ • Kaplan-Meier curves        │
-│ • Injected MNAR   │ • MCAR/MNAR Tests   │ • 5 Prediction Targets │ • Cox PH Regression (C=0.71) │
-│ • Cross breaks    │ • PSI / KS Drift    │ • Time-Aware Split     │ • 7-State Markov Matrix      │
-│ • Servicer feeds  │ • Composite DQ (97) │ • Platt Calibration    │ • Baseline Lift (+0.21)      │
-├───────────────────┴─────────────────────┴────────────────────────┴──────────────────────────────┤
-│  Anomaly & Exceptions (Task 4) │ Macro Scenarios (Task 5)     │ Explainability (Task 6)        │
-│ • Isolation Forest [0, 1]      │ • Base / Adverse / High Prep │ • TreeSHAP Global Rankings     │
-│ • Hybrid Rule Classifier       │ • Segment Vulnerability      │ • Local Waterfall per Loan     │
-│ • 25 Reviewer Case Studies     │ • 2.4x Subprime Stress Rate  │ • Confidence & Error Audits    │
-├────────────────────────────────┴──────────────────────────────┴────────────────────────────────┤
-│  Grounded LLM Copilot (Task 7)                                │ Verification & Governance (Task 8)            │
-│ • Context Retrieval over Schema, Rules & ML Probabilities      │ • Rigorous Test Suite (46 pytest tests)       │
-│ • Verbatim JSONL Audit Logging (logs/llm_prompt_log.jsonl)     │ • Disqualification Self-Audit Compliance      │
-│ • Governance: "Recommendation — not a decision."               │ • End-to-End Reproducibility (Makefile)       │
-└───────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 Loan Performance Intelligence Engine (LoanScope)                         │
+├───────────────────┬─────────────────────┬────────────────────────┬──────────────────────────────────────┤
+│  Data Generation  │  Data Intelligence  │  Predictive Modeling   │  Survival & Competing Risks          │
+│  (Phase 1)        │  (Task 1)           │  (Task 2)              │  (Task 3)                            │
+│                   │                     │                        │                                      │
+│ • 50k loans panel │ • Column Profiling  │ • LightGBM + LogReg    │ • Cause-Specific Aalen-Johansen CIF  │
+│ • Injected MNAR   │ • MCAR/MNAR Tests   │ • 5 Prediction Targets │ • Cox PH Regression (C=0.71)         │
+│ • Cross breaks    │ • PSI / KS Drift    │ • Time-Aware Split     │ • 7-State Markov Transition Matrix   │
+│ • Servicer feeds  │ • Composite DQ (97) │ • Platt Calibration    │ • +8.72pp KM Bias Eliminated         │
+├───────────────────┴─────────────────────┴────────────────────────┴──────────────────────────────────────┤
+│  Anomaly & Exceptions (Task 4) │ Macro Scenarios (Task 5)     │ Explainability (Task 6)                │
+│ • Isolation Forest [0, 1]      │ • Base / Adverse / High Prep │ • TreeSHAP Global & Local Waterfalls   │
+│ • Deterministic Rule Engine    │ • Segment Vulnerability      │ • Split Conformal Prediction Intervals │
+│ • 25 Reviewer Case Studies     │ • 1,000-Path Monte Carlo     │ • Subgroup Fairness & Disparate Impact │
+├────────────────────────────────┴──────────────────────────────┴────────────────────────────────────────┤
+│  Grounded LLM Copilot (Task 7)                                │ Verification & Governance (Task 8)                    │
+│ • BM25/RAG Context Retrieval over Schema, Rules & Predictions │ • Automated Test Suite (46 pytest tests passing)      │
+│ • Verbatim JSONL Audit Logging (logs/llm_prompt_log.jsonl)     │ • Multi-Page Streamlit App (loanscope-drift)          │
+│ • Governance: "Recommendation — not a decision."               │ • End-to-End Reproducibility (Makefile)               │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Hosted Streamlit Showcase App (`src/monitoring/`)
+Accessible at [https://loanscope-drift.streamlit.app](https://loanscope-drift.streamlit.app) with native multi-page sidebar navigation:
+1. **Overview**: Executive summary, dataset lineage (778K train / 95K val / 69K test), zero-leakage guarantee, and task scorecard.
+2. **Predictions & Calibration**: Multi-outcome LightGBM classifiers vs Logistic Regression baselines, Platt reliability diagrams, and decision cutoff optimization ($t=0.50$ vs optimal $t^*=0.057$).
+3. **Survival & Risk**: Aalen-Johansen Cumulative Incidence Functions (CIF) modeling default vs voluntary prepayment, quantifying the **+8.72pp** single-risk Kaplan-Meier overestimation bias.
+4. **Anomaly Cases**: Dual-engine architecture (Component A: Deterministic Rule Engine VR001–VR005 vs Component B: Isolation Forest + Learned ML), 25 inspectable reviewer cases, and static grounded Copilot audit notes.
+5. **Scenario Simulator**: Deterministic macroeconomic stress projections (Base, Adverse Credit +150bps, High Prepayment -75bps), segment vulnerability curves, and 1,000-path Monte Carlo risk distributions.
+6. **Drift Monitoring**: Feature distribution surveillance tracking Population Stability Index (PSI) and Kolmogorov-Smirnov (KS) statistics with automated cloud self-generation.
+
+---
+
+## 2. Repository Structure
+
+```
+loan-performance-intelligence-engine/
+├── DEPLOYMENT.md               # Streamlit Community Cloud deployment & configuration guide
+├── Makefile                    # One-command execution targets for all pipeline tasks
+├── README.md                   # System documentation & performance scorecard
+├── requirements.txt            # Full pipeline Python dependencies (LightGBM, SHAP, MLflow, etc.)
+├── requirements-dashboard.txt  # Lightweight cloud deployment dependency manifest (~60s build)
+├── run_pipeline.sh             # Bash runner for complete autonomous execution
+├── configs/                    # Experiment configuration files
+│   └── sweep.yaml              # Hyperparameter search grid for model tuning
+├── data/                       # Data schemas, scenario definitions, and generated panels
+│   ├── data_dictionary.md      # Field definitions, valid ranges, and data types
+│   ├── macro_scenarios.csv     # Rate, unemployment, and HPI macro shock definitions
+│   ├── validation_rules.json   # Deterministic validation rules (VR001–VR005)
+│   ├── raw/                    # Generated raw loan panels (gitignored, reproducible via make data)
+│   │   ├── loan_static_attributes.csv
+│   │   ├── loan_monthly_performance_train.csv
+│   │   ├── loan_monthly_performance_test.csv
+│   │   └── servicer_updates.csv
+│   └── processed/feature_store/# 32-feature versioned feature store registry
+├── logs/                       # System logs, MLflow artifacts, and audit trails
+│   ├── llm_prompt_log.jsonl    # Verbatim audit log of all grounded LLM prompt payloads & notes
+│   ├── sweep_results.json      # Model search and tuning optimization logs
+│   └── active_learning_log.json# Reviewer feedback loop recalibration log
+├── notebooks/                  # Interactive exploratory analysis
+│   └── end_to_end_walkthrough.ipynb
+├── reports/                    # Generated analytical reports & markdown artifacts
+│   ├── model_card.md           # Official model specifications and governance documentation
+│   ├── data_intelligence_report.md
+│   ├── survival_report.md
+│   ├── anomaly_reviewer_cases.md
+│   ├── scenario_report.md
+│   ├── explainability_report.md
+│   ├── fairness_report.md
+│   ├── calibration_report.md
+│   └── drift_monitoring_report.md
+├── src/                        # Production Python source codebase
+│   ├── data_generation/        # Synthetic loan panel & stress test data generator
+│   ├── profiling/              # Data intelligence, MCAR/MNAR tests, and DQ scoring
+│   ├── features/               # 32-feature versioned feature engineering engine
+│   ├── models/
+│   │   ├── prediction/         # LightGBM, Logistic Regression, and Platt calibration
+│   │   ├── survival/           # Kaplan-Meier, Cox PH, and Aalen-Johansen CIF models
+│   │   └── anomaly/            # Rule Engine, Isolation Forest, and Active Learning
+│   ├── scenarios/              # Macro stress projections and 1,000-path Monte Carlo
+│   ├── explainability/         # TreeSHAP waterfalls, conformal intervals, fairness audit
+│   ├── llm_copilot/            # BM25 RAG retriever and grounded reviewer note generator
+│   ├── monitoring/             # Multi-page Streamlit showcase application
+│   │   ├── app.py              # Main landing page and global navigation hub
+│   │   ├── drift_dashboard.py  # Standalone drift surveillance engine
+│   │   └── pages/              # Dedicated sub-system showcase pages (1 to 6)
+│   └── pipeline/               # CLI orchestrator, splitter, and submission generator
+├── submission/                 # Final challenge submission artifacts
+│   ├── submission.csv          # Final scored test cohort (3,587 rows)
+│   └── submission_template.csv
+└── tests/                      # Automated test suite (46 unit & integration tests)
 ```
 
 ---
 
-## 2. Dataset Scale & Time-Aware Partitioning
+## 3. Dataset Scale & Zero-Leakage Cohorts
 
-> **Data Storage & Generation Note**: Raw data CSVs are generated locally and deterministically with fixed seed (`seed=42`) via `make data` (or `python src/data_generation/generate.py`) and are gitignored to keep repository clone size minimal (<3 MB). Running `make data` reproduces the exact 50,000-loan / 944,306-row panel dataset described below in ~20 seconds.
+> **Data Storage & Generation Note**: Raw data CSVs are generated locally and deterministically with fixed seed (`seed=42`) via `make data` (or `python src/data_generation/generate.py`) and are gitignored to keep repository clone size minimal (<3 MB). Running `make data` reproduces the exact 50,000-loan / 944,306-row panel dataset in ~20 seconds.
 
 - **Total Population**: **50,000 unique loans** across 20 US states (`data/raw/loan_static_attributes.csv`, 5.08 MB).
 - **Historical Training Panel**: **874,435 monthly performance records** across **46,413 unique loans** (originated $\le$ 2021-12 in `data/raw/loan_monthly_performance_train.csv`, 180.05 MB). Split strictly by vintage cohort into:
   - **Train Partition**: **778,872 rows** (41,477 unique loans, originated $\le$ 2019-12)
   - **Out-of-Time Validation Partition**: **95,563 rows** (4,936 unique loans, originated 2020-01 to 2021-12)
-- **Held-Out Test Panel**: **69,871 monthly performance records** across **3,587 unique loans** (originated $\ge$ 2022-01 in `data/raw/loan_monthly_performance_test.csv`, 14.40 MB). Zero `loan_id` overlap with training panel (formally asserted by automated tests in `tests/test_schema_validation.py` and `tests/test_splitter.py`).
+- **Held-Out Test Panel**: **69,871 monthly performance records** across **3,587 unique loans** (originated $\ge$ 2022-01 in `data/raw/loan_monthly_performance_test.csv`, 14.40 MB).
+- **Zero Data Leakage Guarantee**: Formally asserted zero `loan_id` intersection between train, validation, and test partitions (`Intersection(Train_IDs, Val_IDs, Test_IDs) == Ø`). All lag and rolling features incorporate only backward-looking historical observations.
 - **Final Scored Submission**: Exactly **3,587 rows** (`submission/submission.csv`), representing 100% of the unique held-out test loan cohort evaluated at their latest monthly surveillance snapshot.
 
 ---
 
-## 3. Quickstart & Reproducibility
+## 4. Quickstart & Reproducibility
 
 ### Setup Virtual Environment
 ```bash
@@ -55,7 +130,14 @@ cd LoanScope
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # add your GOOGLE_API_KEY or OPENAI_API_KEY (optional)
+cp .env.example .env   # add optional GOOGLE_API_KEY or OPENAI_API_KEY for Copilot
+```
+
+### Launch Interactive Showcase App Locally
+```bash
+make app               # Launches Streamlit multi-page app at http://localhost:8501
+# Or directly:
+streamlit run src/monitoring/app.py
 ```
 
 ### Run Full End-to-End Pipeline
@@ -64,7 +146,7 @@ make run-all
 ```
 *(Approximate runtime: ~2.5 minutes end-to-end on a standard developer laptop)*
 
-Or execute task by task:
+Or execute individual pipeline tasks:
 ```bash
 make data            # Phase 1: Generate synthetic 50,000 loans panel dataset
 make test            # Run 46 automated pytest tests (leakage, schema, rolling features, parity)
@@ -93,7 +175,7 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 
 ---
 
-## 4. Quantitative Model Results
+## 5. Quantitative Model Results
 
 ### Task 2: Predictive Modeling Performance (Out-of-Time Validation Cohort)
 
@@ -109,15 +191,14 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 - **Component A (Deterministic Rule Engine)**: Evaluates hard constraints (VR001–VR005) with **100.00% Rule Match Rate** (by construction).
 - **Component B (Learned ML Model)**: Non-circular LightGBM on 32 behavioral features achieves **ROC-AUC: 0.8310**, **F1 @ 0.50: 0.7361**, and **Macro-F1: 0.5914**.
 
-*Note: All models use time-aware cohort splits by `origination_month` with formally asserted zero `loan_id` data leakage.*
-
 ---
 
-## 5. Key Deliverables Directory
+## 6. Key Deliverables Directory
 
 | Deliverable | File Location | Description |
 | :--- | :--- | :--- |
-| **Final Submission File** | [`submission/submission.csv`](submission/submission.csv) | Final scored test dataset with probabilities, anomaly scores, top drivers, and actions. |
+| **Live Showcase App** | [https://loanscope-drift.streamlit.app](https://loanscope-drift.streamlit.app) | Multi-page interactive Streamlit cloud demonstration. |
+| **Final Submission File** | [`submission/submission.csv`](submission/submission.csv) | Scored test dataset with probabilities, anomaly scores, drivers, and actions. |
 | **Data Intelligence Report** | [`reports/data_intelligence_report.md`](reports/data_intelligence_report.md) | Full distributions, missingness (MNAR/MCAR), outliers, drift, and DQ scores. |
 | **Model Card** | [`reports/model_card.md`](reports/model_card.md) | Official model specifications, data lineage, validation method, and limitations. |
 | **Explainability Report** | [`reports/explainability_report.md`](reports/explainability_report.md) | Global SHAP importance, local waterfalls, uncertainty, and FP/FN audits. |
@@ -130,7 +211,7 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 
 ---
 
-## 6. Disqualification Self-Audit Status
+## 7. Disqualification Self-Audit Status
 
 - [x] **No LLM-only prediction** (All predictions generated by non-LLM models: LightGBM, LogisticRegression, Cox PH, Isolation Forest).
 - [x] **Trained non-LLM models saved** (`.joblib` binaries in `src/models/saved_models/`).
@@ -141,9 +222,7 @@ python src/pipeline/cli.py monte-carlo   # Run Monte Carlo stress
 
 ---
 
-## 7. Advanced Features Suite (All 15 Implemented & Audited)
-
-Every advanced feature listed in Section 10 of the problem statement is fully functional, producing real quantitative outputs from actual data and models:
+## 8. Advanced Features Suite (All 15 Implemented & Audited)
 
 | # | Advanced Feature | Description | Executable Module | Output Artifact / Report |
 |---|------------------|-------------|-------------------|--------------------------|
@@ -165,7 +244,6 @@ Every advanced feature listed in Section 10 of the problem statement is fully fu
 
 ---
 
-## 8. License
+## 9. License
 
 This project is licensed under the MIT License — see the [`LICENSE`](LICENSE) file for details.
-

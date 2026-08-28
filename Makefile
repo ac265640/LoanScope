@@ -1,6 +1,14 @@
-.PHONY: all data profile features train survival anomaly scenarios explain copilot submission test run-all clean drift fairness monte-carlo competing-risks thresholds mlflow
+.PHONY: all data profile features train survival anomaly scenarios explain copilot submission test run-all clean drift fairness monte-carlo competing-risks thresholds mlflow app dashboard
 
 PYTHON = PYTHONPATH=. python
+
+app:
+	@echo "→ Launching LoanScope Multi-Page Showcase Application..."
+	streamlit run src/monitoring/app.py
+
+dashboard:
+	@echo "→ Launching Drift Surveillance Dashboard..."
+	streamlit run src/monitoring/drift_dashboard.py
 
 run-all: data profile train survival anomaly scenarios explain copilot submission drift fairness
 	@echo "=================================================================="
