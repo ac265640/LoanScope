@@ -6,6 +6,8 @@
 **Live Streamlit Showcase Demo**: [https://loanscope-drift.streamlit.app](https://loanscope-drift.streamlit.app)  
 **Primary Developer**: Quantitative ML Engineering Team | **Version**: 1.2.0 (Production Release)
 
+📽️ [Pitch Video](https://drive.google.com/file/d/13gEukUVSlMBe29DKxicMjcLYxmHcBfV6/view?usp=drivesdk) · 🎥 [Demo Video](https://drive.google.com/file/d/1A0d5-kMKpvDxMg84qQF2kiKarivfF182/view?usp=sharing)
+
 ---
 
 ## 1. System Architecture & Live Showcase
