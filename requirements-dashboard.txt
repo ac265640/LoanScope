@@ -1,0 +1,13 @@
+# Streamlit Cloud deployment requirements — lightweight subset for the drift dashboard.
+# Does NOT include LightGBM, SHAP, MLflow, OpenAI, scikit-learn, lifelines, statsmodels,
+# or other heavy pipeline-only dependencies.  Build time on Streamlit Community Cloud
+# free tier stays well under the 10-minute limit with this set.
+#
+# To run the full project pipeline locally, use requirements.txt instead.
+
+numpy==2.0.2
+pandas==2.3.3
+scipy==1.13.1
+streamlit==1.50.0
+plotly==7.0.0
+tqdm==4.70.0
