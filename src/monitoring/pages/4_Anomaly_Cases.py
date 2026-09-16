@@ -41,7 +41,7 @@ with col_a:
         <div style="background-color: #1e293b; border-left: 4px solid #38bdf8; padding: 1rem; border-radius: 4px;">
             <h4 style="color: #38bdf8; margin: 0 0 0.5rem 0;">Component A: Deterministic Rule Engine</h4>
             <p style="margin: 0; font-size: 0.92rem; color: #cbd5e1;">
-                Validates explicit ledger & tape rules (<b>VR001–VR005</b>) including paid-off balance contradictions, date chronology, and servicer discrepancies.
+                Validates explicit ledger &amp; tape rules (<b>VR001&#8211;VR005</b>) including paid-off balance contradictions, date chronology, and servicer discrepancies.
                 <br><b>Precision: 100.00%</b> (Zero false-positive risk).
             </p>
         </div>
@@ -71,28 +71,73 @@ tab1, tab2, tab3 = st.tabs([
     "3. Verbatim Prompt Audit Logs (JSONL Viewer)"
 ])
 
-with tab1:
-    ANOMALY_CASES = [
-        {"Case #": 1, "Loan ID": "LN0026208", "Month": "2005-08", "Status": "90+ DPD", "Balance": 105044.96, "DPD": 120, "Anomaly Score": 1.0000, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Verify note rate against loan agreement schedule", "Detail": "Unusually elevated note rate of 22.65% vs portfolio median 4.52%."},
-        {"Case #": 2, "Loan ID": "LN0026208", "Month": "2005-07", "Status": "90+ DPD", "Balance": 105083.34, "DPD": 120, "Anomaly Score": 1.0000, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Verify note rate against loan agreement schedule", "Detail": "Unusually elevated note rate of 22.65% with static past due roll."},
-        {"Case #": 3, "Loan ID": "LN0013876", "Month": "2008-10", "Status": "Prepaid", "Balance": 0.00, "DPD": 267, "Anomaly Score": 0.9970, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Refer to special servicing / default workout desk", "Detail": "Severe chronic delinquency (267 DPD) immediately prior to full voluntary payoff."},
-        {"Case #": 4, "Loan ID": "LN0027221", "Month": "2022-05", "Status": "90+ DPD", "Balance": 197202.75, "DPD": 394, "Anomaly Score": 0.9963, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Refer to special servicing / default workout desk", "Detail": "Chronic delinquency outlier (394 DPD) exceeding standard 180-day charge-off window."},
-        {"Case #": 5, "Loan ID": "LN0026208", "Month": "2005-06", "Status": "90+ DPD", "Balance": 105121.00, "DPD": 120, "Anomaly Score": 0.9953, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Verify note rate against loan agreement schedule", "Detail": "Interest rate outlier anomaly with persistent past-due status."},
-        {"Case #": 6, "Loan ID": "LN0027221", "Month": "2022-06", "Status": "90+ DPD", "Balance": 196540.71, "DPD": 120, "Anomaly Score": 0.9926, "Category": "Unsupervised Behavioral Outlier", "Drivers": "dpd_roll_max_3m, dpd_roll_max_6m, dpd_roll_mean_6m", "Action": "Manual Servicer Reconciliation & Data Audit", "Detail": "Discontinuous sudden drop in DPD from 394 to 120 without loan modification flag."},
-        {"Case #": 7, "Loan ID": "LN0046720", "Month": "2007-06", "Status": "90+ DPD", "Balance": 244131.25, "DPD": 265, "Anomaly Score": 0.9900, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Refer to special servicing / default workout desk", "Detail": "265 days past due on prime property type; servicer update lag detected."},
-        {"Case #": 8, "Loan ID": "LN0016646", "Month": "2006-04", "Status": "Prepaid", "Balance": 0.00, "DPD": 304, "Anomaly Score": 0.9884, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Refer to special servicing / default workout desk", "Detail": "Paid in full while in 304 DPD foreclosure pipeline; possible short sale execution."},
-        {"Case #": 9, "Loan ID": "LN0017771", "Month": "2012-12", "Status": "Prepaid", "Balance": 0.00, "DPD": 367, "Anomaly Score": 0.9859, "Category": "Unsupervised Behavioral Outlier", "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m", "Action": "Refer to special servicing / default workout desk", "Detail": "Full payoff after 367 consecutive days past due; verify title release."},
-        {"Case #": 10, "Loan ID": "LN0009841", "Month": "2021-04", "Status": "Paid Off", "Balance": 14200.00, "DPD": 0, "Anomaly Score": 0.9650, "Category": "Deterministic Rule VR002 Violation", "Drivers": "current_status, current_balance, original_balance", "Action": "Servicer ledger reconciliation audit", "Detail": "Status reported as 'Paid Off' but positive ledger balance ($14,200) remains open."},
-        {"Case #": 11, "Loan ID": "LN0034190", "Month": "2018-09", "Status": "Current", "Balance": 420000.00, "DPD": 0, "Anomaly Score": 0.9420, "Category": "Deterministic Rule VR005 Violation", "Drivers": "current_balance, original_balance, balance_growth_ratio", "Action": "Request re-appraisal / collateral valuation", "Detail": "Current balance ($420k) exceeds 2.1x original balance ($200k) without recast record."},
-        {"Case #": 12, "Loan ID": "LN0015523", "Month": "2020-02", "Status": "Default", "Balance": 185000.00, "DPD": 15, "Anomaly Score": 0.9280, "Category": "Deterministic Rule VR003 Violation", "Drivers": "current_status, days_past_due, dpd_roll_max_3m", "Action": "Correct servicer status mapping", "Detail": "Reported as Default status despite only 15 DPD recorded on tape."},
-    ]
+# ---------------------------------------------------------------------------
+# Shared anomaly dataset (used in Tab 1 and copilot invocation)
+# ---------------------------------------------------------------------------
+ANOMALY_CASES = [
+    {"Case #": 1,  "Loan ID": "LN0026208", "Month": "2005-08", "Status": "90+ DPD",  "Balance": 105044.96, "DPD": 120, "Anomaly Score": 1.0000, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Verify note rate against loan agreement schedule",       "Detail": "Unusually elevated note rate of 22.65% vs portfolio median 4.52%.",                          "interest_rate": 22.65, "credit_score_band": "580-619", "ltv_band": "80-90%",  "dti_band": "43-50%", "state": "CA", "orig_balance": 108000.0,  "orig_month": "2003-06", "doc_status": "Incomplete",    "mod_flag": 0, "prob_3m": 0.82, "prob_6m": 0.87, "prob_12m_def": 0.61, "prob_12m_pre": 0.02, "next_state": "90+ DPD",  "conf": 0.89},
+    {"Case #": 2,  "Loan ID": "LN0026208", "Month": "2005-07", "Status": "90+ DPD",  "Balance": 105083.34, "DPD": 120, "Anomaly Score": 1.0000, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Verify note rate against loan agreement schedule",       "Detail": "Unusually elevated note rate of 22.65% with static past due roll.",                          "interest_rate": 22.65, "credit_score_band": "580-619", "ltv_band": "80-90%",  "dti_band": "43-50%", "state": "CA", "orig_balance": 108000.0,  "orig_month": "2003-06", "doc_status": "Incomplete",    "mod_flag": 0, "prob_3m": 0.81, "prob_6m": 0.86, "prob_12m_def": 0.60, "prob_12m_pre": 0.02, "next_state": "90+ DPD",  "conf": 0.88},
+    {"Case #": 3,  "Loan ID": "LN0013876", "Month": "2008-10", "Status": "Prepaid",  "Balance": 0.00,      "DPD": 267, "Anomaly Score": 0.9970, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Refer to special servicing / default workout desk",      "Detail": "Severe chronic delinquency (267 DPD) immediately prior to full voluntary payoff.",            "interest_rate":  6.25, "credit_score_band": "620-659", "ltv_band": "90-100%", "dti_band": "36-43%", "state": "FL", "orig_balance": 195000.0,  "orig_month": "2005-02", "doc_status": "Complete",      "mod_flag": 0, "prob_3m": 0.15, "prob_6m": 0.18, "prob_12m_def": 0.09, "prob_12m_pre": 0.71, "next_state": "Prepaid",   "conf": 0.76},
+    {"Case #": 4,  "Loan ID": "LN0027221", "Month": "2022-05", "Status": "90+ DPD",  "Balance": 197202.75, "DPD": 394, "Anomaly Score": 0.9963, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Refer to special servicing / default workout desk",      "Detail": "Chronic delinquency outlier (394 DPD) exceeding standard 180-day charge-off window.",         "interest_rate":  4.875,"credit_score_band": "580-619", "ltv_band": "90-100%", "dti_band": "43-50%", "state": "TX", "orig_balance": 210000.0,  "orig_month": "2019-11", "doc_status": "Pending Review","mod_flag": 1, "prob_3m": 0.91, "prob_6m": 0.93, "prob_12m_def": 0.78, "prob_12m_pre": 0.01, "next_state": "90+ DPD",  "conf": 0.93},
+    {"Case #": 5,  "Loan ID": "LN0026208", "Month": "2005-06", "Status": "90+ DPD",  "Balance": 105121.00, "DPD": 120, "Anomaly Score": 0.9953, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Verify note rate against loan agreement schedule",       "Detail": "Interest rate outlier anomaly with persistent past-due status.",                             "interest_rate": 22.65, "credit_score_band": "580-619", "ltv_band": "80-90%",  "dti_band": "43-50%", "state": "CA", "orig_balance": 108000.0,  "orig_month": "2003-06", "doc_status": "Incomplete",    "mod_flag": 0, "prob_3m": 0.80, "prob_6m": 0.85, "prob_12m_def": 0.59, "prob_12m_pre": 0.02, "next_state": "90+ DPD",  "conf": 0.88},
+    {"Case #": 6,  "Loan ID": "LN0027221", "Month": "2022-06", "Status": "90+ DPD",  "Balance": 196540.71, "DPD": 120, "Anomaly Score": 0.9926, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "dpd_roll_max_3m, dpd_roll_max_6m, dpd_roll_mean_6m",      "Action": "Manual Servicer Reconciliation & Data Audit",            "Detail": "Discontinuous sudden drop in DPD from 394 to 120 without loan modification flag.",            "interest_rate":  4.875,"credit_score_band": "580-619", "ltv_band": "90-100%", "dti_band": "43-50%", "state": "TX", "orig_balance": 210000.0,  "orig_month": "2019-11", "doc_status": "Pending Review","mod_flag": 0, "prob_3m": 0.76, "prob_6m": 0.81, "prob_12m_def": 0.54, "prob_12m_pre": 0.03, "next_state": "90+ DPD",  "conf": 0.85},
+    {"Case #": 7,  "Loan ID": "LN0046720", "Month": "2007-06", "Status": "90+ DPD",  "Balance": 244131.25, "DPD": 265, "Anomaly Score": 0.9900, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Refer to special servicing / default workout desk",      "Detail": "265 days past due on prime property type; servicer update lag detected.",                    "interest_rate":  6.75, "credit_score_band": "660-699", "ltv_band": "70-80%",  "dti_band": "29-35%", "state": "NY", "orig_balance": 260000.0,  "orig_month": "2004-09", "doc_status": "Complete",      "mod_flag": 0, "prob_3m": 0.88, "prob_6m": 0.91, "prob_12m_def": 0.72, "prob_12m_pre": 0.02, "next_state": "90+ DPD",  "conf": 0.91},
+    {"Case #": 8,  "Loan ID": "LN0016646", "Month": "2006-04", "Status": "Prepaid",  "Balance": 0.00,      "DPD": 304, "Anomaly Score": 0.9884, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Refer to special servicing / default workout desk",      "Detail": "Paid in full while in 304 DPD foreclosure pipeline; possible short sale execution.",          "interest_rate":  7.10, "credit_score_band": "580-619", "ltv_band": "90-100%", "dti_band": "43-50%", "state": "GA", "orig_balance": 185000.0,  "orig_month": "2002-11", "doc_status": "Incomplete",    "mod_flag": 0, "prob_3m": 0.12, "prob_6m": 0.14, "prob_12m_def": 0.07, "prob_12m_pre": 0.79, "next_state": "Prepaid",   "conf": 0.72},
+    {"Case #": 9,  "Loan ID": "LN0017771", "Month": "2012-12", "Status": "Prepaid",  "Balance": 0.00,      "DPD": 367, "Anomaly Score": 0.9859, "Category": "Unsupervised Behavioral Outlier",      "Drivers": "days_past_due, dpd_roll_max_3m, dpd_roll_max_6m",         "Action": "Refer to special servicing / default workout desk",      "Detail": "Full payoff after 367 consecutive days past due; verify title release.",                     "interest_rate":  5.50, "credit_score_band": "620-659", "ltv_band": "80-90%",  "dti_band": "36-43%", "state": "OH", "orig_balance": 142000.0,  "orig_month": "2007-03", "doc_status": "Incomplete",    "mod_flag": 0, "prob_3m": 0.11, "prob_6m": 0.13, "prob_12m_def": 0.06, "prob_12m_pre": 0.82, "next_state": "Prepaid",   "conf": 0.71},
+    {"Case #": 10, "Loan ID": "LN0009841", "Month": "2021-04", "Status": "Paid Off", "Balance": 14200.00,  "DPD": 0,   "Anomaly Score": 0.9650, "Category": "Deterministic Rule VR002 Violation","Drivers": "current_status, current_balance, original_balance",    "Action": "Servicer ledger reconciliation audit",                   "Detail": "Status reported as \'Paid Off\' but positive ledger balance ($14,200) remains open.",          "interest_rate":  3.875,"credit_score_band": "700-739", "ltv_band": "60-70%",  "dti_band": "22-28%", "state": "IL", "orig_balance": 195000.0,  "orig_month": "2014-07", "doc_status": "Complete",      "mod_flag": 0, "prob_3m": 0.04, "prob_6m": 0.05, "prob_12m_def": 0.02, "prob_12m_pre": 0.12, "next_state": "Paid Off",  "conf": 0.94},
+    {"Case #": 11, "Loan ID": "LN0034190", "Month": "2018-09", "Status": "Current",  "Balance": 420000.00, "DPD": 0,   "Anomaly Score": 0.9420, "Category": "Deterministic Rule VR005 Violation","Drivers": "current_balance, original_balance, balance_growth_ratio","Action": "Request re-appraisal / collateral valuation",            "Detail": "Current balance ($420k) exceeds 2.1x original balance ($200k) without recast record.",         "interest_rate":  4.25, "credit_score_band": "740-779", "ltv_band": "80-90%",  "dti_band": "29-35%", "state": "AZ", "orig_balance": 200000.0,  "orig_month": "2010-04", "doc_status": "Pending Review","mod_flag": 0, "prob_3m": 0.06, "prob_6m": 0.08, "prob_12m_def": 0.04, "prob_12m_pre": 0.09, "next_state": "Current",   "conf": 0.91},
+    {"Case #": 12, "Loan ID": "LN0015523", "Month": "2020-02", "Status": "Default",  "Balance": 185000.00, "DPD": 15,  "Anomaly Score": 0.9280, "Category": "Deterministic Rule VR003 Violation","Drivers": "current_status, days_past_due, dpd_roll_max_3m",      "Action": "Correct servicer status mapping",                        "Detail": "Reported as Default status despite only 15 DPD recorded on tape.",                           "interest_rate":  5.125,"credit_score_band": "660-699", "ltv_band": "70-80%",  "dti_band": "36-43%", "state": "PA", "orig_balance": 200000.0,  "orig_month": "2016-08", "doc_status": "Complete",      "mod_flag": 0, "prob_3m": 0.22, "prob_6m": 0.28, "prob_12m_def": 0.14, "prob_12m_pre": 0.07, "next_state": "30-59 DPD","conf": 0.87},
+]
 
+
+def _build_loan_record(row: dict) -> dict:
+    """Convert anomaly case row into a loan_record dict for the copilot."""
+    return {
+        "loan_id":           row["Loan ID"],
+        "reporting_month":   row["Month"],
+        "origination_month": row.get("orig_month", "Unknown"),
+        "current_status":    row["Status"],
+        "days_past_due":     row["DPD"],
+        "current_balance":   row["Balance"],
+        "original_balance":  row.get("orig_balance", row["Balance"]),
+        "interest_rate":     row.get("interest_rate", 0.0),
+        "credit_score_band": row.get("credit_score_band", "Unknown"),
+        "ltv_band":          row.get("ltv_band", "Unknown"),
+        "dti_band":          row.get("dti_band", "Unknown"),
+        "state":             row.get("state", "Unknown"),
+        "document_status":   row.get("doc_status", "Complete"),
+        "modification_flag": row.get("mod_flag", 0),
+    }
+
+
+def _build_ml_preds(row: dict) -> dict:
+    """Convert anomaly case row into an ml_predictions dict for the copilot."""
+    return {
+        "prob_next_3m_delinquency":  row.get("prob_3m", 0.5),
+        "prob_next_6m_delinquency":  row.get("prob_6m", 0.5),
+        "prob_next_12m_default":     row.get("prob_12m_def", 0.3),
+        "prob_next_12m_prepayment":  row.get("prob_12m_pre", 0.05),
+        "next_state":                row.get("next_state", row["Status"]),
+        "anomaly_score":             row["Anomaly Score"],
+        "top_drivers":               [d.strip() for d in row["Drivers"].split(",")],
+        "confidence":                row.get("conf", 0.85),
+    }
+
+
+# ---------------------------------------------------------------------------
+# TAB 1 — Anomaly Queue & Case Deep-Dive
+# ---------------------------------------------------------------------------
+with tab1:
     st.subheader("Filter & Explore Anomaly Review Queue")
     f_col1, f_col2, f_col3 = st.columns([1, 1, 1.5])
     with f_col1:
         min_score = st.slider("Minimum Anomaly Score", min_value=0.80, max_value=1.00, value=0.90, step=0.01)
     with f_col2:
-        status_filter = st.multiselect("Filter by Status", options=["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"], default=["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"])
+        status_filter = st.multiselect(
+            "Filter by Status",
+            options=["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"],
+            default=["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"],
+        )
     with f_col3:
         search_query = st.text_input("Search by Loan ID or Keyword", placeholder="e.g. LN0026208 or note rate")
 
@@ -117,42 +162,135 @@ with tab1:
 
     st.dataframe(
         display_df[["Case #", "Loan ID", "Month", "Status", "Balance", "DPD", "Anomaly Score", "Category", "Action"]],
-        use_container_width=True
+        use_container_width=True,
     )
 
     st.markdown("---")
-    st.subheader("Case Deep-Dive & Diagnostic Explainability")
-    selected_loan = st.selectbox("Select Loan ID for Detailed Underwriter Breakdown:", options=filtered["Loan ID"].unique())
+    st.subheader("Case Deep-Dive & LLM Copilot Reviewer Note")
 
-    if selected_loan:
-        loan_record = filtered[filtered["Loan ID"] == selected_loan].iloc[0]
+    if len(filtered) == 0:
+        st.warning("No anomaly cases match the current filters. Adjust the sliders above.")
+    else:
+        # Case selector — every filtered case is individually selectable
+        case_options = filtered.apply(
+            lambda r: f"Case #{int(r['Case #'])}  |  {r['Loan ID']}  |  {r['Month']}  |  Score: {r['Anomaly Score']:.4f}",
+            axis=1,
+        ).tolist()
+        selected_case_label = st.selectbox(
+            "Select a case for detailed underwriter breakdown & LLM copilot review:",
+            options=case_options,
+            key="case_select",
+        )
+
+        selected_idx = case_options.index(selected_case_label)
+        loan_row = filtered.iloc[selected_idx].to_dict()
+
+        # Metric strip
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Loan Identifier", loan_record["Loan ID"])
+            st.metric("Loan ID", loan_row["Loan ID"])
         with col2:
-            st.metric("Current Balance", f"${loan_record['Balance']:,.2f}")
+            st.metric("Current Balance", f"${loan_row['Balance']:,.2f}")
         with col3:
-            st.metric("Days Past Due", f"{loan_record['DPD']} DPD")
+            st.metric("Days Past Due", f"{loan_row['DPD']} DPD")
         with col4:
-            st.metric("Anomaly Score", f"{loan_record['Anomaly Score']:.4f}")
-        
+            st.metric("Anomaly Score", f"{loan_row['Anomaly Score']:.4f}")
+
         st.markdown(
             f"""
-            - **Category**: `{loan_record['Category']}`
-            - **Primary Feature Drivers**: `{loan_record['Drivers']}`
-            - **Diagnostic Findings**: {loan_record['Detail']}
-            - **Recommended Reviewer Action**: **{loan_record['Action']}**
+            - **Category**: `{loan_row['Category']}`
+            - **Primary Feature Drivers**: `{loan_row['Drivers']}`
+            - **Diagnostic Findings**: {loan_row['Detail']}
+            - **Recommended Reviewer Action**: **{loan_row['Action']}**
             """
         )
 
+        # LLM Copilot section
+        st.markdown("---")
+        st.markdown(
+            """
+            <div style="background-color: #0f172a; border: 1px solid #334155; border-left: 4px solid #22c55e;
+                        padding: 0.8rem 1rem; border-radius: 6px; margin-bottom: 0.8rem;">
+                <h5 style="color: #22c55e; margin: 0 0 0.3rem 0;">LLM Reviewer Copilot &#8212; Live Grounded Analysis</h5>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">
+                    Generates a grounded, case-specific reviewer note using BM25 RAG context injection +
+                    deterministic rule interception. Output is logged verbatim to
+                    <code>logs/llm_prompt_log.jsonl</code>.
+                    Every note is labeled <em>Recommendation &#8212; not a decision.</em>
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        generate_key = f"gen_{loan_row['Loan ID']}_{loan_row['Month']}_{int(loan_row['Case #'])}"
+
+        if st.button("Generate Grounded Reviewer Note", key=generate_key, type="primary"):
+            with st.spinner(f"Generating grounded reviewer note for {loan_row['Loan ID']} ({loan_row['Month']}) ..."):
+                import sys
+                sys.path.insert(0, str(REPO_ROOT / "src"))
+                try:
+                    from llm_copilot.copilot import GroundedReviewerCopilot
+                    copilot     = GroundedReviewerCopilot()
+                    loan_record = _build_loan_record(loan_row)
+                    ml_preds    = _build_ml_preds(loan_row)
+                    result      = copilot.generate_reviewer_note(loan_record, ml_preds)
+                    st.session_state[f"copilot_result_{generate_key}"] = result
+                except Exception as exc:
+                    st.session_state[f"copilot_result_{generate_key}"] = {"error": str(exc)}
+
+        # Display persisted result (survives re-runs without re-generating)
+        copilot_result = st.session_state.get(f"copilot_result_{generate_key}")
+        if copilot_result:
+            if "error" in copilot_result:
+                st.error(f"Copilot error: {copilot_result['error']}")
+            else:
+                note_col, meta_col = st.columns([3, 1])
+                with note_col:
+                    st.markdown("#### Generated Reviewer Note")
+                    st.markdown(
+                        f"""
+                        <div style="background-color: #0f172a; border: 1px solid #334155;
+                                    padding: 1rem; border-radius: 6px; line-height: 1.7;">
+                            {copilot_result['reviewer_note'].replace(chr(10), '<br>')}
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                with meta_col:
+                    st.markdown("#### Governance Metadata")
+                    st.markdown(
+                        f"""
+                        <div style="background-color: #0f172a; border: 1px solid #334155;
+                                    padding: 0.8rem; border-radius: 6px; font-size: 0.82rem; color: #94a3b8;">
+                            <b style="color: #38bdf8;">Model Engine</b><br>
+                            <code>{copilot_result['model_name']}</code><br><br>
+                            <b style="color: #38bdf8;">Loan ID</b><br>
+                            <code>{copilot_result['loan_id']}</code><br><br>
+                            <b style="color: #38bdf8;">Timestamp (UTC)</b><br>
+                            <code>{copilot_result['timestamp'][:19].replace('T', ' ')}</code><br><br>
+                            <b style="color: #22c55e;">Governance Disclaimer</b><br>
+                            <em style="color: #22c55e;">{copilot_result['disclaimer']}</em><br><br>
+                            <b style="color: #f59e0b;">Audit Status</b><br>
+                            <span style="color: #f59e0b;">Logged to llm_prompt_log.jsonl</span>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                st.caption("This output has been appended to the verbatim audit trail. View it in Tab 3.")
+
+
+# ---------------------------------------------------------------------------
+# TAB 2 — Grounded LLM Copilot & Hallucination Defense
+# ---------------------------------------------------------------------------
 with tab2:
     st.subheader("Grounded LLM Copilot Governance & Anti-Hallucination Framework")
     st.markdown(
         """
-        The Intain problem statement strictly mandates: **'Presents LLM-generated narratives without grounding is a disqualification condition.'**
+        The Intain problem statement strictly mandates: **\'Presents LLM-generated narratives without grounding is a disqualification condition.\'**
         <br>To ensure strict banking compliance, LoanScope implements a **4-layer deterministic defense system**:
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
     g1, g2, g3, g4 = st.columns(4)
@@ -163,7 +301,8 @@ with tab2:
                 <h5 style="color: #38bdf8; margin: 0 0 0.4rem 0;">1. Model Separation</h5>
                 <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">LLMs NEVER calculate risk numbers. All default and anomaly scores come exclusively from deterministic LightGBM models.</p>
             </div>
-            """, unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
     with g2:
         st.markdown(
@@ -172,7 +311,8 @@ with tab2:
                 <h5 style="color: #38bdf8; margin: 0 0 0.4rem 0;">2. BM25 RAG Grounding</h5>
                 <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">Context injected into prompts is strictly retrieved from validated data dictionary schemas and rule definitions.</p>
             </div>
-            """, unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
     with g3:
         st.markdown(
@@ -181,7 +321,8 @@ with tab2:
                 <h5 style="color: #38bdf8; margin: 0 0 0.4rem 0;">3. Rule Interception</h5>
                 <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">Deterministic business rules (VR001-VR005) execute before text generation. Hard data constraints strictly override generative output.</p>
             </div>
-            """, unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
     with g4:
         st.markdown(
@@ -190,7 +331,8 @@ with tab2:
                 <h5 style="color: #38bdf8; margin: 0 0 0.4rem 0;">4. Verbatim Audit Trail</h5>
                 <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">Every prompt, retrieved payload, model name, and response is logged verbatim to JSONL with mandatory advisory tags.</p>
             </div>
-            """, unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
 
     st.markdown("---")
@@ -202,8 +344,8 @@ with tab2:
         options=[
             "Case 1: Contradictory Status Inference (Factual Hallucination - LN0012940)",
             "Case 2: Non-Existent Attribute & Tax Income Fabrication (LN0034182)",
-            "Case 3: Overconfident Absolute Certainty Claim (LN0009511)"
-        ]
+            "Case 3: Overconfident Absolute Certainty Claim (LN0009511)",
+        ],
     )
 
     if "Case 1" in selected_case:
@@ -216,12 +358,12 @@ with tab2:
                 """
                 ```text
                 ### Reviewer Summary: Loan LN0012940
-                The borrower has fully satisfied all contractual mortgage obligations 
-                as indicated by the 'Paid Off' status. The loan file should be archived 
+                The borrower has fully satisfied all contractual mortgage obligations
+                as indicated by the \'Paid Off\' status. The loan file should be archived
                 and marked as closed with zero credit risk. No further action needed.
                 Decision: Complete Archival.
                 ```
-                **The Danger:** The LLM naively trusted the text label 'Paid Off', ignoring that **$45,200** was still owed. Closing this file causes the bank a $45,200 write-off!
+                **The Danger:** The LLM naively trusted the text label \'Paid Off\', ignoring that **$45,200** was still owed. Closing this file causes the bank a $45,200 write-off!
                 """
             )
         with c_guard:
@@ -229,8 +371,8 @@ with tab2:
             st.markdown(
                 """
                 ```text
-                CRITICAL DATA CONTRADICTION [VR002]: Reported status 'Paid Off' 
-                directly contradicts active outstanding balance of $45,200.00. 
+                CRITICAL DATA CONTRADICTION [VR002]: Reported status \'Paid Off\'
+                directly contradicts active outstanding balance of $45,200.00.
                 Servicer ledger reconciliation required before file archival.
 
                 Part A: Risk Assessment - Low Risk (Calibrated Default Prob: 1.20%).
@@ -253,12 +395,12 @@ with tab2:
                 """
                 ```text
                 ### Reviewer Summary: Loan LN0034182
-                The loan should be rejected because the borrower's annual household 
-                income fell by 30% according to their 2023 W2 tax filings, violating 
+                The loan should be rejected because the borrower\'s annual household
+                income fell by 30% according to their 2023 W2 tax filings, violating
                 standard debt-to-income limits.
                 Recommendation — not a decision.
                 ```
-                **The Danger:** The underlying dataset only contains categorical bands (`dti_band: 36-43%`). The LLM fabricated '2023 W2 tax filings' and '30% income drop' out of thin air!
+                **The Danger:** The underlying dataset only contains categorical bands (`dti_band: 36-43%`). The LLM fabricated \'2023 W2 tax filings\' and \'30% income drop\' out of thin air!
                 """
             )
         with c_guard:
@@ -266,12 +408,12 @@ with tab2:
             st.markdown(
                 """
                 ```text
-                Underwriting Note: DTI is in the 36-43% tier with 'Pending Review' 
-                documentation status. 
+                Underwriting Note: DTI is in the 36-43% tier with \'Pending Review\'
+                documentation status.
 
                 Part A: Risk Assessment - Moderate Risk (Calibrated Default Prob: 14.20%).
                 Part B: Data Quality - No raw tax docs present in schema.
-                Part C: Action - Request standard verification of employment (VOE) 
+                Part C: Action - Request standard verification of employment (VOE)
                         and missing income documentation schedules.
                 ------------------------------------------------------------
                 Recommendation — not a decision.
@@ -290,12 +432,12 @@ with tab2:
                 """
                 ```text
                 ### Reviewer Summary: Loan LN0009511
-                This loan is guaranteed to default in the next quarter due to subprime 
-                credit (<620) and 75 DPD delinquency. Foreclosure proceedings must be 
+                This loan is guaranteed to default in the next quarter due to subprime
+                credit (<620) and 75 DPD delinquency. Foreclosure proceedings must be
                 immediately initiated without cure opportunity.
                 Recommendation — not a decision.
                 ```
-                **The Danger:** The LLM used absolute deterministic language (*'guaranteed to default'*). Foreclosure without statutory cure notices violates federal CFPB servicing laws! And with 28.5% default probability, **71.5% of similar loans actually cure or modify**!
+                **The Danger:** The LLM used absolute deterministic language (*\'guaranteed to default\'*). Foreclosure without statutory cure notices violates federal CFPB servicing laws! And with 28.5% default probability, **71.5% of similar loans actually cure or modify**!
                 """
             )
         with c_guard:
@@ -304,21 +446,28 @@ with tab2:
                 """
                 ```text
                 ### Reviewer Note: Loan LN0009511
-                Part A: Risk Assessment - High Risk (Calibrated 12M Default Probability: 
+                Part A: Risk Assessment - High Risk (Calibrated 12M Default Probability:
                         28.50%, Epistemic Confidence: 0.57).
                 Part B: Current Performance - 75 DPD with active balance of $198,000.00.
-                Part C: Action - Initiate early loss-mitigation contact and borrower 
+                Part C: Action - Initiate early loss-mitigation contact and borrower
                         workout outreach rather than immediate foreclosure.
                 ------------------------------------------------------------
                 Recommendation — not a decision.
                 ```
-                **The Catch Mechanism:** Uncertainty & Calibration Bound Checker flagged absolute claims (*'guaranteed'*) against probabilistic metrics, converting the text to calibrated regulatory language.
+                **The Catch Mechanism:** Uncertainty & Calibration Bound Checker flagged absolute claims (*\'guaranteed\'*) against probabilistic metrics, converting the text to calibrated regulatory language.
                 """
             )
 
     st.markdown("---")
-    st.info("**Mandatory Governance Invariant:** Every LLM-generated output is strictly labeled: *'Recommendation — not a decision.'* to ensure humans retain final underwriting authority.")
+    st.info(
+        "**Mandatory Governance Invariant:** Every LLM-generated output is strictly labeled: "
+        "*\'Recommendation — not a decision.\'* to ensure humans retain final underwriting authority."
+    )
 
+
+# ---------------------------------------------------------------------------
+# TAB 3 — Verbatim Prompt Audit Logs
+# ---------------------------------------------------------------------------
 with tab3:
     st.subheader("Verbatim Audit Trail Viewer (logs/llm_prompt_log.jsonl)")
     st.markdown(
@@ -339,7 +488,7 @@ with tab3:
 
     if log_records:
         st.success(f"Found **{len(log_records)} verifiable audit log entries** recorded on disk.")
-        
+
         summary_rows = []
         for idx, entry in enumerate(log_records):
             loan_id = entry.get("retrieved_context", {}).get("loan_identifiers", {}).get("loan_id", "N/A")
@@ -349,9 +498,9 @@ with tab3:
                 "Loan ID": loan_id,
                 "Call Type": entry.get("call_type", "N/A"),
                 "Model Engine": entry.get("model_name", "N/A"),
-                "Governance Tag": entry.get("disclaimer", "Recommendation — not a decision.")
+                "Governance Tag": entry.get("disclaimer", "Recommendation — not a decision."),
             })
-        
+
         log_df = pd.DataFrame(summary_rows)
         st.dataframe(log_df, use_container_width=True)
 
@@ -360,7 +509,7 @@ with tab3:
         sel_idx = st.selectbox(
             "Select Log Entry to Inspect Full Request / Response Payloads:",
             options=range(1, len(log_records) + 1),
-            format_func=lambda i: f"Log #{i} — Loan {summary_rows[i-1]['Loan ID']} ({summary_rows[i-1]['Timestamp (UTC)']})"
+            format_func=lambda i: f"Log #{i} — Loan {summary_rows[i-1]['Loan ID']} ({summary_rows[i-1]['Timestamp (UTC)']})",
         )
 
         selected_entry = log_records[sel_idx - 1]
@@ -380,12 +529,15 @@ with tab3:
             st.markdown(
                 f"""
                 <div style="background-color: #0f172a; border: 1px solid #334155; padding: 1rem; border-radius: 6px;">
-                    {selected_entry.get('output', '').replace(chr(10), '<br>')}
+                    {selected_entry.get("output", "").replace(chr(10), "<br>")}
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
             st.caption(f"Mandatory Governance Disclaimer: **{selected_entry.get('disclaimer', '')}**")
 
     else:
-        st.warning(f"No prompt logs found at `{LOG_FILE}`.")
+        st.warning(
+            f"No prompt logs found at `{LOG_FILE}`. "
+            "Generate a reviewer note in Tab 1 to populate the audit trail."
+        )
