@@ -228,9 +228,11 @@ with tab1:
         if st.button("Generate Grounded Reviewer Note", key=generate_key, type="primary"):
             with st.spinner(f"Generating grounded reviewer note for {loan_row['Loan ID']} ({loan_row['Month']}) ..."):
                 import sys
-                sys.path.insert(0, str(REPO_ROOT / "src"))
+                # Insert repo root — copilot.py internally uses `from src.llm_copilot.retriever`
+                if str(REPO_ROOT) not in sys.path:
+                    sys.path.insert(0, str(REPO_ROOT))
                 try:
-                    from llm_copilot.copilot import GroundedReviewerCopilot
+                    from src.llm_copilot.copilot import GroundedReviewerCopilot
                     copilot     = GroundedReviewerCopilot()
                     loan_record = _build_loan_record(loan_row)
                     ml_preds    = _build_ml_preds(loan_row)
