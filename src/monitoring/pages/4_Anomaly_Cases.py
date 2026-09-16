@@ -66,9 +66,9 @@ with col_b:
 st.markdown("<br>", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs([
-    "🔍 1. Anomaly Queue & Case Deep-Dive",
-    "🛡️ 2. Grounded LLM Copilot & Hallucination Defense",
-    "📜 3. Verbatim Prompt Audit Logs (JSONL Viewer)"
+    "1. Anomaly Queue & Case Deep-Dive",
+    "2. Grounded LLM Copilot & Hallucination Defense",
+    "3. Verbatim Prompt Audit Logs (JSONL Viewer)"
 ])
 
 with tab1:
@@ -146,7 +146,7 @@ with tab1:
         )
 
 with tab2:
-    st.subheader("🛡️ Grounded LLM Copilot Governance & Anti-Hallucination Framework")
+    st.subheader("Grounded LLM Copilot Governance & Anti-Hallucination Framework")
     st.markdown(
         """
         The Intain problem statement strictly mandates: **'Presents LLM-generated narratives without grounding is a disqualification condition.'**
@@ -194,7 +194,7 @@ with tab2:
         )
 
     st.markdown("---")
-    st.subheader("🚨 3 Real Hallucination Case Studies: Failure Modes & Guardrail Interceptions")
+    st.subheader("Three Real Hallucination Case Studies: Failure Modes & Guardrail Interceptions")
     st.markdown("Select a real failure case to view how our deterministic guardrails caught and corrected dangerous ungrounded LLM output:")
 
     selected_case = st.selectbox(
@@ -207,11 +207,11 @@ with tab2:
     )
 
     if "Case 1" in selected_case:
-        st.markdown("#### 🔴 Case Study 1: Contradictory Status Inference")
+        st.markdown("#### Case Study 1: Contradictory Status Inference")
         st.markdown("**Loan Profile:** `LN0012940` | Reported Status: `Paid Off` | Active Ledger Balance: **$45,200.00** | Rule Breach: **VR002**")
         c_raw, c_guard = st.columns(2)
         with c_raw:
-            st.error("❌ Raw Ungrounded LLM Output (Before Interception)")
+            st.error("Raw Ungrounded LLM Output (Before Interception)")
             st.markdown(
                 """
                 ```text
@@ -225,7 +225,7 @@ with tab2:
                 """
             )
         with c_guard:
-            st.success("✅ Deterministic Interception & Corrected Output")
+            st.success("Deterministic Interception & Corrected Output")
             st.markdown(
                 """
                 ```text
@@ -244,11 +244,11 @@ with tab2:
             )
 
     elif "Case 2" in selected_case:
-        st.markdown("#### 🔴 Case Study 2: Non-Existent Attribute & Tax Income Fabrication")
+        st.markdown("#### Case Study 2: Non-Existent Attribute & Tax Income Fabrication")
         st.markdown("**Loan Profile:** `LN0034182` | DTI Band: `36-43%` | Document Status: `Pending Review` | Raw Tax Returns: **None exist in tape**")
         c_raw, c_guard = st.columns(2)
         with c_raw:
-            st.error("❌ Raw Ungrounded LLM Output (Before Interception)")
+            st.error("Raw Ungrounded LLM Output (Before Interception)")
             st.markdown(
                 """
                 ```text
@@ -262,7 +262,7 @@ with tab2:
                 """
             )
         with c_guard:
-            st.success("✅ Contextual Entity Whitelist Interception")
+            st.success("Contextual Entity Whitelist Interception")
             st.markdown(
                 """
                 ```text
@@ -281,11 +281,11 @@ with tab2:
             )
 
     else:
-        st.markdown("#### 🔴 Case Study 3: Overconfident Absolute Certainty Claim")
+        st.markdown("#### Case Study 3: Overconfident Absolute Certainty Claim")
         st.markdown("**Loan Profile:** `LN0009511` | Status: `60-89 DPD` (75 DPD) | Calibrated Default Prob: **28.50%** | Epistemic Confidence: `0.57`")
         c_raw, c_guard = st.columns(2)
         with c_raw:
-            st.error("❌ Raw Ungrounded LLM Output (Before Interception)")
+            st.error("Raw Ungrounded LLM Output (Before Interception)")
             st.markdown(
                 """
                 ```text
@@ -299,7 +299,7 @@ with tab2:
                 """
             )
         with c_guard:
-            st.success("✅ Calibration Bound & Uncertainty Interception")
+            st.success("Calibration Bound & Uncertainty Interception")
             st.markdown(
                 """
                 ```text
@@ -317,10 +317,10 @@ with tab2:
             )
 
     st.markdown("---")
-    st.info("⚖️ **Mandatory Governance Invariant:** Every LLM-generated output is strictly labeled: *'Recommendation — not a decision.'* to ensure humans retain final underwriting authority.")
+    st.info("**Mandatory Governance Invariant:** Every LLM-generated output is strictly labeled: *'Recommendation — not a decision.'* to ensure humans retain final underwriting authority.")
 
 with tab3:
-    st.subheader("📜 Verbatim Audit Trail Viewer (`logs/llm_prompt_log.jsonl`)")
+    st.subheader("Verbatim Audit Trail Viewer (logs/llm_prompt_log.jsonl)")
     st.markdown(
         "For complete regulatory compliance and model risk governance, every copilot interaction is stored verbatim. "
         "Below is the live audit log loaded directly from system storage:"
@@ -338,7 +338,7 @@ with tab3:
                         pass
 
     if log_records:
-        st.success(f"✅ Found **{len(log_records)} verifiable audit log entries** recorded on disk.")
+        st.success(f"Found **{len(log_records)} verifiable audit log entries** recorded on disk.")
         
         summary_rows = []
         for idx, entry in enumerate(log_records):
@@ -367,7 +367,7 @@ with tab3:
 
         col_left, col_right = st.columns(2)
         with col_left:
-            st.markdown("#### 📥 Retrieved Grounding Context Payload (BM25)")
+            st.markdown("#### Retrieved Grounding Context Payload (BM25)")
             st.caption("Facts retrieved from data dictionary & feature store injected into prompt:")
             st.json(selected_entry.get("retrieved_context", {}))
 
@@ -375,7 +375,7 @@ with tab3:
                 st.code(selected_entry.get("prompt", ""), language="text")
 
         with col_right:
-            st.markdown("#### 📤 Generated Reviewer Note (Grounded)")
+            st.markdown("#### Generated Reviewer Note (Grounded)")
             st.caption(f"Engine: `{selected_entry.get('model_name')}` | Timestamp: `{selected_entry.get('timestamp')}`")
             st.markdown(
                 f"""
