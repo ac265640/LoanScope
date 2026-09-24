@@ -4,7 +4,7 @@
 > An ML-first, production-grade platform for loan-level data profiling, multi-outcome performance prediction, cause-specific competing-risk survival modeling, hybrid anomaly detection, macroeconomic stress simulation, explainability, and grounded LLM reviewer assistance.
 
 **Live Streamlit Showcase Demo**: [https://loanscope-drift.streamlit.app](https://loanscope-drift.streamlit.app)  
-**Primary Developer**: Quantitative ML Engineering Team | **Version**: 1.2.0 (Production Release)
+
 
 📽️ [Pitch Video](https://drive.google.com/file/d/13gEukUVSlMBe29DKxicMjcLYxmHcBfV6/view?usp=drivesdk) · 🎥 [Demo Video](https://drive.google.com/file/d/1A0d5-kMKpvDxMg84qQF2kiKarivfF182/view?usp=sharing)
 
