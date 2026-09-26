@@ -12,72 +12,30 @@ Multi-Page Structure:
 - 6_Drift_Monitoring.py: Feature distribution stability (PSI & KS metrics)
 """
 
+import sys
 from pathlib import Path
 import streamlit as st
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+_THIS_DIR = Path(__file__).resolve().parent
+if str(_THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(_THIS_DIR))
+from _theme import inject_theme  # noqa: E402
 
-# Page configuration
-st.set_page_config(
-    page_title="LoanScope — Quantitative Risk & Surveillance Engine",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+# Page configuration — wrapped so this file still works standalone
+# (`streamlit run src/monitoring/app.py`) AND when hosted as a page under
+# st.navigation() from drift_dashboard.py, where set_page_config is already
+# called once by the parent entry point.
+try:
+    st.set_page_config(
+        page_title="LoanScope — Quantitative Risk & Surveillance Engine",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+except Exception:
+    pass
 
-# Custom CSS for polished, institutional typography and card styling
-st.markdown(
-    """
-    <style>
-    .main-header {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #f8fafc;
-        margin-bottom: 0.2rem;
-    }
-    .sub-header {
-        font-size: 1.05rem;
-        color: #94a3b8;
-        margin-bottom: 1.5rem;
-    }
-    .metric-card {
-        background-color: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 6px;
-        padding: 1.2rem;
-        text-align: center;
-    }
-    .feature-card {
-        background-color: #0f172a;
-        border: 1px solid #334155;
-        border-radius: 6px;
-        padding: 1.2rem;
-        margin-bottom: 1rem;
-    }
-    .feature-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #38bdf8;
-    }
-    .badge-green {
-        background-color: rgba(34, 197, 94, 0.15);
-        color: #4ade80;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    .badge-blue {
-        background-color: rgba(56, 189, 248, 0.15);
-        color: #38bdf8;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+inject_theme()
 
 # Global Sidebar
 with st.sidebar:
@@ -104,91 +62,71 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Headline KPI Cards
-col1, col2, col3, col4, col5 = st.columns(5)
-with col1:
-    st.metric(label="3M Delinquency ROC-AUC", value="0.7977", delta="+0.0197 vs LR")
-with col2:
-    st.metric(label="3M Early Warning PR-AUC", value="0.4090", delta="10.1x Base Prevalence")
-with col3:
-    st.metric(label="Competing-Risk CIF Bias", value="+8.72 pp", delta="KM Overestimation Removed", delta_color="inverse")
-with col4:
-    st.metric(label="Anomaly Detection ROC-AUC", value="0.8310", delta="100% Rule Engine Match")
-with col5:
-    st.metric(label="Automated Pipeline Tests", value="100% Pass", delta="Zero Data Leakage")
+# Headline KPI Cards — bordered card grid, vertically centered, equal height
+kpi_metrics = [
+    dict(label="3M Delinquency ROC-AUC", value="0.7977", delta="+0.0197 vs LR"),
+    dict(label="3M Early Warning PR-AUC", value="0.4090", delta="10.1x Base Prevalence"),
+    dict(label="Competing-Risk CIF Bias", value="+8.72 pp", delta="KM Overestimation Removed", delta_color="inverse"),
+    dict(label="Anomaly Detection ROC-AUC", value="0.8310", delta="100% Rule Engine Match"),
+    dict(label="Automated Pipeline Tests", value="100% Pass", delta="Zero Data Leakage"),
+]
+kpi_cols = st.columns(5, vertical_alignment="center")
+for col, kpi in zip(kpi_cols, kpi_metrics):
+    with col:
+        with st.container(border=True, height="stretch"):
+            st.metric(**kpi)
 
 st.markdown("---")
 
 st.markdown("### Platform Modules")
 st.markdown("Select a module from the left navigation menu or explore the platform sections below:")
 
-nav_col1, nav_col2 = st.columns(2)
+# Data-driven feature grid — dynamic 2-column layout built via enumerate()
+PLATFORM_MODULES = [
+    {
+        "title": "1. System Overview & Architecture",
+        "body": "Pipeline data lineage, zero-leakage cohort partitioning (778K train / 95K val / 69K test), feature store specifications, and performance scorecard.",
+        "badges": [("badge-blue", "Architecture"), ("badge-green", "Data Lineage")],
+    },
+    {
+        "title": "2. Predictive Models & Probability Calibration",
+        "body": "Multi-outcome LightGBM classifiers (3M/6M delinquency, 12M default, 12M prepayment), Platt sigmoid scaling, reliability diagrams, and decision threshold optimization.",
+        "badges": [("badge-blue", "LightGBM"), ("badge-green", "Platt Scaling")],
+    },
+    {
+        "title": "3. Survival Analysis & Competing Risks",
+        "body": "Cause-specific Aalen-Johansen Cumulative Incidence Functions (CIF) modeling default and voluntary prepayment as competing terminal events, eliminating naive Kaplan-Meier overestimation bias (+8.72pp).",
+        "badges": [("badge-blue", "Aalen-Johansen"), ("badge-green", "Competing Risks")],
+    },
+    {
+        "title": "4. Anomaly Detection & Reviewer Cases",
+        "body": "Component A (Deterministic Rule Engine VR001–VR005) + Component B (Isolation Forest + Learned ML). 25 reviewer-ready anomaly cases with SHAP driver attributions and structured audit notes.",
+        "badges": [("badge-blue", "Isolation Forest"), ("badge-green", "25 Reviewer Cases")],
+    },
+    {
+        "title": "5. Macroeconomic Scenario & Stress Simulator",
+        "body": "Multi-scenario stress projections (Base, Adverse Credit +150bps, High Prepayment -75bps), segment vulnerability curves, and 1,000-path Monte Carlo stochastic risk distributions.",
+        "badges": [("badge-blue", "Stress Testing"), ("badge-green", "1,000 Monte Carlo Paths")],
+    },
+    {
+        "title": "6. Feature Drift Surveillance Dashboard",
+        "body": "Population Stability Index (PSI) and Kolmogorov-Smirnov (KS) statistic tracking between historical train and out-of-time test distributions with formal thresholds.",
+        "badges": [("badge-blue", "PSI & KS"), ("badge-green", "Drift Surveillance")],
+    },
+]
 
-with nav_col1:
-    with st.container():
+N_GRID_COLS = 2
+grid_cols = st.columns(N_GRID_COLS)
+for i, module in enumerate(PLATFORM_MODULES):
+    col = grid_cols[i % N_GRID_COLS]
+    with col:
+        badge_html = " &nbsp; ".join(f'<span class="{cls}">{label}</span>' for cls, label in module["badges"])
         st.markdown(
-            """
+            f"""
             <div class="feature-card">
-                <div class="feature-title">1. System Overview & Architecture</div>
-                <p>Pipeline data lineage, zero-leakage cohort partitioning (778K train / 95K val / 69K test), feature store specifications, and performance scorecard.</p>
-                <span class="badge-blue">Architecture</span> &nbsp; <span class="badge-green">Data Lineage</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        
-        st.markdown(
-            """
-            <div class="feature-card">
-                <div class="feature-title">2. Predictive Models & Probability Calibration</div>
-                <p>Multi-outcome LightGBM classifiers (3M/6M delinquency, 12M default, 12M prepayment), Platt sigmoid scaling, reliability diagrams, and decision threshold optimization.</p>
-                <span class="badge-blue">LightGBM</span> &nbsp; <span class="badge-green">Platt Scaling</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown(
-            """
-            <div class="feature-card">
-                <div class="feature-title">3. Survival Analysis & Competing Risks</div>
-                <p>Cause-specific Aalen-Johansen Cumulative Incidence Functions (CIF) modeling default and voluntary prepayment as competing terminal events, eliminating naive Kaplan-Meier overestimation bias (+8.72pp).</p>
-                <span class="badge-blue">Aalen-Johansen</span> &nbsp; <span class="badge-green">Competing Risks</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-with nav_col2:
-    with st.container():
-        st.markdown(
-            """
-            <div class="feature-card">
-                <div class="feature-title">4. Anomaly Detection & Reviewer Cases</div>
-                <p>Component A (Deterministic Rule Engine VR001–VR005) + Component B (Isolation Forest + Learned ML). 25 reviewer-ready anomaly cases with SHAP driver attributions and structured audit notes.</p>
-                <span class="badge-blue">Isolation Forest</span> &nbsp; <span class="badge-green">25 Reviewer Cases</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown(
-            """
-            <div class="feature-card">
-                <div class="feature-title">5. Macroeconomic Scenario & Stress Simulator</div>
-                <p>Multi-scenario stress projections (Base, Adverse Credit +150bps, High Prepayment -75bps), segment vulnerability curves, and 1,000-path Monte Carlo stochastic risk distributions.</p>
-                <span class="badge-blue">Stress Testing</span> &nbsp; <span class="badge-green">1,000 Monte Carlo Paths</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown(
-            """
-            <div class="feature-card">
-                <div class="feature-title">6. Feature Drift Surveillance Dashboard</div>
-                <p>Population Stability Index (PSI) and Kolmogorov-Smirnov (KS) statistic tracking between historical train and out-of-time test distributions with formal thresholds.</p>
-                <span class="badge-blue">PSI & KS</span> &nbsp; <span class="badge-green">Drift Surveillance</span>
+                <div class="feature-title">{module["title"]}</div>
+                <p>{module["body"]}</p>
+                {badge_html}
             </div>
             """,
             unsafe_allow_html=True,

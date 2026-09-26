@@ -6,11 +6,22 @@ Component A (Deterministic Rule Engine VR001-VR005) vs Component B (Learned ML E
 """
 
 import json
+import sys
 from pathlib import Path
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Anomaly & LLM Copilot | LoanScope", layout="wide")
+_THIS_DIR = Path(__file__).resolve().parents[1]
+if str(_THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(_THIS_DIR))
+from _theme import inject_theme  # noqa: E402
+
+try:
+    st.set_page_config(page_title="Anomaly & LLM Copilot | LoanScope", layout="wide")
+except Exception:
+    pass
+
+inject_theme()
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 LOG_FILE = REPO_ROOT / "logs" / "llm_prompt_log.jsonl"
@@ -129,41 +140,72 @@ def _build_ml_preds(row: dict) -> dict:
 # ---------------------------------------------------------------------------
 with tab1:
     st.subheader("Filter & Explore Anomaly Review Queue")
+
+    # Read initial filter state from URL query params so a specific filtered
+    # view of the queue is shareable via direct link.
+    _qp_min_score = float(st.query_params.get("min_score", 0.90))
+    _qp_status_raw = st.query_params.get_all("status")
+    _all_statuses = ["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"]
+    _default_status = _qp_status_raw if _qp_status_raw else _all_statuses
+    _qp_search = st.query_params.get("q", "")
+
     f_col1, f_col2, f_col3 = st.columns([1, 1, 1.5])
     with f_col1:
-        min_score = st.slider("Minimum Anomaly Score", min_value=0.80, max_value=1.00, value=0.90, step=0.01)
+        min_score = st.slider("Minimum Anomaly Score", min_value=0.80, max_value=1.00, value=_qp_min_score, step=0.01)
     with f_col2:
         status_filter = st.multiselect(
             "Filter by Status",
-            options=["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"],
-            default=["90+ DPD", "Prepaid", "Paid Off", "Current", "Default"],
+            options=_all_statuses,
+            default=_default_status,
+            accept_new_options=True,
         )
     with f_col3:
-        search_query = st.text_input("Search by Loan ID or Keyword", placeholder="e.g. LN0026208 or note rate")
+        search_query = st.text_input("Search by Loan ID or Keyword", value=_qp_search, placeholder="e.g. LN0026208 or note rate")
 
-    df_anom = pd.DataFrame(ANOMALY_CASES)
-    filtered = df_anom[
-        (df_anom["Anomaly Score"] >= min_score) &
-        (df_anom["Status"].isin(status_filter))
-    ]
-
+    st.query_params["min_score"] = f"{min_score:.2f}"
+    st.query_params["status"] = status_filter
     if search_query:
-        filtered = filtered[
-            filtered["Loan ID"].str.contains(search_query, case=False) |
-            filtered["Detail"].str.contains(search_query, case=False) |
-            filtered["Category"].str.contains(search_query, case=False)
+        st.query_params["q"] = search_query
+    elif "q" in st.query_params:
+        del st.query_params["q"]
+
+    @st.cache_data(ttl="6h", show_spinner=False)
+    def _load_anomaly_df() -> pd.DataFrame:
+        return pd.DataFrame(ANOMALY_CASES)
+
+    df_anom = _load_anomaly_df()
+
+    # Note: st.stop() is intentionally NOT used for the empty-selection case
+    # below — all three tabs' bodies execute on every rerun regardless of
+    # which tab is visually active, so stopping here would also blank out
+    # Tabs 2 and 3. An explicit if/else keeps the empty-state notice scoped
+    # to this tab only.
+    if not status_filter:
+        st.info("Select at least one status above to view cases in the review queue.")
+        filtered = df_anom.iloc[0:0]
+    else:
+        filtered = df_anom[
+            (df_anom["Anomaly Score"] >= min_score) &
+            (df_anom["Status"].isin(status_filter))
         ]
 
-    st.markdown(f"**Showing {len(filtered)} matching anomaly cases:**")
+        if search_query:
+            filtered = filtered[
+                filtered["Loan ID"].str.contains(search_query, case=False) |
+                filtered["Detail"].str.contains(search_query, case=False) |
+                filtered["Category"].str.contains(search_query, case=False)
+            ]
 
-    display_df = filtered.copy()
-    display_df["Balance"] = display_df["Balance"].apply(lambda v: f"${v:,.2f}")
-    display_df["Anomaly Score"] = display_df["Anomaly Score"].apply(lambda v: f"{v:.4f}")
+        st.markdown(f"**Showing {len(filtered)} matching anomaly cases:**")
 
-    st.dataframe(
-        display_df[["Case #", "Loan ID", "Month", "Status", "Balance", "DPD", "Anomaly Score", "Category", "Action"]],
-        use_container_width=True,
-    )
+        display_df = filtered.copy()
+        display_df["Balance"] = display_df["Balance"].apply(lambda v: f"${v:,.2f}")
+        display_df["Anomaly Score"] = display_df["Anomaly Score"].apply(lambda v: f"{v:.4f}")
+
+        st.dataframe(
+            display_df[["Case #", "Loan ID", "Month", "Status", "Balance", "DPD", "Anomaly Score", "Category", "Action"]],
+            use_container_width=True,
+        )
 
     st.markdown("---")
     st.subheader("Case Deep-Dive & LLM Copilot Reviewer Note")
@@ -185,16 +227,20 @@ with tab1:
         selected_idx = case_options.index(selected_case_label)
         loan_row = filtered.iloc[selected_idx].to_dict()
 
-        # Metric strip
-        col1, col2, col3, col4 = st.columns(4)
+        # Metric strip — bordered, vertically centered, equal-height cards
+        col1, col2, col3, col4 = st.columns(4, vertical_alignment="center")
         with col1:
-            st.metric("Loan ID", loan_row["Loan ID"])
+            with st.container(border=True, height="stretch"):
+                st.metric("Loan ID", loan_row["Loan ID"])
         with col2:
-            st.metric("Current Balance", f"${loan_row['Balance']:,.2f}")
+            with st.container(border=True, height="stretch"):
+                st.metric("Current Balance", f"${loan_row['Balance']:,.2f}")
         with col3:
-            st.metric("Days Past Due", f"{loan_row['DPD']} DPD")
+            with st.container(border=True, height="stretch"):
+                st.metric("Days Past Due", f"{loan_row['DPD']} DPD")
         with col4:
-            st.metric("Anomaly Score", f"{loan_row['Anomaly Score']:.4f}")
+            with st.container(border=True, height="stretch"):
+                st.metric("Anomaly Score", f"{loan_row['Anomaly Score']:.4f}")
 
         st.markdown(
             f"""
@@ -341,16 +387,34 @@ with tab2:
     st.subheader("Three Real Hallucination Case Studies: Failure Modes & Guardrail Interceptions")
     st.markdown("Select a real failure case to view how our deterministic guardrails caught and corrected dangerous ungrounded LLM output:")
 
-    selected_case = st.selectbox(
+    # Short chip labels mapped to the full descriptive case strings.
+    HALLUCINATION_CASES = {
+        "Case 1": "Case 1: Contradictory Status Inference (Factual Hallucination - LN0012940)",
+        "Case 2": "Case 2: Non-Existent Attribute & Tax Income Fabrication (LN0034182)",
+        "Case 3": "Case 3: Overconfident Absolute Certainty Claim (LN0009511)",
+    }
+
+    _qp_case = st.query_params.get("case", "Case 1")
+    if _qp_case not in HALLUCINATION_CASES:
+        _qp_case = "Case 1"
+
+    selected_short = st.pills(
         "Select Hallucination Case Study to Inspect:",
-        options=[
-            "Case 1: Contradictory Status Inference (Factual Hallucination - LN0012940)",
-            "Case 2: Non-Existent Attribute & Tax Income Fabrication (LN0034182)",
-            "Case 3: Overconfident Absolute Certainty Claim (LN0009511)",
-        ],
+        options=list(HALLUCINATION_CASES.keys()),
+        default=_qp_case,
+        key="hallucination_case_pills",
     )
 
-    if "Case 1" in selected_case:
+    if not selected_short:
+        st.info("Select a case above to inspect the raw vs. guardrail-corrected LLM output.")
+        selected_case = None
+    else:
+        st.query_params["case"] = selected_short
+        selected_case = HALLUCINATION_CASES[selected_short]
+
+    if selected_case is None:
+        pass
+    elif "Case 1" in selected_case:
         st.markdown("#### Case Study 1: Contradictory Status Inference")
         st.markdown("**Loan Profile:** `LN0012940` | Reported Status: `Paid Off` | Active Ledger Balance: **$45,200.00** | Rule Breach: **VR002**")
         c_raw, c_guard = st.columns(2)

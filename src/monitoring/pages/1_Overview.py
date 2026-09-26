@@ -5,11 +5,22 @@ Institutional overview of the Loan Performance Intelligence Engine,
 data lineage, zero-leakage partitions, architecture diagram, and full scorecard.
 """
 
+import sys
 from pathlib import Path
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Overview | LoanScope", layout="wide")
+_THIS_DIR = Path(__file__).resolve().parents[1]
+if str(_THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(_THIS_DIR))
+from _theme import inject_theme, render_mermaid_diagram  # noqa: E402
+
+try:
+    st.set_page_config(page_title="Overview | LoanScope", layout="wide")
+except Exception:
+    pass
+
+inject_theme()
 
 # Sidebar
 with st.sidebar:
@@ -29,18 +40,19 @@ st.markdown(
 
 st.markdown("---")
 
-# Headline KPI Row
-col1, col2, col3, col4, col5 = st.columns(5)
-with col1:
-    st.metric("Total Dataset Scale", "50,000 Loans", "874,435 Monthly Records")
-with col2:
-    st.metric("Early Warning ROC-AUC", "0.7977", "+0.0197 vs Baseline LR")
-with col3:
-    st.metric("Early Warning PR-AUC", "0.4090", "10.1x Base Rate (0.0404)")
-with col4:
-    st.metric("Anomaly Detection ROC-AUC", "0.8310", "100% Rule Engine Match")
-with col5:
-    st.metric("Competing-Risk CIF Bias", "+8.72 pp", "KM Overestimation Fixed")
+# Headline KPI Row — bordered, vertically centered, equal-height card grid
+overview_metrics = [
+    dict(label="Total Dataset Scale", value="50,000 Loans", delta="874,435 Monthly Records"),
+    dict(label="Early Warning ROC-AUC", value="0.7977", delta="+0.0197 vs Baseline LR"),
+    dict(label="Early Warning PR-AUC", value="0.4090", delta="10.1x Base Rate (0.0404)"),
+    dict(label="Anomaly Detection ROC-AUC", value="0.8310", delta="100% Rule Engine Match"),
+    dict(label="Competing-Risk CIF Bias", value="+8.72 pp", delta="KM Overestimation Fixed"),
+]
+kpi_cols = st.columns(5, vertical_alignment="center")
+for col, kpi in zip(kpi_cols, overview_metrics):
+    with col:
+        with st.container(border=True, height="stretch"):
+            st.metric(**kpi)
 
 st.markdown("---")
 
@@ -59,42 +71,48 @@ with tab_arch:
         The platform operates as a modular pipeline across 6 specialized sub-systems:
         """
     )
-    
-    col_a, col_b = st.columns([1.2, 1])
-    with col_a:
-        st.markdown(
-            """
-            ```mermaid
-            graph TD
-                A[Loan Servicing Tape & Static Attributes] --> B[Data Quality & Profiling Engine]
-                B --> C[32-Feature Versioned Feature Store]
-                C --> D1[Multi-Outcome GBDT Predictive Suite]
-                C --> D2[Aalen-Johansen Competing-Risk Engine]
-                C --> D3[Hybrid Anomaly & Exception Detector]
-                D1 --> E[Platt Calibration & Conformal Bounds]
-                D2 --> F[Macro Stress & Monte Carlo Simulator]
-                D3 --> G[Grounded Reviewer Copilot]
-                E --> H[Automated Surveillance & Drift Monitor]
-                F --> H
-                G --> H
-            ```
-            """
-        )
+
+    # Real rendered Mermaid flowchart (actual arrows/merge lines via CDN mermaid.js)
+    render_mermaid_diagram(
+        """
+        graph TD
+            A[Loan Servicing Tape & Static Attributes] --> B[Data Quality & Profiling Engine]
+            B --> C[32-Feature Versioned Feature Store]
+            C --> D1[Multi-Outcome GBDT Predictive Suite]
+            C --> D2[Aalen-Johansen Competing-Risk Engine]
+            C --> D3[Hybrid Anomaly & Exception Detector]
+            D1 --> E[Platt Calibration & Conformal Bounds]
+            D2 --> F[Macro Stress & Monte Carlo Simulator]
+            D3 --> G[Grounded Reviewer Copilot]
+            E --> H[Automated Surveillance & Drift Monitor]
+            F --> H
+            G --> H
+        """,
+        height=580,
+    )
+
+    st.markdown("")
+    st.markdown("#### Core Technical Principles:")
+    col_b, col_c = st.columns(2)
     with col_b:
-        st.markdown("#### Core Technical Principles:")
         st.markdown("- **Zero-Leakage Temporal Split**: Cohort partition by origination month. Zero loan ID overlap across train, val, and test partitions.")
         st.markdown("- **32 Versioned Engineered Features**: Rolling payment trajectory, spread-to-market, DTI/LTV stress ratios, and payment acceleration signals.")
+    with col_c:
         st.markdown("- **Dual-Engine Anomaly Interception**: Component A (Deterministic Rule Engine VR001-VR005) + Component B (Isolation Forest + Learned LightGBM).")
         st.markdown("- **Split Conformal Prediction**: 90.3% empirical marginal coverage at 90% target, giving underwriters rigorous uncertainty bounds.")
 
 with tab_lineage:
     st.subheader("Data Partitioning & Zero-Leakage Cohorts")
-    
-    lineage_data = pd.DataFrame([
-        {"Partition": "Train Cohort", "Origination Window": "≤ 2019-12", "Loans": 41477, "Monthly Records": 778872, "Purpose": "Model Training & Feature Store Extraction"},
-        {"Partition": "Validation Cohort", "Origination Window": "2020-01 to 2021-12", "Loans": 4936, "Monthly Records": 95563, "Purpose": "Hyperparameter Tuning & Platt Calibration"},
-        {"Partition": "Holdout Test Cohort", "Origination Window": "≥ 2022-01", "Loans": 3587, "Monthly Records": 69871, "Purpose": "Out-of-Time Blind Performance Evaluation"},
-    ])
+
+    @st.cache_data(ttl="6h", show_spinner=False)
+    def _load_lineage_data() -> pd.DataFrame:
+        return pd.DataFrame([
+            {"Partition": "Train Cohort", "Origination Window": "≤ 2019-12", "Loans": 41477, "Monthly Records": 778872, "Purpose": "Model Training & Feature Store Extraction"},
+            {"Partition": "Validation Cohort", "Origination Window": "2020-01 to 2021-12", "Loans": 4936, "Monthly Records": 95563, "Purpose": "Hyperparameter Tuning & Platt Calibration"},
+            {"Partition": "Holdout Test Cohort", "Origination Window": "≥ 2022-01", "Loans": 3587, "Monthly Records": 69871, "Purpose": "Out-of-Time Blind Performance Evaluation"},
+        ])
+
+    lineage_data = _load_lineage_data()
     st.dataframe(lineage_data, use_container_width=True)
     
     st.info(
@@ -104,8 +122,10 @@ with tab_lineage:
 
 with tab_scorecard:
     st.subheader("Task-by-Task Performance Scorecard")
-    
-    scorecard_df = pd.DataFrame([
+
+    @st.cache_data(ttl="6h", show_spinner=False)
+    def _load_scorecard_df() -> pd.DataFrame:
+        return pd.DataFrame([
         {
             "Target / Task": "next_3m_delinquency_flag",
             "Baseline LR ROC-AUC": 0.7780,
@@ -162,21 +182,26 @@ with tab_scorecard:
             "Precision @ Top 5%": "Macro-F1 0.543"
         }
     ])
-    
+
+    scorecard_df = _load_scorecard_df()
     st.dataframe(scorecard_df, use_container_width=True)
     st.caption("Evaluated on out-of-time validation cohort. Macro-F1 shown for multiclass state transition model.")
 
 with tab_fairness:
     st.subheader("Responsible AI, Subgroup Parity & Fair Lending Audit")
-    
-    fairness_data = pd.DataFrame([
-        {"Credit Score Band": "<620 (Subprime)", "Sample Size": 7039, "Observed Default Rate": "12.09%", "Subgroup ROC-AUC": 0.6281, "Predicted Pos Rate": "3.25%", "FPR": "2.31%"},
-        {"Credit Score Band": "620-659 (Near Prime)", "Sample Size": 11769, "Observed Default Rate": "6.55%", "Subgroup ROC-AUC": 0.6739, "Predicted Pos Rate": "1.72%", "FPR": "1.23%"},
-        {"Credit Score Band": "660-699 (Prime)", "Sample Size": 19849, "Observed Default Rate": "5.29%", "Subgroup ROC-AUC": 0.6151, "Predicted Pos Rate": "1.26%", "FPR": "0.80%"},
-        {"Credit Score Band": "700-739 (Prime Plus)", "Sample Size": 23415, "Observed Default Rate": "3.57%", "Subgroup ROC-AUC": 0.6268, "Predicted Pos Rate": "0.79%", "FPR": "0.56%"},
-        {"Credit Score Band": "740-779 (Super Prime)", "Sample Size": 18675, "Observed Default Rate": "2.77%", "Subgroup ROC-AUC": 0.6519, "Predicted Pos Rate": "0.54%", "FPR": "0.35%"},
-        {"Credit Score Band": "780+ (Tier 1)", "Sample Size": 14207, "Observed Default Rate": "1.75%", "Subgroup ROC-AUC": 0.6442, "Predicted Pos Rate": "0.42%", "FPR": "0.24%"},
-    ])
+
+    @st.cache_data(ttl="6h", show_spinner=False)
+    def _load_fairness_data() -> pd.DataFrame:
+        return pd.DataFrame([
+            {"Credit Score Band": "<620 (Subprime)", "Sample Size": 7039, "Observed Default Rate": "12.09%", "Subgroup ROC-AUC": 0.6281, "Predicted Pos Rate": "3.25%", "FPR": "2.31%"},
+            {"Credit Score Band": "620-659 (Near Prime)", "Sample Size": 11769, "Observed Default Rate": "6.55%", "Subgroup ROC-AUC": 0.6739, "Predicted Pos Rate": "1.72%", "FPR": "1.23%"},
+            {"Credit Score Band": "660-699 (Prime)", "Sample Size": 19849, "Observed Default Rate": "5.29%", "Subgroup ROC-AUC": 0.6151, "Predicted Pos Rate": "1.26%", "FPR": "0.80%"},
+            {"Credit Score Band": "700-739 (Prime Plus)", "Sample Size": 23415, "Observed Default Rate": "3.57%", "Subgroup ROC-AUC": 0.6268, "Predicted Pos Rate": "0.79%", "FPR": "0.56%"},
+            {"Credit Score Band": "740-779 (Super Prime)", "Sample Size": 18675, "Observed Default Rate": "2.77%", "Subgroup ROC-AUC": 0.6519, "Predicted Pos Rate": "0.54%", "FPR": "0.35%"},
+            {"Credit Score Band": "780+ (Tier 1)", "Sample Size": 14207, "Observed Default Rate": "1.75%", "Subgroup ROC-AUC": 0.6442, "Predicted Pos Rate": "0.42%", "FPR": "0.24%"},
+        ])
+
+    fairness_data = _load_fairness_data()
     st.dataframe(fairness_data, use_container_width=True)
     
     st.markdown(

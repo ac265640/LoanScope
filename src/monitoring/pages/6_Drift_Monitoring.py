@@ -18,11 +18,21 @@ import plotly.express as px
 
 warnings.filterwarnings("ignore")
 
+_THIS_DIR = Path(__file__).resolve().parents[1]
+if str(_THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(_THIS_DIR))
+from _theme import inject_theme, STATUS_COLOR_MAP, apply_chart_theme  # noqa: E402
+
 # Page config
-st.set_page_config(
-    page_title="Drift Monitoring | LoanScope",
-    layout="wide",
-)
+try:
+    st.set_page_config(
+        page_title="Drift Monitoring | LoanScope",
+        layout="wide",
+    )
+except Exception:
+    pass
+
+inject_theme()
 
 # ---------------------------------------------------------------------------
 # Path resolution — always relative to this file
@@ -133,7 +143,7 @@ def _generate_sample_data(n_loans: int, max_months: int) -> None:
 
 
 # Module-level caching for stable performance
-@st.cache_resource(show_spinner=False)
+@st.cache_resource(show_spinner=False, ttl="6h")
 def _ensure_data_resource() -> bool:
     if TRAIN_FILE.exists() and TEST_FILE.exists() and not LITE_MODE:
         return False
@@ -143,7 +153,7 @@ def _ensure_data_resource() -> bool:
     return True
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, ttl="6h")
 def _compute_drift_cached() -> pd.DataFrame:
     return compute_drift_metrics()
 
@@ -170,16 +180,27 @@ if is_demo:
     )
 
 with st.spinner("Computing drift metrics..."):
-    df = _compute_drift_cached()
+    try:
+        df = _compute_drift_cached()
+    except Exception as exc:
+        st.cache_data.clear()
+        st.error(f"Unable to compute drift metrics: {exc}")
+        st.stop()
 
-# Summary KPIs
-col1, col2, col3 = st.columns(3)
-col1.metric("PASS Features", int((df["status"] == "PASS").sum()))
-col2.metric("WARN Features", int((df["status"] == "WARN").sum()))
-col3.metric("FAIL Features", int((df["status"] == "FAIL").sum()))
+# Summary KPIs — bordered, vertically centered, equal-height card grid
+col1, col2, col3 = st.columns(3, vertical_alignment="center")
+with col1:
+    with st.container(border=True, height="stretch"):
+        st.metric("PASS Features", int((df["status"] == "PASS").sum()))
+with col2:
+    with st.container(border=True, height="stretch"):
+        st.metric("WARN Features", int((df["status"] == "WARN").sum()))
+with col3:
+    with st.container(border=True, height="stretch"):
+        st.metric("FAIL Features", int((df["status"] == "FAIL").sum()))
 
 # PSI bar chart
-color_map = {"PASS": "#27ae60", "WARN": "#f39c12", "FAIL": "#e74c3c"}
+color_map = STATUS_COLOR_MAP
 df_sorted = df.sort_values("PSI", ascending=False)
 fig = px.bar(
     df_sorted, x="feature", y="PSI", color="status",
@@ -189,7 +210,12 @@ fig = px.bar(
 )
 fig.add_hline(y=0.10, line_dash="dash", line_color="orange", annotation_text="WARN threshold (0.10)")
 fig.add_hline(y=0.25, line_dash="dash", line_color="red", annotation_text="FAIL threshold (0.25)")
-fig.update_layout(xaxis_tickangle=-45, height=430)
+fig.update_layout(
+    xaxis_tickangle=-45,
+    height=460,
+    margin=dict(b=90),
+    legend=dict(orientation="h", yanchor="top", y=-0.35, xanchor="center", x=0.5, title=None),
+)
 st.plotly_chart(fig, use_container_width=True)
 
 # KS chart for numeric features
@@ -201,8 +227,13 @@ if len(numeric_df) > 0:
         color_discrete_map=color_map,
         title="Kolmogorov-Smirnov (KS) Statistic by Numeric Feature",
     )
+    fig2 = apply_chart_theme(fig2, height=410, title="Kolmogorov-Smirnov (KS) Statistic by Numeric Feature")
     fig2.add_hline(y=0.05, line_dash="dash", line_color="orange", annotation_text="p<0.05 threshold")
-    fig2.update_layout(height=380)
+    fig2.update_layout(
+        height=410,
+        margin=dict(b=90),
+        legend=dict(orientation="h", yanchor="top", y=-0.3, xanchor="center", x=0.5, title=None),
+    )
     st.plotly_chart(fig2, use_container_width=True)
 
 # Full table
@@ -210,11 +241,11 @@ st.subheader("Full Drift Metrics Table")
 
 def _style_status(val: object) -> str:
     if val == "PASS":
-        return "background-color: #d4efdf; color: #1e293b"
+        return "background-color: rgba(34, 197, 94, 0.2); color: #4ade80; font-weight: 600;"
     elif val == "WARN":
-        return "background-color: #fdebd0; color: #1e293b"
+        return "background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; font-weight: 600;"
     elif val == "FAIL":
-        return "background-color: #f5b7b1; color: #1e293b"
+        return "background-color: rgba(239, 68, 68, 0.25); color: #f87171; font-weight: 600;"
     return ""
 
 st.dataframe(

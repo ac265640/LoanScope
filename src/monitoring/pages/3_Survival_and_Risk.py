@@ -5,12 +5,23 @@ Cause-specific Aalen-Johansen Cumulative Incidence Functions (CIF) vs
 naive Kaplan-Meier single-risk overestimation (+8.72pp bias).
 """
 
+import sys
 from pathlib import Path
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Survival & Risk | LoanScope", layout="wide")
+_THIS_DIR = Path(__file__).resolve().parents[1]
+if str(_THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(_THIS_DIR))
+from _theme import inject_theme, apply_chart_theme  # noqa: E402
+
+try:
+    st.set_page_config(page_title="Survival & Risk | LoanScope", layout="wide")
+except Exception:
+    pass
+
+inject_theme()
 
 # Sidebar
 with st.sidebar:
@@ -29,16 +40,20 @@ st.markdown(
 
 st.markdown("---")
 
-# Key Metrics
-c1, c2, c3, c4 = st.columns(4)
+# Key Metrics — bordered, vertically centered, equal-height card grid
+c1, c2, c3, c4 = st.columns(4, vertical_alignment="center")
 with c1:
-    st.metric("36M Single-Risk Default", "23.13%", "Naive Kaplan-Meier")
+    with st.container(border=True, height="stretch"):
+        st.metric("36M Single-Risk Default", "23.13%", "Naive Kaplan-Meier")
 with c2:
-    st.metric("36M Competing-Risk Default", "14.41%", "Aalen-Johansen CIF")
+    with st.container(border=True, height="stretch"):
+        st.metric("36M Competing-Risk Default", "14.41%", "Aalen-Johansen CIF")
 with c3:
-    st.metric("KM Overestimation Bias", "+8.72 pp", "Eliminated Capital Penalty", delta_color="inverse")
+    with st.container(border=True, height="stretch"):
+        st.metric("KM Overestimation Bias", "+8.72 pp", "Eliminated Capital Penalty", delta_color="inverse")
 with c4:
-    st.metric("36M Prepayment CIF", "8.47%", "Voluntary Refinance")
+    with st.container(border=True, height="stretch"):
+        st.metric("36M Prepayment CIF", "8.47%", "Voluntary Refinance")
 
 st.markdown("---")
 
@@ -82,14 +97,12 @@ with col_left:
         marker=dict(size=8)
     ))
     
+    fig = apply_chart_theme(fig, height=470, title="Cumulative Incidence Over Time: Competing-Risk CIF vs Naive KM")
     fig.update_layout(
-        title="Cumulative Incidence Over Time: Competing-Risk CIF vs Naive KM",
         xaxis_title="Months Since Origination",
-        yaxis_title="Cumulative Probability",
+        yaxis_title="Cumulative Event Probability",
         yaxis=dict(tickformat=".1%"),
-        height=450,
-        margin=dict(l=20, r=20, t=40, b=20),
-        legend=dict(x=0.05, y=0.95),
+        legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="center", x=0.5),
     )
     
     st.plotly_chart(fig, use_container_width=True)
@@ -111,25 +124,35 @@ with col_right:
         """
     )
     
-    bias_df = pd.DataFrame([
-        {"Horizon": "12 Months", "CIF Default": "8.47%", "Naive KM Default": "8.89%", "Overestimation Bias": "+0.43 pp"},
-        {"Horizon": "24 Months", "CIF Default": "13.15%", "Naive KM Default": "17.38%", "Overestimation Bias": "+4.23 pp"},
-        {"Horizon": "36 Months", "CIF Default": "14.41%", "Naive KM Default": "23.13%", "Overestimation Bias": "+8.72 pp"},
-    ])
+    @st.cache_data(ttl="6h", show_spinner=False)
+    def _load_bias_df() -> pd.DataFrame:
+        return pd.DataFrame([
+            {"Horizon": "12 Months", "CIF Default": "8.47%", "Naive KM Default": "8.89%", "Overestimation Bias": "+0.43 pp"},
+            {"Horizon": "24 Months", "CIF Default": "13.15%", "Naive KM Default": "17.38%", "Overestimation Bias": "+4.23 pp"},
+            {"Horizon": "36 Months", "CIF Default": "14.41%", "Naive KM Default": "23.13%", "Overestimation Bias": "+8.72 pp"},
+        ])
+
+    bias_df = _load_bias_df()
     st.dataframe(bias_df, use_container_width=True)
 
 st.markdown("---")
 
 st.subheader("Cumulative Incidence Rates by Credit Score Band")
 
-credit_cif_df = pd.DataFrame([
-    {"Credit Band": "<620 (Subprime)", "12M CIF Default": "19.57%", "12M CIF Prepayment": "0.00%", "36M CIF Default": "32.61%", "36M CIF Prepayment": "0.00%", "Primary Risk": "Severe Credit Default"},
-    {"Credit Band": "620-659 (Near Prime)", "12M CIF Default": "16.90%", "12M CIF Prepayment": "1.41%", "36M CIF Default": "28.17%", "36M CIF Prepayment": "1.41%", "Primary Risk": "Elevated Default"},
-    {"Credit Band": "660-699 (Prime)", "12M CIF Default": "10.00%", "12M CIF Prepayment": "1.11%", "36M CIF Default": "18.89%", "36M CIF Prepayment": "2.22%", "Primary Risk": "Moderate Default"},
-    {"Credit Band": "700-739 (Prime Plus)", "12M CIF Default": "3.94%", "12M CIF Prepayment": "7.87%", "36M CIF Default": "4.72%", "36M CIF Prepayment": "8.66%", "Primary Risk": "Balanced / Low Risk"},
-    {"Credit Band": "740-779 (Super Prime)", "12M CIF Default": "3.06%", "12M CIF Prepayment": "7.14%", "36M CIF Default": "10.20%", "36M CIF Prepayment": "11.22%", "Primary Risk": "Refinance Flight Risk"},
-    {"Credit Band": "780+ (Top Tier)", "12M CIF Default": "2.50%", "12M CIF Prepayment": "17.50%", "36M CIF Default": "5.00%", "36M CIF Prepayment": "22.50%", "Primary Risk": "High Prepayment (Duration Risk)"},
-])
+
+@st.cache_data(ttl="6h", show_spinner=False)
+def _load_credit_cif_df() -> pd.DataFrame:
+    return pd.DataFrame([
+        {"Credit Band": "<620 (Subprime)", "12M CIF Default": "19.57%", "12M CIF Prepayment": "0.00%", "36M CIF Default": "32.61%", "36M CIF Prepayment": "0.00%", "Primary Risk": "Severe Credit Default"},
+        {"Credit Band": "620-659 (Near Prime)", "12M CIF Default": "16.90%", "12M CIF Prepayment": "1.41%", "36M CIF Default": "28.17%", "36M CIF Prepayment": "1.41%", "Primary Risk": "Elevated Default"},
+        {"Credit Band": "660-699 (Prime)", "12M CIF Default": "10.00%", "12M CIF Prepayment": "1.11%", "36M CIF Default": "18.89%", "36M CIF Prepayment": "2.22%", "Primary Risk": "Moderate Default"},
+        {"Credit Band": "700-739 (Prime Plus)", "12M CIF Default": "3.94%", "12M CIF Prepayment": "7.87%", "36M CIF Default": "4.72%", "36M CIF Prepayment": "8.66%", "Primary Risk": "Balanced / Low Risk"},
+        {"Credit Band": "740-779 (Super Prime)", "12M CIF Default": "3.06%", "12M CIF Prepayment": "7.14%", "36M CIF Default": "10.20%", "36M CIF Prepayment": "11.22%", "Primary Risk": "Refinance Flight Risk"},
+        {"Credit Band": "780+ (Top Tier)", "12M CIF Default": "2.50%", "12M CIF Prepayment": "17.50%", "36M CIF Default": "5.00%", "36M CIF Prepayment": "22.50%", "Primary Risk": "High Prepayment (Duration Risk)"},
+    ])
+
+
+credit_cif_df = _load_credit_cif_df()
 
 st.dataframe(credit_cif_df, use_container_width=True)
 st.caption("Data source: reports/survival_report.md | Estimator: Aalen-Johansen non-parametric competing risk model.")

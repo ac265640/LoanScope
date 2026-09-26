@@ -5,13 +5,25 @@ Multi-outcome hazard prediction models, comparative benchmarks (Baseline LR vs L
 Platt calibration diagrams, and decision threshold analysis.
 """
 
+import sys
 from pathlib import Path
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Predictions & Calibration | LoanScope", layout="wide")
+_THIS_DIR = Path(__file__).resolve().parents[1]
+if str(_THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(_THIS_DIR))
+from _theme import inject_theme, COLORS, apply_chart_theme  # noqa: E402
+
+try:
+    st.set_page_config(page_title="Predictions & Calibration | LoanScope", layout="wide")
+except Exception:
+    pass
+
+inject_theme()
 
 # Sidebar
 with st.sidebar:
@@ -30,8 +42,14 @@ st.markdown(
 
 st.markdown("---")
 
+@st.cache_data(ttl="6h", show_spinner=False)
+def _load_target_metrics() -> dict:
+    """Pre-computed, out-of-time validation metrics per prediction target."""
+    return _TARGET_METRICS_RAW
+
+
 # Target Data Dictionary
-TARGET_METRICS = {
+_TARGET_METRICS_RAW = {
     "next_3m_delinquency_flag": {
         "title": "3-Month Delinquency Early Warning (next_3m_delinquency_flag)",
         "horizon": "Short-Term (90 Days)",
@@ -122,27 +140,58 @@ TARGET_METRICS = {
     }
 }
 
-# Target Selection Dropdown
-selected_target_key = st.selectbox(
+TARGET_METRICS = _load_target_metrics()
+
+# Short display labels mapped to technical target keys — st.pills shows the
+# label, everything downstream keys off the technical target identifier.
+TARGET_LABELS = {
+    "next_3m_delinquency_flag": "3M Delinquency",
+    "next_6m_delinquency_flag": "6M Delinquency",
+    "next_12m_default_flag": "12M Default",
+    "next_12m_prepayment_flag": "12M Prepayment",
+}
+LABEL_TO_KEY = {v: k for k, v in TARGET_LABELS.items()}
+
+# Read initial selection from URL query params so a specific target view is
+# shareable via direct link; write the current selection back on change.
+_qp_target = st.query_params.get("target")
+_default_label = TARGET_LABELS.get(_qp_target, TARGET_LABELS["next_3m_delinquency_flag"])
+
+st.markdown("**Select Outcome Target to Inspect:**")
+selected_label = st.pills(
     "Select Outcome Target to Inspect:",
-    options=list(TARGET_METRICS.keys()),
-    format_func=lambda k: TARGET_METRICS[k]["title"]
+    options=list(TARGET_LABELS.values()),
+    default=_default_label,
+    label_visibility="collapsed",
+    key="target_pills",
 )
+
+if not selected_label:
+    st.info("Select an outcome target above to view its calibration and performance metrics.")
+    st.stop()
+
+selected_target_key = LABEL_TO_KEY[selected_label]
+st.query_params["target"] = selected_target_key
 
 meta = TARGET_METRICS[selected_target_key]
 
-# Metric Cards Row
-c1, c2, c3, c4, c5 = st.columns(5)
+# Metric Cards Row — bordered, vertically centered, equal-height card grid
+c1, c2, c3, c4, c5 = st.columns(5, vertical_alignment="center")
 with c1:
-    st.metric("LightGBM ROC-AUC", f"{meta['lgb_roc_auc']:.4f}", f"LR: {meta['lr_roc_auc']:.4f}")
+    with st.container(border=True, height="stretch"):
+        st.metric("LightGBM ROC-AUC", f"{meta['lgb_roc_auc']:.4f}", f"LR: {meta['lr_roc_auc']:.4f}")
 with c2:
-    st.metric("LightGBM PR-AUC", f"{meta['lgb_pr_auc']:.4f}", f"Base Prev: {meta['prevalence']:.4f}")
+    with st.container(border=True, height="stretch"):
+        st.metric("LightGBM PR-AUC", f"{meta['lgb_pr_auc']:.4f}", f"Base Prev: {meta['prevalence']:.4f}")
 with c3:
-    st.metric("Calibrated Brier Loss", f"{meta['brier']:.4f}", "Platt Sigmoid Scaled")
+    with st.container(border=True, height="stretch"):
+        st.metric("Calibrated Brier Loss", f"{meta['brier']:.4f}", "Platt Sigmoid Scaled")
 with c4:
-    st.metric("Optimal Cutoff (t*)", f"{meta['optimal_t']:.3f}", f"F1: {meta['f1_opt']:.4f}")
+    with st.container(border=True, height="stretch"):
+        st.metric("Optimal Cutoff (t*)", f"{meta['optimal_t']:.3f}", f"F1: {meta['f1_opt']:.4f}")
 with c5:
-    st.metric("Top-5% Precision", meta['prec_top5'], "Queue Surveillance")
+    with st.container(border=True, height="stretch"):
+        st.metric("Top-5% Precision", meta['prec_top5'], "Queue Surveillance")
 
 st.info(f"**Performance Note**: {meta['notes']}")
 
@@ -175,14 +224,12 @@ with col_left:
         line=dict(color='#38bdf8', width=3)
     ))
     
+    fig = apply_chart_theme(fig, height=440, title=f"Reliability Diagram: {selected_target_key}")
     fig.update_layout(
-        title=f"Reliability Diagram: {selected_target_key}",
         xaxis_title="Mean Predicted Probability",
         yaxis_title="Empirical True Event Frequency",
         xaxis=dict(range=[0, 0.85]),
         yaxis=dict(range=[0, 0.85]),
-        height=420,
-        margin=dict(l=20, r=20, t=40, b=20),
         legend=dict(x=0.05, y=0.95),
     )
     
@@ -213,10 +260,66 @@ st.markdown("---")
 
 # Full Comparative Multi-Outcome Matrix
 st.subheader("Multi-Outcome Model Performance Summary")
-all_targets_df = pd.DataFrame([
-    {"Target Outcome": "next_3m_delinquency_flag", "Horizon": "90 Days", "Base LR ROC-AUC": 0.7780, "LightGBM ROC-AUC": 0.7977, "PR-AUC (Lift)": "0.4090 (10.1x)", "Calibrated Brier": 0.0291, "Top-5% Precision": "33.82%"},
-    {"Target Outcome": "next_6m_delinquency_flag", "Horizon": "180 Days", "Base LR ROC-AUC": 0.7464, "LightGBM ROC-AUC": 0.7656, "PR-AUC (Lift)": "0.3599 (5.7x)", "Calibrated Brier": 0.0486, "Top-5% Precision": "39.66%"},
-    {"Target Outcome": "next_12m_default_flag", "Horizon": "365 Days", "Base LR ROC-AUC": 0.7008, "LightGBM ROC-AUC": 0.7179, "PR-AUC (Lift)": "0.1401 (3.1x)", "Calibrated Brier": 0.0415, "Top-5% Precision": "18.52%"},
-    {"Target Outcome": "next_12m_prepayment_flag", "Horizon": "365 Days", "Base LR ROC-AUC": 0.6773, "LightGBM ROC-AUC": 0.6738, "PR-AUC (Lift)": "0.0816 (1.7x)", "Calibrated Brier": 0.0442, "Top-5% Precision": "10.69%"},
-])
+
+
+@st.cache_data(ttl="6h", show_spinner=False)
+def _load_all_targets_df() -> pd.DataFrame:
+    return pd.DataFrame([
+        {"Target Outcome": "next_3m_delinquency_flag", "Horizon": "90 Days", "Base LR ROC-AUC": 0.7780, "LightGBM ROC-AUC": 0.7977, "PR-AUC (Lift)": "0.4090 (10.1x)", "Calibrated Brier": 0.0291, "Top-5% Precision": "33.82%"},
+        {"Target Outcome": "next_6m_delinquency_flag", "Horizon": "180 Days", "Base LR ROC-AUC": 0.7464, "LightGBM ROC-AUC": 0.7656, "PR-AUC (Lift)": "0.3599 (5.7x)", "Calibrated Brier": 0.0486, "Top-5% Precision": "39.66%"},
+        {"Target Outcome": "next_12m_default_flag", "Horizon": "365 Days", "Base LR ROC-AUC": 0.7008, "LightGBM ROC-AUC": 0.7179, "PR-AUC (Lift)": "0.1401 (3.1x)", "Calibrated Brier": 0.0415, "Top-5% Precision": "18.52%"},
+        {"Target Outcome": "next_12m_prepayment_flag", "Horizon": "365 Days", "Base LR ROC-AUC": 0.6773, "LightGBM ROC-AUC": 0.6738, "PR-AUC (Lift)": "0.0816 (1.7x)", "Calibrated Brier": 0.0442, "Top-5% Precision": "10.69%"},
+    ])
+
+
+all_targets_df = _load_all_targets_df()
 st.dataframe(all_targets_df, use_container_width=True)
+
+st.markdown("#### Normalized PR-AUC Lift vs. Naive Base Rate")
+st.caption(
+    "Every target's PR-AUC sits on a different scale (rare-event prevalence differs 4x across targets), "
+    "so raw PR-AUC numbers aren't comparable side by side. Normalizing to 'multiple of naive base rate' "
+    "puts all four targets on one common 1.0x-referenced scale."
+)
+
+
+@st.cache_data(ttl="6h", show_spinner=False)
+def _load_lift_long_df() -> pd.DataFrame:
+    lift_wide = pd.DataFrame([
+        {"Target": "3M Delinquency", "Naive Baseline": 1.0, "LightGBM Lift": 10.1},
+        {"Target": "6M Delinquency", "Naive Baseline": 1.0, "LightGBM Lift": 5.7},
+        {"Target": "12M Default", "Naive Baseline": 1.0, "LightGBM Lift": 3.1},
+        {"Target": "12M Prepayment", "Naive Baseline": 1.0, "LightGBM Lift": 1.7},
+    ])
+    # Reshape wide -> long/tidy so Altair can encode "Series" as color
+    return lift_wide.melt(id_vars="Target", var_name="Series", value_name="Multiplier")
+
+
+lift_long_df = _load_lift_long_df()
+
+hover = alt.selection_point(fields=["Target", "Series"], on="mouseover", empty=False)
+
+lift_chart = (
+    alt.Chart(lift_long_df)
+    .mark_bar()
+    .encode(
+        x=alt.X("Target:N", title=None, sort=None),
+        y=alt.Y("Multiplier:Q", title="Multiple of Naive Base Rate"),
+        color=alt.Color(
+            "Series:N",
+            scale=alt.Scale(domain=["Naive Baseline", "LightGBM Lift"], range=[COLORS["base"], COLORS["gold"]]),
+            legend=alt.Legend(orient="bottom", title=None),
+        ),
+        opacity=alt.condition(hover, alt.value(1.0), alt.value(0.85)),
+        xOffset="Series:N",
+        tooltip=[
+            alt.Tooltip("Target:N", title="Target"),
+            alt.Tooltip("Series:N", title="Series"),
+            alt.Tooltip("Multiplier:Q", title="Multiplier", format=".1f"),
+        ],
+    )
+    .add_params(hover)
+    .properties(height=320)
+    .interactive()
+)
+st.altair_chart(lift_chart, use_container_width=True)

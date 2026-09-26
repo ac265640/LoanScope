@@ -158,8 +158,8 @@ def _ensure_data_resource() -> bool:
 try:
     import streamlit as st
     import plotly.express as px
-    _ensure_data_cached = st.cache_resource(show_spinner=False)(_ensure_data_resource)
-    _compute_drift_cached = st.cache_data(show_spinner=False)(compute_drift_metrics)
+    _ensure_data_cached = st.cache_resource(show_spinner=False, ttl="6h")(_ensure_data_resource)
+    _compute_drift_cached = st.cache_data(show_spinner=False, ttl="6h")(compute_drift_metrics)
 except Exception:
     _ensure_data_cached = _ensure_data_resource
     _compute_drift_cached = compute_drift_metrics
@@ -207,10 +207,16 @@ def run_dashboard() -> None:
         )
 
     # ------------------------------------------------------------------
-    # Step 3: Compute drift metrics (cached)
+    # Step 3: Compute drift metrics (cached) — clear cache and stop
+    # gracefully on unrecoverable failure so a bad cached state can't persist.
     # ------------------------------------------------------------------
     with st.spinner("Computing drift metrics..."):
-        df = _compute_drift_cached()
+        try:
+            df = _compute_drift_cached()
+        except Exception as exc:
+            st.cache_data.clear()
+            st.error(f"Unable to compute drift metrics: {exc}")
+            st.stop()
 
     # ------------------------------------------------------------------
     # KPI summary row
@@ -293,13 +299,45 @@ def _is_running_under_streamlit() -> bool:
 
 
 if _is_running_under_streamlit():
-    # Streamlit Cloud execution: Load and render the full multi-page showcase
-    import importlib.util
-    app_path = Path(__file__).resolve().parent / "app.py"
-    if app_path.exists():
-        spec = importlib.util.spec_from_file_location("showcase_app", app_path)
-        app_mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(app_mod)
+    # Streamlit Cloud execution: this file (drift_dashboard.py) is the
+    # configured main entry point, so without explicit navigation Streamlit
+    # would render this script's own name as a stray first nav tab
+    # ("drift dashboard") ahead of the real pages. st.navigation() defines
+    # the sidebar explicitly instead, so only the six real pages show up,
+    # with the platform overview (app.py's content) as the default landing
+    # page under a proper "Home" label.
+    import streamlit as st
+
+    _PAGES_DIR = Path(__file__).resolve().parent / "pages"
+    _APP_PATH = Path(__file__).resolve().parent / "app.py"
+
+    st.set_page_config(
+        page_title="LoanScope — Quantitative Risk & Surveillance Engine",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+
+    if _APP_PATH.exists():
+        _pages = [st.Page(str(_APP_PATH), title="Home", icon=":material/dashboard:", default=True)]
+    else:
+        _pages = []
+
+    _page_specs = [
+        ("1_Overview.py", "Overview", ":material/insights:"),
+        ("2_Predictions.py", "Predictions", ":material/model_training:"),
+        ("3_Survival_and_Risk.py", "Survival and Risk", ":material/timeline:"),
+        ("4_Anomaly_Cases.py", "Anomaly Cases", ":material/report:"),
+        ("5_Scenario_Simulator.py", "Scenario Simulator", ":material/monitoring:"),
+        ("6_Drift_Monitoring.py", "Drift Monitoring", ":material/query_stats:"),
+    ]
+    for filename, title, icon in _page_specs:
+        page_path = _PAGES_DIR / filename
+        if page_path.exists():
+            _pages.append(st.Page(str(page_path), title=title, icon=icon))
+
+    if _pages:
+        pg = st.navigation(_pages)
+        pg.run()
     else:
         run_dashboard()
 elif __name__ == "__main__":
